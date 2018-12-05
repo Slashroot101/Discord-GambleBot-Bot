@@ -1,0 +1,24 @@
+{
+  "name": "discord-gamble-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "eslint": "^5.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Slashroot101/Discord-Gamble-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Slashroot101/Discord-Gamble-Bot/issues"
+  },
+  "homepage": "https://github.com/Slashroot101/Discord-Gamble-Bot#readme"
+}
