@@ -1,11 +1,13 @@
-let {getSumOfMap, getRandomIndex} = require(`./utility/bj/bj`);
+
 let {cards} = require(`./utility/bj/cards`);
+let {gameBoard, winnerBoard} = require(`./utility/bj/board.js`);
+let {getRandomIndex, getSumOfMap, createCardString} = require(`./utility/bj/bj`);
 const Discord = require('discord.js');
 
 module.exports = {
     name: 'bj',
     description: 'Blackjack',
-    execute(client, message, args) {
+    async execute(client, message, args) {
         let deck = new Map(cards);
 
         //dealer
@@ -18,58 +20,141 @@ module.exports = {
         let cCard1 = getRandomIndex(deck);
         deck.delete(cCard1[0]);
         let cCard2 = getRandomIndex(deck);
-        deck.delete(cCard2);
+        deck.delete(cCard2[0]);
 
         let clientHand = [cCard1, cCard2];
         let dealerHand = [dCard1, dCard2];
-        message.channel.send({embed: {
-            color: 3447003,
-            author: {
-              name: message.member.user.tag,
-              icon_url: message.member.user.avatarURL
-            },
-            title: "",
-            url: "",
-            description: "Type `hit` to draw another card or `stand` to pass.",
-            fields: [
-              {
-                name: "**Your Hand**",
-                value: `${cCard1[0].substr(0, cCard1[0].indexOf(`|`))} ${cCard2[0].substr(0, cCard2[0].indexOf(`|`))}`,
-                inline: true
-              },
-              {
-                name: "**Dealer Hand**",
-                value: `${dCard1[0].substr(0, dCard1[0].indexOf(`|`))} ${dCard2[0].substr(0, dCard2[0].indexOf(`|`))}`,
-                inline: true
-              },
-              {
-                name: "\u200b",
-                value: `\u200b`,
-                inline: true
-              },
-              {
-                name: "\u200b",
-                value: `Value: ${getSumOfMap(clientHand)}`,
-                inline: true
-              },
-              {
-                name: "\u200b",
-                value: `Value: ${getSumOfMap(dealerHand)} `,
-                inline: true
-              }
-            ],
-            timestamp: new Date()
-          }
-        });
+        let dealerSum = getSumOfMap(dealerHand);
+        let clientSum = getSumOfMap(clientHand);
+
+        let board;
+        if(dealerSum === 21){``
+          let embedText = {
+            clientString: createCardString(clientHand),
+            clientSum,
+            dealerString: createCardString(dealerHand),
+            dealerSum,
+            result: `You lost`,
+            color: 15158332
+          };
+          return message.channel.send(winnerBoard(message, embedText));
+        } else if (clientSum === 21){
+          let embedText = {
+            clientString: createCardString(clientHand),
+            clientSum,
+            dealerString: createCardString(dealerHand),
+            dealerSum,
+            result: `You win`,
+            color: 0x00FF00
+          };
+          return board.edit(winnerBoard(message, embedText));
+        } else {
+          let embedText = {
+            clientString: createCardString(clientHand),
+            clientSum,
+            dealerString: `${dealerHand[0][0].substr(0, dealerHand[0][0].indexOf(`|`))} **`,
+            dealerSum: dealerHand[0][1].value,
+            color: 3447003
+          };
+          board = await message.channel.send(gameBoard(message, embedText));
+        }
 
         const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 10000 });
 
+        let bust = false;
         collector.on('collect', msg => {
+          if(!bust){
             if(msg.content === `hit`){
-                console.log(`hit`)
+              let newCard = getRandomIndex(deck);
+              deck.delete(newCard[0]);
+              clientHand.push(newCard);
+              clientSum = getSumOfMap(clientHand);
+              if(clientSum > 21 || dealerSum === 21){
+                bust = true;
+                let embedText = {
+                  clientString: createCardString(clientHand),
+                  clientSum,
+                  dealerString: createCardString(dealerHand),
+                  dealerSum,
+                  result: `You lost`,
+                  color: 15158332
+                };
+                board.edit(winnerBoard(message, embedText));
+              } else if(clientSum === 21){
+                bust = true;
+                let embedText = {
+                  clientString: createCardString(clientHand),
+                  clientSum,
+                  dealerString: createCardString(dealerHand),
+                  dealerSum,
+                  result: `You win`,
+                  color: 0x00FF00
+                };
+                board.edit(winnerBoard(message, embedText));
+              } else {
+                let embedText = {
+                  clientString: createCardString(clientHand),
+                  clientSum,
+                  dealerString: `${dealerHand[0][0].substr(0, dealerHand[0][0].indexOf(`|`))} **`,
+                  dealerSum : dealerHand[0][1].value,
+                  color: 3447003
+                };
+                board.edit(gameBoard(message, embedText));
+              }
             } else if (msg.content === `stand`){
+              let numDraws = Math.floor(Math.random() * 3);
+              for(let i = 0; i < numDraws; i++){
+                if(dealerSum < 16){
+                  let card = getRandomIndex(deck);
+                  dealerHand.push(card);
+                  deck.delete(card[0]);
+                } else {
+                  let randomNumber = Math.floor(Math.random() * 3);
+                  if(randomNumber === 0){
+                    let card = getRandomIndex(deck);
+                    dealerHand.push(card);
+                    deck.delete(card[0]);
+                    break;
+                  }
+                }
+                dealerSum = getSumOfMap(dealerHand);
+              }
 
+              if(dealerSum === clientSum){
+                bust = true;
+                let embedText = {
+                  clientString: createCardString(clientHand),
+                  clientSum,
+                  dealerString: createCardString(dealerHand),
+                  dealerSum,
+                  result: `Both sides bust`,
+                  color: 0x808080
+                };
+                board.edit(winnerBoard(message, embedText));
+              } else if(clientSum < dealerSum && dealerSum < 21 || dealerSum === 21 ){
+                 embedText = {
+                  clientString: createCardString(clientHand),
+                  clientSum,
+                  dealerString: createCardString(dealerHand),
+                  dealerSum,
+                  result: `You lost`,
+                  color: 15158332
+                };
+                board.edit(winnerBoard(message, embedText));
+              } else if (dealerSum > 21 || clientSum > dealerSum) {
+                bust = true;
+                let embedText = {
+                  clientString: createCardString(clientHand),
+                  clientSum,
+                  dealerString: createCardString(dealerHand),
+                  dealerSum,
+                  result: `You win`,
+                  color: 0x00FF00
+                };
+                board.edit(winnerBoard(message, embedText));
+              }
             }
+          }
         });
     }
 };
