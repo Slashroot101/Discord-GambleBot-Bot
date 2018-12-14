@@ -7,7 +7,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'bj',
     description: 'Blackjack',
-    async execute(client, message, args) {
+    async execute(client, message, args, user) {
         let deck = new Map(cards);
 
         //dealer
@@ -61,37 +61,25 @@ module.exports = {
 
         const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 10000 });
 
-        let bust = false;
+        let bust = 0;
+        /**
+         * 1 = lose
+         * 2 = win
+         * 3 = tie
+         */
         collector.on('collect', msg => {
-          if(!bust){
+          if(bust === 0){
             if(msg.content === `hit`){
               let newCard = getRandomIndex(deck);
               deck.delete(newCard[0]);
               clientHand.push(newCard);
               clientSum = getSumOfMap(clientHand);
               if(clientSum > 21 || dealerSum === 21){
-                bust = true;
-                let embedText = {
-                  clientString: createCardString(clientHand),
-                  clientSum,
-                  dealerString: createCardString(dealerHand),
-                  dealerSum,
-                  result: `You lost`,
-                  color: 15158332
-                };
-                board.edit(winnerBoard(message, embedText));
+                bust = 1;
               } else if(clientSum === 21){
-                bust = true;
-                let embedText = {
-                  clientString: createCardString(clientHand),
-                  clientSum,
-                  dealerString: createCardString(dealerHand),
-                  dealerSum,
-                  result: `You win`,
-                  color: 0x00FF00
-                };
-                board.edit(winnerBoard(message, embedText));
+                bust = 2;
               } else {
+                bust = 0;
                 let embedText = {
                   clientString: createCardString(clientHand),
                   clientSum,
@@ -121,38 +109,23 @@ module.exports = {
               }
 
               if(dealerSum === clientSum){
-                bust = true;
-                let embedText = {
-                  clientString: createCardString(clientHand),
-                  clientSum,
-                  dealerString: createCardString(dealerHand),
-                  dealerSum,
-                  result: `Both sides bust`,
-                  color: 0x808080
-                };
-                board.edit(winnerBoard(message, embedText));
+                bust = 3;
               } else if(clientSum < dealerSum && dealerSum < 21 || dealerSum === 21 ){
-                 embedText = {
-                  clientString: createCardString(clientHand),
-                  clientSum,
-                  dealerString: createCardString(dealerHand),
-                  dealerSum,
-                  result: `You lost`,
-                  color: 15158332
-                };
-                board.edit(winnerBoard(message, embedText));
+                bust = 1;
               } else if (dealerSum > 21 || clientSum > dealerSum) {
-                bust = true;
-                let embedText = {
-                  clientString: createCardString(clientHand),
-                  clientSum,
-                  dealerString: createCardString(dealerHand),
-                  dealerSum,
-                  result: `You win`,
-                  color: 0x00FF00
-                };
-                board.edit(winnerBoard(message, embedText));
+                bust = 2;
               }
+            }
+            if(bust === 1 || bust === 2){
+              let embedText = {
+                clientString: createCardString(clientHand),
+                clientSum,
+                dealerString: createCardString(dealerHand),
+                dealerSum,
+                result: bust === 1 ? `You lose` : (bust === 2) ?  `You win` : `Both sides lose`,
+                color: bust === 1 ?  15158332 : (bust === 2) ? 0x00FF00: 0x808080
+              };
+              board.edit(winnerBoard(message, embedText));
             }
           }
         });

@@ -1,5 +1,6 @@
 const fs = require(`fs`);
 const Discord = require('discord.js');
+const {getUserByDiscordID, create} = require('./api/user');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const {prefix, botToken} = require(`./config`);
@@ -15,16 +16,21 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', msg => {
+client.on('message', async msg => {
     if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-	if (!client.commands.has(command)) return;
-
+	if (!client.commands.has(command)) return;;
+	let user = await getUserByDiscordID(msg.author.id);
+	console.log(user)
+	if(!user){
+		user = await create(msg.author.id);
+	}
+	console.log(user)
 	try {
-		client.commands.get(command).execute(client, msg, args);
+		client.commands.get(command).execute(client, msg, args, user);
 	}
 	catch (error) {
 		console.error(error);
