@@ -5,7 +5,8 @@
   "main": "main.js",
   "dependencies": {
     "discord.js": "^11.4.2",
-    "eslint": "^5.9.0"
+    "eslint": "^5.9.0",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {},
   "scripts": {
