@@ -24,11 +24,11 @@ client.on('message', async msg => {
 
 	if (!client.commands.has(command)) return;;
 	let user = await getUserByDiscordID(msg.author.id);
-	console.log(user)
+
 	if(!user){
 		user = await create(msg.author.id);
 	}
-	console.log(user)
+
 	try {
 		client.commands.get(command).execute(client, msg, args, user);
 	}
