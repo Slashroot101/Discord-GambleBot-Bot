@@ -4,13 +4,14 @@ class Deck {
     constructor(){
         this.deck = Array.from(new Map(cards));
         this.shuffle();
-        this.deck = Hand.createHashMapFromArray(this.deck);
-        console.log(this.deck)
-        this.hand = new Map();
+        this.deck = Deck.createHashMapFromArray(this.deck);
     }
 
     drawRandomCard(){
-        return this.deck.splice(Math.floor(Math.random() * this.deck.length), 1);
+        let tempDeck = Array.from(this.deck);
+        let randomCard = tempDeck.splice(Math.floor(Math.random() * tempDeck.length), 1);
+        this.deck = Deck.createHashMapFromArray(tempDeck);
+        return randomCard;
     }
 
     shuffle() {
@@ -23,6 +24,7 @@ class Deck {
     static createHashMapFromArray(arr){
         let hashMap = new Map();
         for(let i = 0; i < arr.length; i++){
+            console.log(arr)
             hashMap.set(arr[i][0], arr[i][1]);
         }
         return hashMap;

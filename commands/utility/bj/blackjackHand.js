@@ -1,21 +1,30 @@
+let Hand = require(`../hand`);
+
 
 class BlackjackHand extends Hand {
     constructor(){
         super();
+        this.WIN = 0;
+        this.LOSE = 1;
+        this.TIE = 2;
     }
 
     isWinner(opponent){
         let opponentSum = opponent.getSumOfCards();
-        let thisSum =  this.getSumOfCard();
+        let thisSum = super.getSumOfCards();
         if(opponentSum > thisSum &&  opponentSum <= 21){
-            return false;
+            return this.LOSE;
         }
 
         if(thisSum > 21){
-            return false;
+            return this.LOSE;
         }
 
-        return true;
+        if(thisSum === opponentSum){
+            return this.TIE;
+        }
+
+        return this.WIN;
     }
 
 }

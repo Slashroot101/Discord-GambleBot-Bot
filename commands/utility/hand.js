@@ -5,7 +5,9 @@ class Hand {
     }
 
     addCard(card){
+        console.log(card)
         this.cards.set(card[0], card[1]);
+        return this;
     }
 
     removeCard(key){
@@ -16,8 +18,7 @@ class Hand {
         let ret = ``;
         if(!isBlackjackDealer){
             this.cards.forEach(function(key, value, map){
-                cardNames.push(key.substr(0, key.indexOf(`|`)))
-                ret += `${key.substr(0, key.indexOf('|'))} `;
+                ret += `${value[0].substr(0, value[0].indexOf('|'))} `;
             });
         } else {
             let cardArray = Array.from(this.cards);
@@ -29,7 +30,7 @@ class Hand {
     getSumOfCards(){
         let sum = 0;
         this.cards.forEach((value, key, map) =>{
-            sum += value.value;
+            sum += key[1].value;
         });
         return sum;
     }

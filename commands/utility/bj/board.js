@@ -1,3 +1,4 @@
+
 exports.gameBoard = function(message, text){return {embed: {
     color: 3447003,
     author: {
