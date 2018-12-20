@@ -24,7 +24,6 @@ class Deck {
     static createHashMapFromArray(arr){
         let hashMap = new Map();
         for(let i = 0; i < arr.length; i++){
-            console.log(arr)
             hashMap.set(arr[i][0], arr[i][1]);
         }
         return hashMap;
