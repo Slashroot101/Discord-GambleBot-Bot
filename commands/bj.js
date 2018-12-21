@@ -34,7 +34,7 @@ module.exports = {
                 dealerString: dealerHand.toString(),
                 result: `Blackjack`,
                 dealerSum,
-                color: 15158332
+                color: 0x00ff00
             }
 
             message.channel.send(board.gameBoard(message, boardProperties));
@@ -67,13 +67,14 @@ module.exports = {
                         dealerString: dealerHand.toString(),
                         result: `Blackjack`,
                         dealerSum,
-                        color: 15158332
+                        color: 0x00ff00
                     }
         
                    return boardMsg.edit(board.winnerBoard(message, boardProperties));
                 }
 
                 if(isClientWinner === clientHand.BUST){
+                    bust = true;
                     let embedText = {
                         clientString: clientHand.toString(),
                         clientSum,
@@ -98,7 +99,39 @@ module.exports = {
             }
 
             if(msg.content === `stand`){
-
+                if(!bust){
+                    dealerSum = dealerHand.getSumOfCards();  
+                    while(dealerSum < 17){
+                        dealerHand
+                            .addCard(gameDeck.drawRandomCard());
+                        dealerSum = dealerHand.getSumOfCards();     
+                    }
+                    isClientWinner = clientHand.isWinner(dealerHand);
+                    if(isClientWinner === clientHand.BLACKJACK || isClientWinner === clientHand.WIN){
+                        bust = true;
+                        let boardProperties = {
+                            clientString: clientHand.toString(),
+                            clientSum,
+                            dealerString: dealerHand.toString(),
+                            result: isClientWinner === clientHand.BLACKJACK ? `Blackjack` : `You win`,
+                            dealerSum,
+                            color: 0x00ff00
+                        }
+            
+                       return boardMsg.edit(board.winnerBoard(message, boardProperties));
+                    } else {
+                        bust = true;
+                        let embedText = {
+                            clientString: clientHand.toString(),
+                            clientSum,
+                            dealerString: dealerHand.toString(),
+                            dealerSum,
+                            result: `You lost`,
+                            color: 15158332
+                        };
+                       return boardMsg.edit(board.winnerBoard(message, embedText));
+                    }
+                }
             }
         });
 

@@ -14,7 +14,6 @@ class BlackjackHand extends Hand {
     isWinner(opponent){
         let opponentSum = opponent.getSumOfCards();
         let thisSum = super.getSumOfCards();
-        console.log(12123123123, thisSum)
 
         if(thisSum > 21){
             return this.BUST;
@@ -25,6 +24,12 @@ class BlackjackHand extends Hand {
         }
 
         if(thisSum === opponentSum){
+            if(thisSum === 21 && opponentSum === 21){
+                if(super.cards.size > opponent.cards.size){
+                    return this.LOSE
+                }
+                return this.WIN
+            }
             return this.TIE;
         }
 

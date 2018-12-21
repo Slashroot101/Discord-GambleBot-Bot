@@ -1,5 +1,5 @@
 
-exports.gameBoard = function(message, text){return {embed: {
+exports.gameBoard = function(message, text, clientHand, dealerHand){return {embed: {
     color: 3447003,
     author: {
       name: message.member.user.tag,
@@ -44,7 +44,7 @@ exports.gameBoard = function(message, text){return {embed: {
   }
 }};
 
-exports.winnerBoard = function(message, text){
+exports.winnerBoard = function(message, text, clientHand, dealerHand){
     return {
         embed: {
             color: text.color,
