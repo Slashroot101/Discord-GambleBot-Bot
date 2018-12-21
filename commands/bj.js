@@ -7,10 +7,8 @@ module.exports = {
     description: 'Blackjack',
     async execute(client, message, args, user) {
         let gameDeck = new Deck();
-
         let dealerHand = new BlackjackHand();
         let clientHand = new BlackjackHand();
-
         let done = false;
         
         dealerHand
