@@ -40,6 +40,95 @@ class BlackjackHand extends Hand {
         return this.WIN;
     }
 
+    static toGameboardEmbedObject(clientHand, dealerHand, message, isStand){
+        let isClientWinner = clientHand.isWinner(dealerHand);
+        let dealerSum;
+        let clientSum;
+        let result;
+        let clientHandString;
+        let dealerHandString;
+        let color;
+      
+      
+        if(isClientWinner === clientHand.BLACKJACK){
+            clientSum = 21;
+            dealerSum = dealerHand.getSumOfCards();
+            dealerHandString = dealerHand.toString();
+            clientHandString = clientHand.toString();
+            result = "Result: Blackjack";
+            color = 0x00ff00;
+        } else if(isClientWinner === clientHand.BUST || (isClientWinner === clientHand.LOSE && isStand)){
+            dealerSum = dealerHand.getSumOfCards();
+            clientSum = clientHand.getSumOfCards();
+            dealerHandString = dealerHand.toString();
+            clientHandString = clientHand.toString();
+            result = "You lose"
+            color = 15158332;
+        } else if(isClientWinner === clientHand.WIN && isStand){
+            dealerSum = dealerHand.getSumOfCards();
+            clientSum = clientHand.getSumOfCards();
+            dealerHandString = dealerHand.toString();
+            clientHandString = clientHand.toString();
+            result = "You win"
+            color = 0x00ff00;
+        } else {
+            dealerSum = dealerHand.getSumOfCards(true);
+            clientSum = clientHand.getSumOfCards();
+            dealerHandString = dealerHand.toString(true);
+            clientHandString = clientHand.toString();
+            result = "Type `hit` to draw another card or `stand` to pass."
+            color = 3447003
+        }
+      
+      
+      
+        let embed= {
+          color,
+          author: {
+            name: message.member.user.tag,
+            icon_url: message.member.user.avatarURL
+          },
+          title: "",
+          url: "",
+          description: `${result}`,
+          fields: [
+            {
+              name: "**Your Hand**",
+              value: `${clientHandString}`,
+              inline: true
+            },
+            {
+              name: "**Dealer Hand**",
+              value: `${dealerHandString}`,
+              inline: true
+            },
+            {
+              name: "\u200b",
+              value: `\u200b`,
+              inline: true
+            },
+            {
+              name: "\u200b",
+              value: `Value: ${clientSum}`,
+              inline: true
+            },
+            {
+              name: "\u200b",
+              value: `Value: ${dealerSum} `,
+              inline: true
+            },
+            {
+              name: "\u200b",
+              value: `\u200b`,
+              inline: true
+            },
+          ],
+          timestamp: new Date()
+        }
+        
+        return embed;
+    }
+
 }
 
 module.exports = BlackjackHand;
