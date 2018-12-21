@@ -1,7 +1,6 @@
 let Deck = require(`./utility/deck`);
 let BlackjackHand = require(`./utility/bj/blackjackHand`);
 const Discord = require('discord.js');
-let board = require(`./utility/bj/board`);
 
 module.exports = {
     name: 'bj',
