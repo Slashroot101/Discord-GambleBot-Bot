@@ -32,7 +32,6 @@ module.exports = {
                 clientHand
                     .addCard(gameDeck.drawRandomCard());
 
-                
                 if(clientHand.getSumOfCards() >= 21){
                     done = true;
                 }
