@@ -4,7 +4,6 @@ const {getUserByDiscordID, create} = require('./api/user');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const {prefix, botToken} = require(`./config`);
-
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {

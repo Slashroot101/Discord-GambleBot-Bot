@@ -1,5 +1,6 @@
 const request = require('request-promise');
 const config = require('../config');
+
 exports.getUserByDiscordID = (discordID) => {
     return new Promise(async (resolve) => {
         let options = {
