@@ -2,19 +2,14 @@ let Deck = require(`./utility/deck`);
 let BlackjackHand = require(`./utility/bj/blackjackHand`);
 const Discord = require('discord.js');
 const {addPointsByUserID} = require(`../api/points`);
+let currentUsersInGame = new Set();
 
 module.exports = {
     name: 'bj',
     description: 'Blackjack',
     async execute(client, message, args, user) {
-        console.log(currentUsersInGame.has(user.user_id))
-
         if(args.length === 0){
             return message.reply('please specify an amount to bet. Such as `!bj <amount>`');
-        }
-
-        if(currentUsersInGame.has(user.user_id)){
-            return message.reply('you already are in a game of blackjack');
         }
 
         let bet = Number(args[0]);
@@ -23,8 +18,12 @@ module.exports = {
             return message.reply(`you do not have enough money! You currently have ${user.current_balance}, and would need to withdraw ${bet-user.current_balance} more to make that bet.`);
         }
 
-        currentUsersInGame.add(user.user_id);
-        console.log(currentUsersInGame)
+        if(currentUsersInGame.has(user.id)){
+            return message.reply(`you are already in a blackjack game!`);
+        }
+
+        currentUsersInGame.add(user.id);
+
         let gameDeck = new Deck();
         let dealerHand = new BlackjackHand();
         let clientHand = new BlackjackHand();
@@ -45,10 +44,18 @@ module.exports = {
         }
 
         const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000 });
-        
-        setTimeout(function(){
-            currentUsersInGame.delete(user.user_id);
-        })
+
+        var gameTimeout = setTimeout(function() {
+             currentUsersInGame.delete(user.id);
+             clientHand
+                .addCard(gameDeck.drawRandomCard())
+                .addCard(gameDeck.drawRandomCard())
+                .addCard(gameDeck.drawRandomCard())
+                .addCard(gameDeck.drawRandomCard())
+                .addCard(gameDeck.drawRandomCard());
+             boardMsg.edit({embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false)});
+             addPointsByUserID(user.user_id, bet * -1);
+            }, 60000);
 
         collector.on('collect', msg => {
             if(done){ return; }
@@ -57,7 +64,6 @@ module.exports = {
                     .addCard(gameDeck.drawRandomCard());
 
                 let isClientWinner = clientHand.isWinner(dealerHand);
-                console.log(isClientWinner)
                 if(isClientWinner === clientHand.BLACKJACK){
                     addPointsByUserID(user.user_id, bet * 1);
                 } else if (isClientWinner === clientHand.BUST){
@@ -67,7 +73,8 @@ module.exports = {
                 if(clientHand.getSumOfCards() >= 21){
                     done = true;
                 }
-
+               clearTimeout(gameTimeout);
+               currentUsersInGame.delete(user.id);
                return boardMsg.edit({embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false)});
             }
 
@@ -87,7 +94,8 @@ module.exports = {
                     } else if (isClientWinner === clientHand.LOSE || isClientWinner === clientHand.BUST){
                         addPointsByUserID(user.user_id, bet * -1);
                     }
-
+                    clearTimeout(gameTimeout);
+                    currentUsersInGame.delete(user.id);
                     return boardMsg.edit({embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true)});
             }
         });
