@@ -20,15 +20,14 @@ client.on('message', async msg => {
 
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-
-	if (!client.commands.has(command)) return;;
-	let user = await getUserByDiscordID(msg.author.id);
-
-	if(!user){
-		user = await create(msg.author.id);
-	}
-
 	try {
+		if (!client.commands.has(command)) return;;
+		let user = await getUserByDiscordID(msg.author.id);
+
+		if(!user){
+			user = await create(msg.author.id);
+		}
+		
 		client.commands.get(command).execute(client, msg, args, user);
 	}
 	catch (error) {
