@@ -7,6 +7,8 @@ let currentUsersInGame = new Set();
 module.exports = {
     name: 'bj',
     description: 'Blackjack',
+    duration: 60,
+    usages: 1,
     async execute(client, message, args, user) {
         if(args.length === 0){
             return message.reply('please specify an amount to bet. Such as `!bj <amount>`');

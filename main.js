@@ -5,10 +5,13 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const {prefix, botToken} = require(`./config`);
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandAPI = require(`./api/commands`);
+
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
+	client.commands.set(command.name, command);
+	commandAPI.create(command);
 }
 
 client.on('ready', () => {
@@ -27,7 +30,7 @@ client.on('message', async msg => {
 		if(!user){
 			user = await create(msg.author.id);
 		}
-		
+
 		client.commands.get(command).execute(client, msg, args, user);
 	}
 	catch (error) {

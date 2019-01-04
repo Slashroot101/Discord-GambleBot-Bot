@@ -6,13 +6,11 @@ exports.create = (commands) => {
         let options = {
             method: 'POST',
             uri: `${config.apiUrl}/commands`,
-            body: {
-               commands 
-            },
+            body: commands,
             json: true
         };
 
-        let user = await request(options);
-        resolve(user.data[0]);
+        let command = await request(options);
+        resolve(command.data);
     });
 };
