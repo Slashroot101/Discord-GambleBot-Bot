@@ -7,15 +7,15 @@ const {prefix, botToken} = require(`./config`);
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commandAPI = require(`./api/commands`);
 
-
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
-	commandAPI.create(command);
-}
-
-client.on('ready', () => {
+client.on('ready', async () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	let newCommand = await commandAPI.create(command);
+
+	command.id = newCommand.commands.id;
+	client.commands.set(command.name, command);
+  }
 });
 
 client.on('message', async msg => {
@@ -31,7 +31,13 @@ client.on('message', async msg => {
 			user = await create(msg.author.id);
 		}
 
-		client.commands.get(command).execute(client, msg, args, user);
+		let commandToExec = client.commands.get(command);
+
+		commandToExec.execute(client, msg, args, user);
+
+		console.log(commandToExec, user)
+
+		commandAPI.addToUserAudit(commandToExec.id, user.user_id);
 	}
 	catch (error) {
 		console.error(error);
