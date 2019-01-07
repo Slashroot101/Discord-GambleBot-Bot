@@ -7,7 +7,7 @@ const currentUsersInGame = new Set();
 module.exports = {
 	name: 'bj',
 	description: 'Blackjack',
-	duration: 1,
+	duration: 10,
 	usages: 2,
 	async execute(client, message, args, user) {
 		if (args.length === 0) {
@@ -15,6 +15,10 @@ module.exports = {
 		}
 
 		const bet = Number(parseInt(args[0]));
+
+		if(isNaN(bet)){
+			return message.reply('your bet must be a number.');
+		}
 
 		if (user.current_balance < bet) {
 			return message.reply(`you do not have enough money! You currently have ${user.current_balance}, and would need to withdraw ${bet - user.current_balance} more to make that bet.`);
