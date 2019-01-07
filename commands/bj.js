@@ -1,7 +1,7 @@
 const Deck = require(`./utility/deck`);
 const BlackjackHand = require(`./utility/bj/blackjackHand`);
 const Discord = require('discord.js');
-const {addPointsByUserID} = require(`../api/points`);
+const { addPointsByUserID } = require(`../api/points`);
 const currentUsersInGame = new Set();
 
 module.exports = {
@@ -107,7 +107,5 @@ module.exports = {
 				return boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true) });
 			}
 		});
-
-
 	},
 };

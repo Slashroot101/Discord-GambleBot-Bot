@@ -33,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/commands/bj.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="16" column="46" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="46" />
+            <state relative-caret-position="279">
+              <caret line="109" column="6" lean-forward="true" selection-start-line="109" selection-start-column="6" selection-end-line="109" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -91,7 +91,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546875536347" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546875812692" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -125,12 +125,12 @@
       <updated>1544406220297</updated>
       <workItem from="1544406221797" duration="570000" />
       <workItem from="1544932398183" duration="238000" />
-      <workItem from="1546624794446" duration="2386000" />
+      <workItem from="1546624794446" duration="2456000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3194000" />
+    <option name="totallyTimeSpent" value="3264000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="977" extended-state="6" />
@@ -186,8 +186,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/commands/bj.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="16" column="46" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="46" />
+        <state relative-caret-position="279">
+          <caret line="109" column="6" lean-forward="true" selection-start-line="109" selection-start-column="6" selection-end-line="109" selection-end-column="6" />
         </state>
       </provider>
     </entry>
