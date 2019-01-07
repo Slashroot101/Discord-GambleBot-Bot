@@ -7,8 +7,8 @@ const currentUsersInGame = new Set();
 module.exports = {
 	name: 'bj',
 	description: 'Blackjack',
-	duration: 60,
-	usages: 1,
+	duration: 1,
+	usages: 2,
 	async execute(client, message, args, user) {
 		if (args.length === 0) {
 			return message.reply('please specify an amount to bet. Such as `!bj <amount>`');
@@ -42,6 +42,7 @@ module.exports = {
 		const boardMsg = await message.channel.send({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
 
 		if (clientHand.getSumOfCards() === 21) {
+			currentUsersInGame.delete(user.id);
 			return;
 		}
 
