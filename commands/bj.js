@@ -48,7 +48,7 @@ module.exports = {
 
 		const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000 });
 
-		let gameTimeout = setTimeout(function() {
+		const gameTimeout = setTimeout(function() {
 			currentUsersInGame.delete(user.id);
 			clientHand
 				.addCard(gameDeck.drawRandomCard())

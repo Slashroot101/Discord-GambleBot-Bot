@@ -32,10 +32,13 @@ client.on('message', async msg => {
 
 		const commandToExec = client.commands.get(command);
 
+		const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);
+
+		if(isOnCooldown){
+			return msg.reply(' that command is currently on cooldown.');
+		}
+
 		commandToExec.execute(client, msg, args, user);
-
-		console.log(commandToExec, user);
-
 		commandAPI.addToUserAudit(commandToExec.id, user.user_id);
 	}
 	catch (error) {
