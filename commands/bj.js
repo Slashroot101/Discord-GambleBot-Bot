@@ -14,7 +14,7 @@ module.exports = {
 			return message.reply('please specify an amount to bet. Such as `!bj <amount>`');
 		}
 
-		let bet = Number(args[0]);
+		const bet = Number(parseInt(args[0]));
 
 		if (user.current_balance < bet) {
 			return message.reply(`you do not have enough money! You currently have ${user.current_balance}, and would need to withdraw ${bet - user.current_balance} more to make that bet.`);
