@@ -20,7 +20,6 @@ exports.addPointsByDiscordID = (discordID, points) => {
 
 exports.addPointsByUserID = (userID, points) => {
     return new Promise(async (resolve) => {
-        console.log(points)
         let options = {
             method: 'PUT',
             body: {
@@ -34,3 +33,17 @@ exports.addPointsByUserID = (userID, points) => {
         resolve(user.data.length ? user.data[0] : user.data);
     });
 };
+
+exports.daily = (userID) => {
+    return new Promise(async (resolve) => {
+        let options = {
+            method: 'PUT',
+            body: {},
+            uri: `${config.apiUrl}/points/user-id/${userID}/daily`,
+            json: true
+        };
+
+        let reward = await request(options);
+        resolve(reward.data.reward);
+    });
+}

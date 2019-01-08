@@ -32,20 +32,22 @@ client.on('message', async msg => {
 		}
 
 		const commandToExec = client.commands.get(command);
+		
+		if(commandToExec.hasCooldown){
+			const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);
 
-		const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);
-
-		if(isOnCooldown.onCooldown){
-			const availableTime = moment(isOnCooldown.oldestAudit.execution_time).add(isOnCooldown.oldestAudit.duration, 'minutes');
-			const duration = moment.duration(availableTime.diff(moment()));
-			return msg.reply(` that command is currently on cooldown and will be available ${duration.humanize(true)}.`);
+			if(isOnCooldown.onCooldown){
+				const availableTime = moment(isOnCooldown.oldestAudit.execution_time).add(isOnCooldown.oldestAudit.duration, 'minutes');
+				const duration = moment.duration(availableTime.diff(moment()));
+				return msg.reply(` that command is currently on cooldown and will be available ${duration.humanize(true)}.`);
+			}
+	
 		}
 
 		commandToExec.execute(client, msg, args, user);
 		commandAPI.addToUserAudit(commandToExec.id, user.user_id);
 	}
 	catch (error) {
-		console.error(error);
 		msg.reply('there was an error trying to execute that command!');
 	}
 });

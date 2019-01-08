@@ -1,8 +1,9 @@
 module.exports = {
     name: 'bal',
     description: 'Balance',
-    duration: 6000,
-    usages: 11,
+    hasCooldown: false,
+    duration: 0,
+    usages: 0,
     async execute(client, message, args, user) {
 
         let embed= {
