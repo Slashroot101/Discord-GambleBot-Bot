@@ -38,6 +38,6 @@ exports.isCommandOnCooldown = (commandID, userID) => {
 		};
 
 		const isOnCooldown = await request(options);
-		resolve(isOnCooldown.data.onCooldown);
+		resolve(isOnCooldown.data);
 	});
 };

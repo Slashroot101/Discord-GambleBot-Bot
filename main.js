@@ -6,6 +6,7 @@ client.commands = new Discord.Collection();
 const { prefix, botToken } = require('./config');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commandAPI = require('./api/commands');
+const moment = require('moment');
 
 client.on('ready', async () => {
 	console.log(`Logged in as ${client.user.tag}!`);
@@ -34,8 +35,10 @@ client.on('message', async msg => {
 
 		const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);
 
-		if(isOnCooldown){
-			return msg.reply(' that command is currently on cooldown.');
+		if(isOnCooldown.onCooldown){
+			const availableTime = moment(isOnCooldown.oldestAudit.execution_time).add(isOnCooldown.oldestAudit.duration, 'minutes');
+			const duration = moment.duration(availableTime.diff(moment()));
+			return msg.reply(` that command is currently on cooldown and will be available ${duration.humanize(true)}.`);
 		}
 
 		commandToExec.execute(client, msg, args, user);
