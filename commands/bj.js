@@ -23,7 +23,7 @@ module.exports = {
 		}
 
 		if (user.current_balance < bet) {
-			return message.reply(`you do not have enough money! You currently have ${user.current_balance}, and would need to withdraw ${bet - user.current_balance} more to make that bet.`);
+			return message.reply(`you do not have enough money! You currently have ${user.current_balance}, and would need to gain $${bet - user.current_balance} more to make that bet.`);
 		}
 
 		if (currentUsersInGame.has(user.id)) {
