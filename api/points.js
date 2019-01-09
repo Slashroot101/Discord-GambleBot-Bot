@@ -57,6 +57,6 @@ exports.getLeaderboard = (pageNumber) => {
 		};
 
 		const leaderboard = await request(options);
-		resolve(leaderboard.data.leaderboard);
+		resolve(leaderboard.data);
 	});
 };

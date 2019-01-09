@@ -17,13 +17,11 @@ module.exports = {
 			return message.reply(`You must provide the page as a number, such as 1`);
 		}
 		const lb = await getLeaderboard(page);
-
-		if(lb.length){
-			console.log(lb)
+		if(lb.leaderboard.length){
 			let embedString = '';
-			for(let i = 0; i < lb.length; i++){
-				const lbUser = await client.fetchUser(lb[i].discord_user_id);
-				embedString += `${i + 1}. ${lbUser.username} : $${lb[i].current_balance}\n`;
+			for(let i = 0; i < lb.leaderboard.length; i++){
+				const lbUser = await client.fetchUser(lb.leaderboard[i].discord_user_id);
+				embedString += `${i + 1}. ${lbUser.username} : $${lb.leaderboard[i].current_balance}\n`;
 			}
 
 			const embed = {
@@ -42,7 +40,8 @@ module.exports = {
 						inline: true
 					}
 				],
-				timestamp: new Date(),
+				footer: {text: `Page: ${page + 1}/${lb.numPages}`},
+				timestamp: new Date()
 			};
 
 			message.channel.send({embed})
