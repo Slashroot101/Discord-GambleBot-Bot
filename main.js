@@ -27,21 +27,21 @@ client.on('message', async msg => {
 		if (!client.commands.has(command)) return;
 		let user = await getUserByDiscordID(msg.author.id);
 
-		if(!user) {
+		if (!user) {
 			user = await create(msg.author.id);
 		}
 
 		const commandToExec = client.commands.get(command);
-		
-		if(commandToExec.hasCooldown){
+
+		if (commandToExec.hasCooldown) {
 			const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);
 
-			if(isOnCooldown.onCooldown){
+			if (isOnCooldown.onCooldown) {
 				const availableTime = moment(isOnCooldown.oldestAudit.execution_time).add(isOnCooldown.oldestAudit.duration, 'minutes');
 				const duration = moment.duration(availableTime.diff(moment()));
 				return msg.reply(` that command is currently on cooldown and will be available ${duration.humanize(true)}.`);
 			}
-	
+
 		}
 
 		commandToExec.execute(client, msg, args, user);
