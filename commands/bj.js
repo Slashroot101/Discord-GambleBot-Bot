@@ -7,7 +7,7 @@ const currentUsersInGame = new Set();
 module.exports = {
 	name: 'bj',
 	description: 'Blackjack',
-	hasCooldown: true,
+	hasCooldown: false,
 	duration: 10,
 	usages: 2,
 	async execute(client, message, args, user) {

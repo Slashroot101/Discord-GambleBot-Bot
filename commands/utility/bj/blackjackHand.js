@@ -73,8 +73,14 @@ class BlackjackHand extends Hand {
 			clientHandString = clientHand.toString();
 			result = 'You win';
 			color = 0x00ff00;
-		}
-		else {
+		} else if (isClientWinner === clientHand.TIE){
+			dealerSum = dealerHand.getSumOfCards();
+			clientSum = clientHand.getSumOfCards();
+			dealerHandString = dealerHand.toString();
+			clientHandString = clientHand.toString();
+			result = 'Tie, money is pushed back';
+			color = 0xD3D3D3;
+		} else {
 			dealerSum = dealerHand.getSumOfCards(true);
 			clientSum = clientHand.getSumOfCards();
 			dealerHandString = dealerHand.toString(true);
