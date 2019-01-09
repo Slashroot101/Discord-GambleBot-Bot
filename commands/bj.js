@@ -34,7 +34,6 @@ module.exports = {
 		const gameDeck = new Deck();
 		const dealerHand = new BlackjackHand();
 		const clientHand = new BlackjackHand();
-		let done = false;
 
 		dealerHand
 			.addCard(gameDeck.drawRandomCard())
@@ -66,52 +65,37 @@ module.exports = {
 		}, 60000);
 
 		collector.on('collect', msg => {
-			if (done) {
-				return;
-			}
 			if (msg.content === `hit`) {
 				clientHand
 					.addCard(gameDeck.drawRandomCard());
 
-				const isClientWinner = clientHand.isWinner(dealerHand);
-				if (isClientWinner === clientHand.BLACKJACK) {
-					addPointsByUserID(user.user_id, bet * 1);
-				}
-				else if (isClientWinner === clientHand.BUST) {
-					addPointsByUserID(user.user_id, bet * -1);
+				if (clientHand.getSumOfCards() >= 21) {
+					collector.stop();
 				}
 
-				if (clientHand.getSumOfCards() >= 21) {
-					done = true;
-				}
-				clearTimeout(gameTimeout);
-				currentUsersInGame.delete(user.id);
-				return boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
+			    boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
 			}
 
 			if (msg.content === `stand`) {
-				if (done) {
-					return;
-				}
+				collector.stop();
 				let dealerSum = dealerHand.getSumOfCards();
 				while (dealerSum < 17) {
 					dealerHand
 						.addCard(gameDeck.drawRandomCard());
 					dealerSum = dealerHand.getSumOfCards();
 				}
-				done = true;
-
-				const isClientWinner = clientHand.isWinner(dealerHand);
-				if (isClientWinner === clientHand.BLACKJACK || isClientWinner === clientHand.WIN) {
-					addPointsByUserID(user.user_id, bet * 1);
-				}
-				else if (isClientWinner === clientHand.LOSE || isClientWinner === clientHand.BUST) {
-					addPointsByUserID(user.user_id, bet * -1);
-				}
-				clearTimeout(gameTimeout);
-				currentUsersInGame.delete(user.id);
-				return boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true) });
+				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true) });
 			}
+			
+			const isClientWinner = clientHand.isWinner(dealerHand);
+			if (isClientWinner === clientHand.BLACKJACK || isClientWinner === clientHand.WIN) {
+				addPointsByUserID(user.user_id, bet * 1);
+			}
+			else if (isClientWinner === clientHand.LOSE || isClientWinner === clientHand.BUST) {
+				addPointsByUserID(user.user_id, bet * -1);
+			}
+			clearTimeout(gameTimeout);
+			currentUsersInGame.delete(user.id);
 		});
 	},
 };
