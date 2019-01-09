@@ -3,7 +3,7 @@ const { daily } = require('../api/points');
 module.exports = {
 	name: 'daily',
 	description: 'Balance',
-	hasCooldown: true,
+	hasCooldown: false,
 	duration: 60 * 24,
 	usages: 1,
 	execute: async (client, message, args, user) => {

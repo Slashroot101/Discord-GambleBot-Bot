@@ -9,35 +9,47 @@ class BlackjackHand extends Hand {
 		this.TIE = 2;
 		this.BLACKJACK = 3;
 		this.BUST = 4;
+		this.CONTINUEGAME = 5;
 	}
 
-	isWinner(opponent) {
+	isWinner(opponent, isFirst) {
 		const opponentSum = opponent.getSumOfCards();
 		const thisSum = super.getSumOfCards();
-
-		if(thisSum > 21) {
-			return this.BUST;
-		}
-
-		if(opponentSum > thisSum && opponentSum < 21) {
-			return this.LOSE;
-		}
-
-		if(thisSum === opponentSum) {
-			if(thisSum === 21 && opponentSum === 21) {
-				if(super.cards.size > opponent.cards.size) {
-					return this.LOSE;
-				}
-				return this.WIN;
+		if(!isFirst){
+			if(thisSum > 21) {
+				return this.BUST;
 			}
-			return this.TIE;
+	
+			if(opponentSum > thisSum && opponentSum < 21) {
+				return this.LOSE;
+			}
+	
+			if(thisSum === opponentSum) {
+				if(thisSum === 21 && opponentSum === 21) {
+					if(super.cards.size > opponent.cards.size) {
+						return this.LOSE;
+					}
+					return this.WIN;
+				}
+				return this.TIE;
+			}
+
+			if(thisSum === 21) {
+				return this.BLACKJACK;
+			}
+	
+			return this.WIN;
 		}
 
 		if(thisSum === 21) {
 			return this.BLACKJACK;
 		}
 
-		return this.WIN;
+		if(opponentSum === 21) {
+			return this.LOSE;
+		}
+
+		return this.CONTINUEGAME;
 	}
 
 	static toGameboardEmbedObject(clientHand, dealerHand, message, isStand) {

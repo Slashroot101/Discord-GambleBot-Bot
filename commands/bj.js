@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const { addPointsByUserID } = require(`../api/points`);
 const currentUsersInGame = new Set();
 
+
 module.exports = {
 	name: 'bj',
 	description: 'Blackjack',
@@ -28,7 +29,6 @@ module.exports = {
 		if (currentUsersInGame.has(user.id)) {
 			return message.reply(`you are already in a blackjack game!`);
 		}
-
 		currentUsersInGame.add(user.id);
 
 		const gameDeck = new Deck();
@@ -84,6 +84,7 @@ module.exports = {
 						.addCard(gameDeck.drawRandomCard());
 					dealerSum = dealerHand.getSumOfCards();
 				}
+				currentUsersInGame.delete(user.id);
 				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true) });
 			}
 			
@@ -94,8 +95,11 @@ module.exports = {
 			else if (isClientWinner === clientHand.LOSE || isClientWinner === clientHand.BUST) {
 				addPointsByUserID(user.user_id, bet * -1);
 			}
+
+			if(isClientWinner === clientHand.BUST){
+				currentUsersInGame.delete(user.id);
+			}
 			clearTimeout(gameTimeout);
-			currentUsersInGame.delete(user.id);
 		});
 	},
 };
