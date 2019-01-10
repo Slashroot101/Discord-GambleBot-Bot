@@ -29,3 +29,19 @@ exports.create = (discordID) => {
         resolve(user.data[0]);
     });
 };
+
+exports.blacklist = (userID, userWhoBanned, reason) => {
+    return new Promise(async(resolve) => {
+        let options = {
+            method: 'POST',
+            uri: `${config.apiUrl}/user/user-id/${userID}/blacklist`,
+            body: {
+               userWhoBanned, reason 
+            },
+            json: true
+        };
+
+        let user = await request(options);
+        resolve(user.data[0]);
+    });
+};
