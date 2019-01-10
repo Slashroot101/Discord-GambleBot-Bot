@@ -10,6 +10,7 @@ module.exports = {
 	description: 'Blackjack',
 	hasCooldown: false,
 	duration: 10,
+	requiresAdmin: false,
 	usages: 2,
 	async execute(client, message, args, user) {
 		if (args.length === 0) {
@@ -87,7 +88,7 @@ module.exports = {
 				currentUsersInGame.delete(user.id);
 				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true, false) });
 			}
-			
+
 			const isClientWinner = clientHand.isWinner(dealerHand);
 			if (isClientWinner === clientHand.BLACKJACK || isClientWinner === clientHand.WIN) {
 				addPointsByUserID(user.user_id, bet * 1);
