@@ -33,7 +33,7 @@ module.exports = {
 		currentUsersInGame.add(user.id);
 
 		const gameDeck = new Deck();
-		const dealerHand = new BlackjackHand();
+		const dealerHand = new BlackjackHand(true);
 		const clientHand = new BlackjackHand();
 
 		dealerHand
@@ -61,7 +61,7 @@ module.exports = {
 				.addCard(gameDeck.drawRandomCard())
 				.addCard(gameDeck.drawRandomCard())
 				.addCard(gameDeck.drawRandomCard());
-			boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
+			boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false, false) });
 			addPointsByUserID(user.user_id, bet * -1);
 		}, 60000);
 
