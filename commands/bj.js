@@ -43,7 +43,7 @@ module.exports = {
 			.addCard(gameDeck.drawRandomCard())
 			.addCard(gameDeck.drawRandomCard());
 
-		const boardMsg = await message.channel.send({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
+		const boardMsg = await message.channel.send({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false, true) });
 
 		if (clientHand.getSumOfCards() === 21) {
 			currentUsersInGame.delete(user.id);
@@ -73,7 +73,7 @@ module.exports = {
 					collector.stop();
 				}
 
-			    boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
+			    boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false, false) });
 			}
 
 			if (msg.content === `stand`) {
@@ -85,7 +85,7 @@ module.exports = {
 					dealerSum = dealerHand.getSumOfCards();
 				}
 				currentUsersInGame.delete(user.id);
-				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true) });
+				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true, false) });
 			}
 			
 			const isClientWinner = clientHand.isWinner(dealerHand);

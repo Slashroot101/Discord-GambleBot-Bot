@@ -34,6 +34,10 @@ class BlackjackHand extends Hand {
 				return this.TIE;
 			}
 
+			if(opponentSum === 21) {
+				return this.LOSE;
+			}
+
 			if(thisSum === 21) {
 				return this.BLACKJACK;
 			}
@@ -52,8 +56,8 @@ class BlackjackHand extends Hand {
 		return this.CONTINUEGAME;
 	}
 
-	static toGameboardEmbedObject(clientHand, dealerHand, message, isStand) {
-		const isClientWinner = clientHand.isWinner(dealerHand);
+	static toGameboardEmbedObject(clientHand, dealerHand, message, isStand, isWinner) {
+		const isClientWinner = clientHand.isWinner(dealerHand, isWinner);
 		let dealerSum;
 		let clientSum;
 		let result;
