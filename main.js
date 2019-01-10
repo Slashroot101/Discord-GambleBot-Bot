@@ -27,6 +27,10 @@ client.on('message', async msg => {
 		if (!client.commands.has(command)) return;
 		let user = await getUserByDiscordID(msg.author.id);
 
+		if(user.blacklist_date !== null) {
+			return msg.reply(`you were blacklisted on ${moment(user.blacklist_date)}. Please contact an administrator if you think this is incorrect.`);
+		}
+
 		if (!user) {
 			user = await create(msg.author.id);
 		}
