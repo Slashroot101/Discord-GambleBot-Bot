@@ -19,6 +19,10 @@ module.exports = {
 
 		const bet = Number(parseInt(args[0]));
 
+		if(bet < 0){
+			return message.reply('your bet must be greater than or equal to 0.')
+		}
+
 		if(isNaN(bet)){
 			return message.reply('your bet must be a number.');
 		}
@@ -97,7 +101,9 @@ module.exports = {
 				addPointsByUserID(user.user_id, bet * -1);
 			}
 
-			if(isClientWinner === clientHand.BUST){
+			if(isClientWinner === clientHand.BUST ||
+				isClientWinner === clientHand.BLACKJACK ||
+				isClientWinner === clientHand.WIN){
 				currentUsersInGame.delete(user.id);
 			}
 			clearTimeout(gameTimeout);
