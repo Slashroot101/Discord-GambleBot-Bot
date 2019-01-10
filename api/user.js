@@ -31,7 +31,6 @@ exports.create = (discordID) => {
 };
 
 exports.blacklist = (userID, userWhoBanned, reason) => {
-    console.log(userID, userWhoBanned, reason)
 	return new Promise(async (resolve) => {
 		const options = {
 			method: 'POST',

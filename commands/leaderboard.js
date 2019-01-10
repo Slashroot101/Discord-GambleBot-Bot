@@ -5,6 +5,7 @@ module.exports = {
 	description: 'Leaderboard',
 	hasCooldown: true,
 	duration: 1,
+	requiresAdmin: false,
 	usages: 5,
 	execute: async (client, message, args, user) => {
 		let page;

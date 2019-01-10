@@ -27,15 +27,19 @@ client.on('message', async msg => {
 		if (!client.commands.has(command)) return;
 		let user = await getUserByDiscordID(msg.author.id);
 
-		if(user.blacklist_date !== null) {
-			return msg.reply(`you were blacklisted on ${moment(user.blacklist_date)}. Please contact an administrator if you think this is incorrect.`);
-		}
-
-		if (!user) {
+		if (user.length === 0) {
 			user = await create(msg.author.id);
 		}
 
+		if(user.blacklist_date !== null && user.length !== 0) {
+			return msg.reply(`you were blacklisted on ${moment(user.blacklist_date)}. Please contact an administrator if you think this is incorrect.`);
+		}
+
 		const commandToExec = client.commands.get(command);
+
+		if(commandToExec.requiresAdmin && user.rolename !== 'admin'){
+			return msg.reply(`nice try :-). You must be an admin to run that command.`);
+		}
 
 		if (commandToExec.hasCooldown) {
 			const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);

@@ -5,6 +5,7 @@ module.exports = {
 	description: 'Balance',
 	hasCooldown: false,
 	duration: 60 * 24,
+	requiresAdmin: false,
 	usages: 1,
 	execute: async (client, message, args, user) => {
 		const reward = await daily(user.user_id);

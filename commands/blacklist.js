@@ -5,9 +5,9 @@ module.exports = {
 	description: 'Blacklists the user',
 	duration: 0,
 	hasCooldown: false,
+	requiresAdmin: true,
 	usages: 0,
 	execute: async (client, message, args, user) => {
-		console.log(user);
 		if(user.blacklist_date !== null) {
 			return message.reply('that user is already blacklisted.');
 		}
