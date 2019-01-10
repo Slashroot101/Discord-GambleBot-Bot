@@ -45,3 +45,29 @@ exports.blacklist = (userID, userWhoBanned, reason) => {
 		resolve(user.data[0]);
 	});
 };
+
+exports.removeFromBlacklist = (userID) => {
+	return new Promise(async(resolve) => {
+		const options = {
+			method: 'DELETE',
+			uri: `${config.apiUrl}/user/user-id/${userID}/blacklist`,
+			json: true,
+		};
+
+		await request(options);
+		resolve();
+	});
+};
+
+exports.updateRoleID = (userID, roleID) => {
+	return new Promise(async (resolve) => {
+		const options = {
+			method: 'PUT',
+			uri: `${config.apiUrl}/user/user-id/${userID}/role/${roleID}`,
+			json: true,
+		};
+
+		const user = await request(options);
+		resolve(user.data.user);
+	});
+};
