@@ -5,9 +5,9 @@ module.exports = {
 	name: 'pay',
 	description: 'Gives money to a user from YOUR account. Ex: `!pay <@user> <amount>|<all>`',
 	requiresAdmin: false,
-	duration: 60,
-	hasCooldown: false,
-	usages: 1,
+	duration: 1,
+	hasCooldown: true,
+	usages: 2,
 	async execute(client, message, args, user) {
 		const amount = args[1] === 'all' || args[1] === 'ALL' ? user.current_balance : Math.floor(Number(parseInt(args[1])));
 		if(isNaN(amount)) {
