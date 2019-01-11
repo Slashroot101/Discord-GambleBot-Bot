@@ -1,4 +1,4 @@
-const fs = require(`fs`)
+const fs = require('fs');
 
 module.exports = {
 	name: 'help',
@@ -8,24 +8,21 @@ module.exports = {
 	hasCooldown: false,
 	usages: 1,
 	execute(client, message, args, user) {
-        console.log(1)
-        const commandFiles = fs.readdirSync(`./commands`).filter(file => file.endsWith('.js'));
-        console.log(commandFiles)
+		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 		let adminCommands = '';
 		let normieCommands = '';
 		let adminCount = 1;
 		let normieCount = 1;
-		for(let i = 0; i < commandFiles.length; i++){
-			let commandFile = require(`./${commandFiles[i]}`);
-			if(commandFile.requiresAdmin){
-				adminCommands += `${adminCount}. ${commandFile.name} : ${commandFile.description} \n`
+		for(let i = 0; i < commandFiles.length; i++) {
+			const commandFile = require(`./${commandFiles[i]}`);
+			if(commandFile.requiresAdmin) {
+				adminCommands += `${adminCount}. ${commandFile.name} : ${commandFile.description} \n`;
 				adminCount++;
 				continue;
 			}
 
-			normieCommands += `${normieCount}. ${commandFile.name} : ${commandFile.description} \n`
+			normieCommands += `${normieCount}. ${commandFile.name} : ${commandFile.description} \n`;
 			normieCount++;
-			continue;
 		}
 
 		const embed = {
