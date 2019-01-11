@@ -73,11 +73,10 @@ module.exports = {
 				if (clientHand.getSumOfCards() >= 21) {
 					collector.stop();
 				}
-
-			    boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
+				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
 			}
 
-			if (msg.content === `stand`) {
+			if (msg.content === 'stand') {
 				collector.stop();
 				let dealerSum = dealerHand.getSumOfCards();
 				while (dealerSum < 17) {

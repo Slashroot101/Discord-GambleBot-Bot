@@ -37,7 +37,7 @@ client.on('message', async msg => {
 
 		const commandToExec = client.commands.get(command);
 
-		if(commandToExec.requiresAdmin && user.rolename !== 'admin'){
+		if(commandToExec.requiresAdmin && user.roleName !== 'admin'){
 			return msg.reply(`nice try :-). You must be an admin to run that command.`);
 		}
 
