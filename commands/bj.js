@@ -7,7 +7,7 @@ const currentUsersInGame = new Set();
 
 module.exports = {
 	name: 'bj',
-	description: 'Blackjack',
+	description: 'The game blackjack. Try `!bj 0` to give it a try!',
 	hasCooldown: false,
 	duration: 10,
 	requiresAdmin: false,
@@ -18,6 +18,10 @@ module.exports = {
 		}
 
 		const bet = Number(parseInt(args[0]));
+
+		if(bet < 0){
+			return message.reply('your bet must be greater than or equal to 0.')
+		}
 
 		if(isNaN(bet)){
 			return message.reply('your bet must be a number.');
@@ -33,7 +37,7 @@ module.exports = {
 		currentUsersInGame.add(user.id);
 
 		const gameDeck = new Deck();
-		const dealerHand = new BlackjackHand();
+		const dealerHand = new BlackjackHand(true);
 		const clientHand = new BlackjackHand();
 
 		dealerHand
@@ -44,7 +48,7 @@ module.exports = {
 			.addCard(gameDeck.drawRandomCard())
 			.addCard(gameDeck.drawRandomCard());
 
-		const boardMsg = await message.channel.send({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
+		const boardMsg = await message.channel.send({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false, true) });
 
 		if (clientHand.getSumOfCards() === 21) {
 			currentUsersInGame.delete(user.id);
@@ -61,22 +65,23 @@ module.exports = {
 				.addCard(gameDeck.drawRandomCard())
 				.addCard(gameDeck.drawRandomCard())
 				.addCard(gameDeck.drawRandomCard());
-			boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
+			boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false, false) });
 			addPointsByUserID(user.user_id, bet * -1);
 		}, 60000);
 
 		collector.on('collect', msg => {
-			if (msg.content === `hit`) {
+			if (msg.content.toLowerCase() === `hit`) {
 				clientHand
 					.addCard(gameDeck.drawRandomCard());
 
 				if (clientHand.getSumOfCards() >= 21) {
 					collector.stop();
 				}
-				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
+
+				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false, false) });
 			}
 
-			if (msg.content === 'stand') {
+			if (msg.content.toLowerCase() === `stand`) {
 				collector.stop();
 				let dealerSum = dealerHand.getSumOfCards();
 				while (dealerSum < 17) {
@@ -85,7 +90,7 @@ module.exports = {
 					dealerSum = dealerHand.getSumOfCards();
 				}
 				currentUsersInGame.delete(user.id);
-				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true) });
+				boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true, false) });
 			}
 
 			const isClientWinner = clientHand.isWinner(dealerHand);
@@ -96,7 +101,9 @@ module.exports = {
 				addPointsByUserID(user.user_id, bet * -1);
 			}
 
-			if(isClientWinner === clientHand.BUST){
+			if(isClientWinner === clientHand.BUST ||
+				isClientWinner === clientHand.BLACKJACK ||
+				isClientWinner === clientHand.WIN){
 				currentUsersInGame.delete(user.id);
 			}
 			clearTimeout(gameTimeout);

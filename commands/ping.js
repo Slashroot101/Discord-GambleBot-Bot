@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'ping',
-	description: 'Ping!',
+	description: 'Ping! See if the bot is alive. Ex: `!ping`',
 	requiresAdmin: false,
 	duration: 60,
 	hasCooldown: false,

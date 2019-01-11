@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'bal',
-	description: 'Balance',
+	description: 'Retrieves your balance. Ex: `!bal`',
 	hasCooldown: false,
 	duration: 0,
     requiresAdmin: false,

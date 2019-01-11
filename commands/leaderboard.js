@@ -2,7 +2,7 @@ const { getLeaderboard } = require('../api/points');
 
 module.exports = {
 	name: 'lb',
-	description: 'Leaderboard',
+	description: 'Leaderboard. Ex: `!lb`',
 	hasCooldown: true,
 	duration: 1,
 	requiresAdmin: false,

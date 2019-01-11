@@ -2,9 +2,9 @@ const { daily } = require('../api/points');
 
 module.exports = {
 	name: 'daily',
-	description: 'Balance',
-	hasCooldown: false,
-	duration: 60 * 24,
+	description: 'Runs the daily quest, which gives you money to play with. Ex: `!daily`',
+	hasCooldown: true,
+	duration: 1,
 	requiresAdmin: false,
 	usages: 1,
 	execute: async (client, message, args, user) => {

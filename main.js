@@ -19,7 +19,7 @@ client.on('ready', async () => {
 });
 
 client.on('message', async msg => {
-	if (!msg.content.startsWith(prefix) || msg.author.bot) return;
+	if (!msg.content.startsWith(prefix) || msg.author.bot || msg.guild === null) return;
 
 	const args = msg.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
@@ -56,6 +56,7 @@ client.on('message', async msg => {
 		commandAPI.addToUserAudit(commandToExec.id, user.user_id);
 	}
 	catch (error) {
+		console.log(error)
 		msg.reply('there was an error trying to execute that command!');
 	}
 });

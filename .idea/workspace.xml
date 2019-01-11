@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="578a2d05-2ff6-430f-a12f-8ce6c0774b2d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/commands/help.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commands/rank.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commands/speak.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commands/unblacklist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/bal.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/bal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/commands/bj.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/bj.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/blacklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/blacklist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/daily.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/daily.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/leaderboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/leaderboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/ping.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/ping.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/utility/bj/blackjackHand.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/utility/bj/blackjackHand.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/utility/hand.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/utility/hand.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/commands/daily.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="115">
-              <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+              <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -70,8 +83,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/commands/bj.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="80" column="59" lean-forward="true" selection-start-line="80" selection-start-column="59" selection-end-line="80" selection-end-column="59" />
+            <state relative-caret-position="353">
+              <caret line="107" column="13" selection-start-line="107" selection-start-column="12" selection-end-line="107" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -89,7 +102,7 @@
         <entry file="file://$PROJECT_DIR$/commands/utility/bj/blackjackHand.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="317">
-              <caret line="125" column="33" selection-start-line="125" selection-start-column="27" selection-end-line="125" selection-end-column="33" />
+              <caret line="146" column="33" selection-start-line="146" selection-start-column="27" selection-end-line="146" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -188,7 +201,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547218343492" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547218406269" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -222,12 +235,12 @@
       <updated>1544406220297</updated>
       <workItem from="1544406221797" duration="570000" />
       <workItem from="1544932398183" duration="238000" />
-      <workItem from="1546624794446" duration="16107000" />
+      <workItem from="1546624794446" duration="16170000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16915000" />
+    <option name="totallyTimeSpent" value="16978000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="25" width="1680" height="976" extended-state="6" />
@@ -356,7 +369,7 @@
     <entry file="file://$PROJECT_DIR$/commands/utility/bj/blackjackHand.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="317">
-          <caret line="125" column="33" selection-start-line="125" selection-start-column="27" selection-end-line="125" selection-end-column="33" />
+          <caret line="146" column="33" selection-start-line="146" selection-start-column="27" selection-end-line="146" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -391,7 +404,7 @@
     <entry file="file://$PROJECT_DIR$/commands/daily.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
-          <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+          <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -411,8 +424,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/commands/bj.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="80" column="59" lean-forward="true" selection-start-line="80" selection-start-column="59" selection-end-line="80" selection-end-column="59" />
+        <state relative-caret-position="353">
+          <caret line="107" column="13" selection-start-line="107" selection-start-column="12" selection-end-line="107" selection-end-column="13" />
         </state>
       </provider>
     </entry>
