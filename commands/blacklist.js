@@ -19,7 +19,6 @@ module.exports = {
 		}
 
 		const personToBan = await User.getUserByDiscordID(discordID);
-		console.log(personToBan)
 
 		if(personToBan.length === 0) {
 			return message.reply('that person cannot be banned because they have never run a command!');
