@@ -7,7 +7,7 @@ const currentUsersInGame = new Set();
 
 module.exports = {
 	name: 'bj',
-	description: 'Blackjack',
+	description: 'The game blackjack. Try `!bj 0` to give it a try!',
 	hasCooldown: false,
 	duration: 10,
 	requiresAdmin: false,
@@ -70,7 +70,7 @@ module.exports = {
 		}, 60000);
 
 		collector.on('collect', msg => {
-			if (msg.content === `hit`) {
+			if (msg.content.toLowerCase() === `hit`) {
 				clientHand
 					.addCard(gameDeck.drawRandomCard());
 
@@ -81,7 +81,7 @@ module.exports = {
 			    boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false, false) });
 			}
 
-			if (msg.content === `stand`) {
+			if (msg.content.toLowerCase() === `stand`) {
 				collector.stop();
 				let dealerSum = dealerHand.getSumOfCards();
 				while (dealerSum < 17) {

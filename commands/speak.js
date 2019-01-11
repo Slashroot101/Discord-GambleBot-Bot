@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'speak',
-	description: "yoU'lL JuSt hAVe To SEe",
+	description: "yoU'lL JuSt hAVe To SEe. Ex: `!speak yoU'lL JuSt hAVe To SEe.`",
 	requiresAdmin: false,
 	duration: 60,
 	hasCooldown: false,
@@ -18,7 +18,7 @@ module.exports = {
                 if(isCaps === 1){
                     ret += args[i].charAt(j).toUpperCase();
                 } else {
-                    ret += args[i].charAt(j);
+                    ret += args[i].charAt(j).toLowerCase();
                 }
             }
             ret += " ";

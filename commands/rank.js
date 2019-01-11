@@ -2,7 +2,7 @@ const User = require('../api/user');
 
 module.exports = {
 	name: 'rank',
-	description: 'Bans the user',
+	description: 'Checks or sets the rank of the user. Ex: `!rank set <@user> 1` or `!rank get <@user>`',
 	duration: 0,
 	hasCooldown: false,
 	requiresAdmin: true,

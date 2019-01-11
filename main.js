@@ -56,6 +56,7 @@ client.on('message', async msg => {
 		commandAPI.addToUserAudit(commandToExec.id, user.user_id);
 	}
 	catch (error) {
+		console.log(error)
 		msg.reply('there was an error trying to execute that command!');
 	}
 });

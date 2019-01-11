@@ -2,7 +2,7 @@ const User = require('../api/user');
 
 module.exports = {
 	name: 'unban',
-	description: 'Unblacklists the user',
+	description: 'Unblacklists the user. Ex: `!unban <@user>`',
 	duration: 0,
 	hasCooldown: false,
 	requiresAdmin: true,

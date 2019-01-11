@@ -2,7 +2,7 @@ const User = require('../api/user');
 
 module.exports = {
 	name: 'ban',
-	description: 'Bans the user',
+	description: 'Bans the user. `!ban <@user>`',
 	duration: 0,
 	hasCooldown: false,
 	requiresAdmin: true,
