@@ -59,6 +59,13 @@ class Hangman {
 	}
 
 	decodeWithGuess(guess) {
+		if(guess === this.secretPhrase){
+			this.encodedPhrase = '';
+			for(let i = 0; i < this.secretPhrase.length; i++){
+				this.encodedPhrase += `${this.secretPhrase.substr(i, 1)}|`;
+			}
+			return;
+		}
 		const locations = new Set();
 		for(let i = 0; i < this.secretPhrase.length - guess.length + 1; i++) {
 			if(this.secretPhrase.substr(i, guess.length) === guess
@@ -88,7 +95,6 @@ class Hangman {
 	}
 
 	guess(userGuess) {
-
 		if(this.inCorrectGuess.size === 7){
 			return this.LOSE;
 		}
@@ -96,6 +102,7 @@ class Hangman {
 		if(userGuess !== ''
 		 && (userGuess === this.secretPhrase
 		 || !this.encodedPhrase.includes('_'))) {
+			this.decodeWithGuess(userGuess);
 			return this.WIN;
 		}
 
