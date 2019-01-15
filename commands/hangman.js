@@ -57,6 +57,7 @@ module.exports = {
 				const command = args.shift().toLowerCase();
 				if(command === 'guess'){
 					const guess = msg.content.slice(prefix.length + command.length + 1).replace(/\s+/g, ' ');
+					if(!guess.match(/^[ A-Za-z]+$/)){ return message.reply('your guess must be a number');}
 					const isCorrectGuess = hangmanBoard.guess(guess);
 					if(isCorrectGuess === hangmanBoard.INCORRECT_GUESS){
 						await message.reply(`'${guess}' is not a part of the sentence.`);
