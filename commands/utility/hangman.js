@@ -4,9 +4,11 @@ class Hangman {
 	constructor(secretPhrase) {
 		if(!secretPhrase.match(/^[ A-Za-z]+$/)) { throw 'Parameter is not letters only.'; }
 		this.secretPhrase = secretPhrase;
-		this.guessedLetters = new Set();
+		this.inCorrectGuess = new Set();
+		this.correctGuess = new Set();
 		this.encodedPhrase = Hangman.encodePhrase(secretPhrase);
 		this.WIN = 2;
+		this.LOSE = 4;
 		this.INCORRECT_GUESS = 1;
 		this.LETTER_ALREADY_GUESSED = 0;
 		this.CORRECT_LETTER = 3;
@@ -17,17 +19,30 @@ class Hangman {
 	}
 
 	toGameboardEmbed(message) {
+		let isSolved = !this.encodedPhrase.includes('_');
+		let isLoss = this.inCorrectGuess.size === 7;
+		let color;
+		if(isSolved){
+			color = 0x00ff00;
+		} else if(isLoss){
+			color =	15158332;
+		} else {
+			color = 3447003;
+		}
 		const embed = {
-			color: 3447003,
+			color,
 			author: {
 				name: message.member.user.tag,
 				icon_url: message.member.user.avatarURL,
 			},
-			title: '',
+			title: `${ isSolved || isLoss ? `Secret Phrase: ${this.secretPhrase}` : ''}`,
 			url: '',
-			description: '',
+			description: `**Incorrect:** ${[...this.inCorrectGuess].join(', ')} \n **Correct:** ${[...this.correctGuess].join(', ')} `,
+			footer: {
+				text: `Incorrect Guesses: ${this.inCorrectGuess.size} | Correct Guesses: ${this.correctGuess.size}`
+			},
 			image: {
-				url: hangmanImageMap[`${this.guessedLetters.size}`],
+				url: hangmanImageMap[`${this.inCorrectGuess.size}`],
 			},
 			fields: [
 				{
@@ -47,7 +62,8 @@ class Hangman {
 		const locations = new Set();
 		for(let i = 0; i < this.secretPhrase.length - guess.length + 1; i++) {
 			if(this.secretPhrase.substr(i, guess.length) === guess
-			|| this.guessedLetters.has(this.secretPhrase.substr(i, guess.length))) {
+			|| this.secretPhrase.substr(i, guess.length) === guess.toLowerCase()
+			|| this.correctGuess.has(this.secretPhrase.substr(i, guess.length))) {
 				locations.add(i);
 			}
 		}
@@ -72,19 +88,32 @@ class Hangman {
 	}
 
 	guess(userGuess) {
-		if(userGuess === this.secretPhrase) {
+
+		if(this.inCorrectGuess.size === 7){
+			return this.LOSE;
+		}
+
+		if(userGuess !== ''
+		 && (userGuess === this.secretPhrase
+		 || !this.encodedPhrase.includes('_'))) {
 			return this.WIN;
 		}
 
-		if(userGuess.length > 1) {
+		if(userGuess.length === 0){
+			this.inCorrectGuess.add(' ');
 			return this.INCORRECT_GUESS;
 		}
 
-		if(this.guessedLetters.has(userGuess)) {
+		if(userGuess.length > 1 || !this.secretPhrase.includes(userGuess)) {
+			this.inCorrectGuess.add(userGuess);
+			return this.INCORRECT_GUESS;
+		}
+
+		if(this.inCorrectGuess.has(userGuess) || this.correctGuess.has(userGuess)) {
 			return this.LETTER_ALREADY_GUESSED;
 		}
 
-		guessedLetters.add(userGuess);
+		this.correctGuess.add(userGuess);
 
 		if(this.secretPhrase.includes(userGuess)) {
 			this.decodeWithGuess(userGuess);
