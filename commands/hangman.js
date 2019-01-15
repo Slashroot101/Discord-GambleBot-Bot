@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { prefix } = require('../config');
-const hangman = require('./utility/hangman');
+const Hangman = require('./utility/hangman');
 
 module.exports = {
 	name: 'hangman',
@@ -29,23 +29,24 @@ module.exports = {
 		console.log(privateMessage.channel.id);
 
 		const dmCollector = new Discord.MessageCollector(privateMessage.channel, m => m.author.id === message.author.id, { time: 30000 });
-		let sentence;
-		let currentGuessedSetence = '';
+		let hangmanBoard;
 		dmCollector.on('collect', msg => {
 			const command = msg.content.slice(prefix.length).split(/ +/).shift().toLowerCase();
 
 			if(command === 'sentence') {
-				sentence = msg.content.substr(prefix.length + 9, msg.content.length).replace(/\s+/g, ' ');
+				let sentence = msg.content.substr(prefix.length + 9, msg.content.length).replace(/\s+/g, ' ');
 				if(!sentence.match(/^[ A-Za-z]+$/)) {
 					return message.author.send('Your sentence may only contain letters.');
 				}
 
-				currentGuessedSetence = sentence.replace(/[A-Za-z]/g, '-/');
-				message.channel.send(`A game of hangman has been started. Here is the sentence you need to guess: ${currentGuessedSetence}`);
-				return dmCollector.stop();
+				hangmanBoard = new Hangman(sentence);
+				dmCollector.stop();
 			}
 		});
 
+		dmCollector.on('end', msg => {
+			message.channel.send({embed: hangmanBoard.toGameboardEmbed(message)});
+		});
 
 	},
 };
