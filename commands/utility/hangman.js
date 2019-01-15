@@ -1,3 +1,5 @@
+let hangmanImageMap = require('../../assets/hangman/fileMapToUrl');
+
 class Hangman {
 	constructor(secretPhrase) {
 		if(!secretPhrase.match(/^[ A-Za-z]+$/)) { throw 'Parameter is not letters only.'; }
@@ -10,11 +12,11 @@ class Hangman {
 		this.CORRECT_LETTER = 3;
 	}
 
-	getCurrentSentenceWithGuesses(){
+	getCurrentSentenceWithGuesses() {
 		return this.encodedPhrase;
 	}
 
-	toGameboardEmbed(message){
+	toGameboardEmbed(message) {
 		const embed = {
 			color: 3447003,
 			author: {
@@ -23,7 +25,10 @@ class Hangman {
 			},
 			title: '',
 			url: '',
-			description: ``,
+			description: '',
+			image: {
+				url: hangmanImageMap[`${this.guessedLetters.size}`],
+			},
 			fields: [
 				{
 					name: 'Hangman has begun! Type `!guess <letter or phrase>` to begin',
@@ -38,51 +43,53 @@ class Hangman {
 		return embed;
 	}
 
-	decodeWithGuess(guess){
-		let locations = new Set();
-		for(let i = 0; i < this.secretPhrase.length - guess.length + 1; i++){
+	decodeWithGuess(guess) {
+		const locations = new Set();
+		for(let i = 0; i < this.secretPhrase.length - guess.length + 1; i++) {
 			if(this.secretPhrase.substr(i, guess.length) === guess
-			|| this.guessedLetters.has(this.secretPhrase.substr(i, guess.length))){
+			|| this.guessedLetters.has(this.secretPhrase.substr(i, guess.length))) {
 				locations.add(i);
 			}
 		}
 
-		if(!locations.size === 0){
+		if(!locations.size === 0) {
 			return this.encodedPhrase;
 		}
 
-		this.encodedPhrase = "";
-		for(let i = 0; i < this.secretPhrase.length; i++){
-			if(locations.has(i)){
+		this.encodedPhrase = '';
+		for(let i = 0; i < this.secretPhrase.length; i++) {
+			if(locations.has(i)) {
 				this.encodedPhrase += `${this.secretPhrase.substr(i, 1)}|`;
-			} else if(this.secretPhrase.charAt(i) === ' '){
+			}
+			else if(this.secretPhrase.charAt(i) === ' ') {
 				this.encodedPhrase += ' ';
-			} else {
-				this.encodedPhrase += "\\_|";
+			}
+			else {
+				this.encodedPhrase += '\\_|';
 			}
 		}
 		return this.encodedPhrase;
 	}
 
-	guess(userGuess){
-		if(userGuess === this.secretPhrase){
+	guess(userGuess) {
+		if(userGuess === this.secretPhrase) {
 			return this.WIN;
-		} 
+		}
 
-		if(userGuess.length > 1){
+		if(userGuess.length > 1) {
 			return this.INCORRECT_GUESS;
 		}
-		
-		if(this.guessedLetters.has(userGuess)){
+
+		if(this.guessedLetters.has(userGuess)) {
 			return this.LETTER_ALREADY_GUESSED;
 		}
 
 		guessedLetters.add(userGuess);
 
-		if(this.secretPhrase.includes(userGuess)){
+		if(this.secretPhrase.includes(userGuess)) {
 			this.decodeWithGuess(userGuess);
-			let encodedPhrase = this.getCurrentSentenceWithGuesses();
-			if(!encodedPhrase.includes('_')){
+			const encodedPhrase = this.getCurrentSentenceWithGuesses();
+			if(!encodedPhrase.includes('_')) {
 				return this.WIN;
 			}
 			return this.CORRECT_LETTER;

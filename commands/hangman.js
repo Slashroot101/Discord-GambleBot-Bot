@@ -34,7 +34,7 @@ module.exports = {
 			const command = msg.content.slice(prefix.length).split(/ +/).shift().toLowerCase();
 
 			if(command === 'sentence') {
-				let sentence = msg.content.substr(prefix.length + 9, msg.content.length).replace(/\s+/g, ' ');
+				const sentence = msg.content.substr(prefix.length + 9, msg.content.length).replace(/\s+/g, ' ');
 				if(!sentence.match(/^[ A-Za-z]+$/)) {
 					return message.author.send('Your sentence may only contain letters.');
 				}
@@ -44,8 +44,16 @@ module.exports = {
 			}
 		});
 
-		dmCollector.on('end', msg => {
-			message.channel.send({embed: hangmanBoard.toGameboardEmbed(message)});
+		dmCollector.on('end', async () => {
+			const boardMessage = await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
+			const guessCollector = new Discord.MessageCollector(message.channel, (m) => m.author.id !== message.author.id, { time: 30000 });
+
+			guessCollector.on('collect', msg => {
+				const command = msg.content.slice(prefix.length).split(/ +/).shift().toLowerCase();
+				if(command === 'guess'){
+					console.log(command, msg)
+				}
+			});
 		});
 
 	},
