@@ -50,7 +50,7 @@ module.exports = {
 
 		dmCollector.on('end', async () => {
 			const boardMessage = await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
-			const guessCollector = new Discord.MessageCollector(message.channel, (m) => m.author.id !== message.author.id, { time: 45000 });
+			const guessCollector = new Discord.MessageCollector(message.channel, (m) => m.author.id !== message.author.id, { time: 60000 });
 			
 			guessCollector.on('collect', async msg => {
 				const args = msg.content.slice(prefix.length).split(/ +/);
