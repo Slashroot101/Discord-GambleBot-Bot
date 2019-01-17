@@ -25,9 +25,6 @@ module.exports = {
 		}
 
 		const privateMessage = await message.author.send('To start hangman I need a sentence/word from you, type `!sentence <word/sentence>` such as `!sentence wow this bot is awesome`. Please keep in mind that only letters are allowed in hangman. You have 30 seconds.');
-
-		console.log(privateMessage.channel.id);
-
 		const dmCollector = new Discord.MessageCollector(privateMessage.channel, m => m.author.id === message.author.id, { time: 30000 });
 		let hangmanBoard;
 		dmCollector.on('collect', msg => {
@@ -43,15 +40,19 @@ module.exports = {
 				dmCollector.stop();
 			}
 		});
-
+		let numGuesses = 0;
 		dmCollector.on('end', async () => {
-			const boardMessage = await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
+			await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
 			const guessCollector = new Discord.MessageCollector(message.channel, (m) => m.author.id !== message.author.id, { time: 30000 });
 
-			guessCollector.on('collect', msg => {
+			guessCollector.on('collect', async msg => {
 				const command = msg.content.slice(prefix.length).split(/ +/).shift().toLowerCase();
 				if(command === 'guess'){
 					console.log(command, msg)
+				}
+				numGuesses++;
+				if(numGuesses % 3 === 0){
+					await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
 				}
 			});
 		});
