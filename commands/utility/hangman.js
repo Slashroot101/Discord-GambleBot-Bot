@@ -14,6 +14,7 @@ class Hangman {
 		this.LOSE = 4;
 		this.IN_PROGRESS = 5;
 		this.gameState = this.IN_PROGRESS;
+		this.playerPoints = new Map();
 	}
 
 	getCurrentSentenceWithGuesses() {
@@ -25,7 +26,7 @@ class Hangman {
 	}
 
 	toGameboardEmbed(message) {
-		
+
 		let color;
 		if(this.gameState === this.WIN) {
 			color = 0x00ff00;
@@ -100,7 +101,7 @@ class Hangman {
 		return this.encodedPhrase;
 	}
 
-	guess(userGuess) {
+	guess(userGuess, discordID) {
 		if(this.inCorrectGuess.size === 7) {
 			this.gameState = this.LOSE;
 			return this.LOSE;
@@ -135,6 +136,7 @@ class Hangman {
 				this.gameState = this.WIN;
 				return this.WIN;
 			}
+
 			return this.CORRECT_LETTER;
 		}
 
