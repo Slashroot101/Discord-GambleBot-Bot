@@ -7,25 +7,30 @@ class Hangman {
 		this.inCorrectGuess = new Set();
 		this.correctGuess = new Set();
 		this.encodedPhrase = Hangman.encodePhrase(secretPhrase);
-		this.WIN = 2;
-		this.LOSE = 4;
-		this.INCORRECT_GUESS = 1;
 		this.LETTER_ALREADY_GUESSED = 0;
+		this.INCORRECT_GUESS = 1;
+		this.WIN = 2;
 		this.CORRECT_LETTER = 3;
+		this.LOSE = 4;
+		this.IN_PROGRESS = 5;
+		this.gameState = this.IN_PROGRESS;
 	}
 
 	getCurrentSentenceWithGuesses() {
 		return this.encodedPhrase;
 	}
 
+	setGameOver(){
+		this.gameState = this.LOSE;
+	}
+
 	toGameboardEmbed(message) {
-		const isSolved = !this.encodedPhrase.includes('_');
-		const isLoss = this.inCorrectGuess.size === 7;
+		
 		let color;
-		if(isSolved) {
+		if(this.gameState === this.WIN) {
 			color = 0x00ff00;
 		}
-		else if(isLoss) {
+		else if(this.gameState === this.LOSE) {
 			color =	15158332;
 		}
 		else {
@@ -38,7 +43,7 @@ class Hangman {
 				name: message.member.user.tag,
 				icon_url: message.member.user.avatarURL,
 			},
-			title: `${ isSolved || isLoss ? `Secret Phrase: ${this.secretPhrase}` : ''}`,
+			title: `${ this.gameState === this.WIN || this.gameState === this.LOSE ? `Secret Phrase: ${this.secretPhrase}` : ''}`,
 			url: '',
 			description: `**Incorrect:** ${[...this.inCorrectGuess].join(', ')} \n **Correct:** ${[...this.correctGuess].join(', ')} `,
 			footer: {
@@ -97,6 +102,7 @@ class Hangman {
 
 	guess(userGuess) {
 		if(this.inCorrectGuess.size === 7) {
+			this.gameState = this.LOSE;
 			return this.LOSE;
 		}
 
@@ -104,20 +110,19 @@ class Hangman {
 		 && (userGuess === this.secretPhrase
 		 || !this.encodedPhrase.includes('_'))) {
 			this.decodeWithGuess(userGuess);
+			this.gameState = this.WIN;
 			return this.WIN;
 		}
 
-		if(userGuess.length === 0) {
-			this.inCorrectGuess.add(' ');
-			return this.INCORRECT_GUESS;
-		}
-
-		if(userGuess.length > 1 || !this.secretPhrase.includes(userGuess)) {
+		if(userGuess.length === 0
+		 || userGuess.length > 1
+		 || !this.secretPhrase.includes(userGuess)) {
 			this.inCorrectGuess.add(userGuess);
 			return this.INCORRECT_GUESS;
 		}
 
-		if(this.inCorrectGuess.has(userGuess) || this.correctGuess.has(userGuess)) {
+		if(this.inCorrectGuess.has(userGuess)
+		 || this.correctGuess.has(userGuess)) {
 			return this.LETTER_ALREADY_GUESSED;
 		}
 
@@ -127,6 +132,7 @@ class Hangman {
 			this.decodeWithGuess(userGuess);
 			const encodedPhrase = this.getCurrentSentenceWithGuesses();
 			if(!encodedPhrase.includes('_')) {
+				this.gameState = this.WIN;
 				return this.WIN;
 			}
 			return this.CORRECT_LETTER;
