@@ -12,7 +12,6 @@ module.exports = {
 	hasCooldown: false,
 	usages: 1,
 	async execute(client, message, args, user) {
-		console.log(1);
 		const bet = Number(parseInt(args[0]));
 
 		if(currentChannelsInGame.has(message.channel.id)) {
@@ -47,7 +46,7 @@ module.exports = {
 				dmCollector.stop();
 			}
 		});
-		let numGuesses = 0;
+		
 		dmCollector.on('end', async () => {
 			const boardMessage = await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
 			const guessCollector = new Discord.MessageCollector(message.channel, (m) => m.author.id !== message.author.id, { time: 45000 });
@@ -58,7 +57,7 @@ module.exports = {
 				if(command === 'guess') {
 					const guess = msg.content.slice(prefix.length + command.length + 1).replace(/\s+/g, ' ');
 					if(!guess.match(/^[ A-Za-z]+$/)) { return message.reply('your guess must be a number');}
-					const isCorrectGuess = hangmanBoard.guess(guess);
+					const isCorrectGuess = hangmanBoard.guess(guess, msg.author.id);
 					if(isCorrectGuess === hangmanBoard.INCORRECT_GUESS) {
 						await message.reply(`'${guess}' is not a part of the sentence.`);
 					}
@@ -77,10 +76,6 @@ module.exports = {
 						guessCollector.stop();
 					}
 					await boardMessage.edit({ embed: hangmanBoard.toGameboardEmbed(message) });
-				}
-				numGuesses++;
-				if(numGuesses % 3 === 0) {
-					await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
 				}
 			});
 		});
