@@ -102,7 +102,7 @@ class Hangman {
 	}
 
 	guess(userGuess, discordID) {
-		if(this.inCorrectGuess.size === 7) {
+		if(this.inCorrectGuess.size === 6) {
 			this.gameState = this.LOSE;
 			return this.LOSE;
 		}
@@ -119,6 +119,10 @@ class Hangman {
 		 || userGuess.length > 1
 		 || !this.secretPhrase.includes(userGuess)) {
 			this.inCorrectGuess.add(userGuess);
+			if(this.inCorrectGuess.size === 6){
+				this.gameState = this.LOSE;
+				return this.LOSE;
+			}
 			return this.INCORRECT_GUESS;
 		}
 
@@ -127,11 +131,18 @@ class Hangman {
 			return this.LETTER_ALREADY_GUESSED;
 		}
 
-		this.correctGuess.add(userGuess);
-
 		if(this.secretPhrase.includes(userGuess)) {
 			this.decodeWithGuess(userGuess);
 			const encodedPhrase = this.getCurrentSentenceWithGuesses();
+			this.correctGuess.add(userGuess);
+			let player = this.playerPoints.get(discordID);
+			if(!player){
+				this.playerPoints.set(discordID, {numAnswered : 1});
+			} 
+			else {
+				this.playerPoints.set(discordID, player.numAnswered + 1 );
+			}
+			console.log(this.playerPoints)
 			if(!encodedPhrase.includes('_')) {
 				this.gameState = this.WIN;
 				return this.WIN;
