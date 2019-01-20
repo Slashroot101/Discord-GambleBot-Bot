@@ -25,6 +25,11 @@ class Hangman {
 		this.gameState = this.LOSE;
 	}
 
+	getLeaderboard(){
+		let leaderboard = Array.from(this.playerPoints);
+		console.log(leaderboard)
+	}
+
 	toGameboardEmbed(message) {
 
 		let color;
@@ -142,7 +147,6 @@ class Hangman {
 			else {
 				this.playerPoints.set(discordID, player.numAnswered + 1 );
 			}
-			console.log(this.playerPoints)
 			if(!encodedPhrase.includes('_')) {
 				this.gameState = this.WIN;
 				return this.WIN;
