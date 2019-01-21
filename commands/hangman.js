@@ -46,11 +46,16 @@ module.exports = {
 				dmCollector.stop();
 			}
 		});
-		
+
 		dmCollector.on('end', async () => {
 			const boardMessage = await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
 			const guessCollector = new Discord.MessageCollector(message.channel, (m) => m.author.id !== message.author.id, { time: 45000 });
-
+			const gameTimeout = setTimeout(async function() {
+				hangmanBoard.setGameOver();
+				await message.channel.send('The game has timed out.');
+				await message.channel.send({embed: hangmanBoard.getLeaderboard()});
+				await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
+			}, 60000);
 			guessCollector.on('collect', async msg => {
 				const command = msg.content.slice(prefix.length).split(/ +/).shift().toLowerCase();
 
@@ -58,23 +63,24 @@ module.exports = {
 					const guess = msg.content.slice(prefix.length + command.length + 1).replace(/\s+/g, ' ');
 					if(!guess.match(/^[ A-Za-z]+$/)) { return message.reply('your guess must be a number');}
 					const isCorrectGuess = hangmanBoard.guess(guess, msg.author.id);
-					hangmanBoard.getLeaderboard();
 					if(isCorrectGuess === hangmanBoard.INCORRECT_GUESS) {
-						await message.reply(`'${guess}' is not a part of the sentence.`);
+						await msg.reply(`'${guess}' is not a part of the sentence.`);
 					}
 					else if (isCorrectGuess === hangmanBoard.LETTER_ALREADY_GUESSED) {
-						await message.reply(`'${guess} has already been guessed.'`);
+						await msg.reply(`'${guess} has already been guessed.'`);
 					}
 					else if (isCorrectGuess === hangmanBoard.CORRECT_LETTER) {
-						await message.reply(`correct guess! '${guess}' is a part of the sentence.`);
+						await msg.reply(`correct guess! '${guess}' is a part of the sentence.`);
 					}
 					else if(isCorrectGuess === hangmanBoard.LOSE) {
-						await message.channel.send('The game has ended! The secret phrase was not solved.');
+						await msg.channel.send('The game has ended! The secret phrase was not solved.');
 					}
 					else {
 						await message.channel.send('The game has ended. The secret phrase was solved');
+						await message.channel.send({embed: hangmanBoard.getLeaderboard()});
 						currentChannelsInGame.delete(message.channel.id);
 						guessCollector.stop();
+						clearTimeout(gameTimeout);
 					}
 					await boardMessage.edit({ embed: hangmanBoard.toGameboardEmbed(message) });
 				}

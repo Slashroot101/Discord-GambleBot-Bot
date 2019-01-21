@@ -28,24 +28,18 @@ class Hangman {
 	}
 
 	getLeaderboard(){
-		let leaderboard = Array.from(this.playerPoints);
-		let sortedLeaderboard = _.sortBy(leaderboard, function(n){
+		const leaderboard = Array.from(this.playerPoints);
+		const sortedLeaderboard = _.sortBy(leaderboard, function(n){
 			return n[1].numAnswered;
 		});
-		console.log(sortedLeaderboard)
-
 		let embedString = '';
 
 		for(let i = 0; i < sortedLeaderboard.length; i++){
-			embedString += `${i + 1}. ${sortedLeaderboard[0]} : $${sortedLeaderboard[1].numAnswered}\n`;
+			embedString += `${i + 1}. ${sortedLeaderboard[i][0]} : ${sortedLeaderboard[i][1].numAnswered}\n`;
 		}
 
-		const embed = {
+		return {
 			color: 0x00ff00,
-			author: {
-				name: message.member.user.tag,
-				icon_url: message.member.user.avatarURL,
-			},
 			title: 'Leaderboard',
 			url: '',
 			description: `Hangman Rankings`,
@@ -56,11 +50,9 @@ class Hangman {
 					inline: true
 				}
 			],
-			footer: {text: `Page: ${page + 1}/${lb.numPages}`},
+			footer: {text: `Hangman Leaderboard`},
 			timestamp: new Date()
 		};
-
-		return embed;
 	}
 
 	toGameboardEmbed(message) {
@@ -176,7 +168,7 @@ class Hangman {
 			let player = this.playerPoints.get(discordID);
 			if(!player){
 				this.playerPoints.set(discordID, {numAnswered : 1});
-			} 
+			}
 			else {
 				this.playerPoints.set(discordID, player.numAnswered + 1 );
 			}
