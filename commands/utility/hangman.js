@@ -1,4 +1,6 @@
 const hangmanImageMap = require('../../assets/hangman/fileMapToUrl');
+const _ = require('lodash');
+
 
 class Hangman {
 	constructor(secretPhrase) {
@@ -27,7 +29,38 @@ class Hangman {
 
 	getLeaderboard(){
 		let leaderboard = Array.from(this.playerPoints);
-		console.log(leaderboard)
+		let sortedLeaderboard = _.sortBy(leaderboard, function(n){
+			return n[1].numAnswered;
+		});
+		console.log(sortedLeaderboard)
+
+		let embedString = '';
+
+		for(let i = 0; i < sortedLeaderboard.length; i++){
+			embedString += `${i + 1}. ${sortedLeaderboard[0]} : $${sortedLeaderboard[1].numAnswered}\n`;
+		}
+
+		const embed = {
+			color: 0x00ff00,
+			author: {
+				name: message.member.user.tag,
+				icon_url: message.member.user.avatarURL,
+			},
+			title: 'Leaderboard',
+			url: '',
+			description: `Hangman Rankings`,
+			fields: [
+				{
+					name: embedString,
+					value: `\u200b`,
+					inline: true
+				}
+			],
+			footer: {text: `Page: ${page + 1}/${lb.numPages}`},
+			timestamp: new Date()
+		};
+
+		return embed;
 	}
 
 	toGameboardEmbed(message) {
