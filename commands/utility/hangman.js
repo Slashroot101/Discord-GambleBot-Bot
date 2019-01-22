@@ -27,7 +27,7 @@ class Hangman {
 		this.gameState = this.LOSE;
 	}
 
-	getLeaderboard(){
+	getLeaderboard(message){
 		const leaderboard = Array.from(this.playerPoints);
 		const sortedLeaderboard = _.sortBy(leaderboard, function(n){
 			return n[1].numAnswered;
@@ -42,11 +42,15 @@ class Hangman {
 			color: 0x00ff00,
 			title: 'Leaderboard',
 			url: '',
+			author: {
+				name: message.member.user.tag,
+				icon_url: message.member.user.avatarURL,
+			},
 			description: `Hangman Rankings`,
 			fields: [
 				{
-					name: embedString,
-					value: `\u200b`,
+					name: `\u200b`,
+					value: sortedLeaderboard.length > 0  ? embedString : 'No one guessed correctly',
 					inline: true
 				}
 			],
