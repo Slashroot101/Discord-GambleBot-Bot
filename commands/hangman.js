@@ -43,6 +43,7 @@ module.exports = {
 				await message.channel.send('The game has timed out.');
 				await message.channel.send({embed: hangmanBoard.getLeaderboard(message)});
 				await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
+				currentChannelsInGame.delete(msg.channel.id);
 			}, 60000);
 			let numGuesses = 0;
 			guessCollector.on('collect', async msg => {
@@ -67,7 +68,7 @@ module.exports = {
 					else {
 						await message.channel.send('The game has ended. The secret phrase was solved');
 						await message.channel.send({embed: hangmanBoard.getLeaderboard(msg)});
-						currentChannelsInGame.delete(message.channel.id);
+						currentChannelsInGame.delete(msg.channel.id);
 						guessCollector.stop();
 						clearTimeout(gameTimeout);
 						numGuesses = 3;
