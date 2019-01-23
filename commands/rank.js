@@ -5,7 +5,8 @@ module.exports = {
 	description: 'Checks or sets the rank of the user. Ex: `!rank set <@user> 1` or `!rank get <@user>`',
 	duration: 0,
 	hasCooldown: false,
-	requiresAdmin: true,
+    requiresAdmin: true,
+    generatesMoney: false,
 	usages: 0,
 	execute: async (client, message, args, user) => {
 		if(args.length === 0) {

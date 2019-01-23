@@ -7,6 +7,7 @@ module.exports = {
 	requiresAdmin: false,
 	duration: 1,
 	hasCooldown: true,
+	generatesMoney: false,
 	usages: 2,
 	async execute(client, message, args, user) {
 		const amount = args[1] === 'all' || args[1] === 'ALL' ? user.current_balance : Math.floor(Number(parseInt(args[1])));

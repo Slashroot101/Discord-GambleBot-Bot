@@ -5,6 +5,7 @@ module.exports = {
 	description: 'Unblacklists the user. Ex: `!unban <@user>`',
 	duration: 0,
 	hasCooldown: false,
+	generatesMoney: false,
 	requiresAdmin: true,
 	usages: 0,
 	execute: async (client, message, args, user) => {

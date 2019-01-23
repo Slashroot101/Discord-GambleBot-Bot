@@ -5,6 +5,7 @@ module.exports = {
 	duration: 60,
 	hasCooldown: false,
 	usages: 1,
+	generatesMoney: false,
 	execute(client, message) {
 		message.channel.send('Pong.');
 	},

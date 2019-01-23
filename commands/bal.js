@@ -3,7 +3,8 @@ module.exports = {
 	description: 'Retrieves your balance. Ex: `!bal`',
 	hasCooldown: false,
 	duration: 0,
-    requiresAdmin: false,
+	requiresAdmin: false,
+	generatesMoney: false,
 	usages: 0,
 	async execute(client, message, args, user) {
 

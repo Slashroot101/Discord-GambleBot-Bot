@@ -10,6 +10,7 @@ module.exports = {
 	requiresAdmin: false,
 	duration: 60,
 	hasCooldown: false,
+	generatesMoney: false,
 	usages: 1,
 	async execute(client, message, args, user) {
 		const bet = Number(parseInt(args[0]));
@@ -37,13 +38,13 @@ module.exports = {
 
 		dmCollector.on('end', async () => {
 			let boardMessage = await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
-			const guessCollector = new Discord.MessageCollector(message.channel, (m) => m.author.id !== message.author.id, { time: 45000 });
+			const guessCollector = new Discord.MessageCollector(message.channel, (m) => m.author.id !== message.author.id, { time: 120000 });
 			const gameTimeout = setTimeout(async function() {
 				hangmanBoard.setGameOver();
 				await message.channel.send('The game has timed out.');
 				await message.channel.send({embed: hangmanBoard.getLeaderboard(message)});
 				await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
-				currentChannelsInGame.delete(msg.channel.id);
+				currentChannelsInGame.delete(message.channel.id);
 			}, 60000);
 			let numGuesses = 0;
 			guessCollector.on('collect', async msg => {

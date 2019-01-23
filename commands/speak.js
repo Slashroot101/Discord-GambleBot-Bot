@@ -4,6 +4,7 @@ module.exports = {
 	requiresAdmin: false,
 	duration: 60,
 	hasCooldown: false,
+	generatesMoney: false,
 	usages: 1,
 	execute(client, message, args) {
 		let ret = '';

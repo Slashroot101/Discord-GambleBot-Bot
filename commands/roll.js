@@ -6,6 +6,7 @@ module.exports = {
 	requiresAdmin: false,
 	duration: 60,
 	hasCooldown: false,
+	generatesMoney: true,
 	usages: 1,
 	async execute(client, message, args, user) {
 		const bet = Number(parseInt(args[0]));

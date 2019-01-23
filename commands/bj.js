@@ -11,6 +11,7 @@ module.exports = {
 	hasCooldown: false,
 	duration: 10,
 	requiresAdmin: false,
+	generatesMoney: true,
 	usages: 2,
 	async execute(client, message, args, user) {
 		if (args.length === 0) {

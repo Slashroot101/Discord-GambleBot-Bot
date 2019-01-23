@@ -6,6 +6,7 @@ module.exports = {
 	requiresAdmin: false,
 	duration: 60,
 	hasCooldown: false,
+	generatesMoney: false,
 	usages: 1,
 	execute(client, message, args, user) {
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));

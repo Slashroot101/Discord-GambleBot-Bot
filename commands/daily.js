@@ -6,6 +6,7 @@ module.exports = {
 	hasCooldown: true,
 	duration: 1,
 	requiresAdmin: false,
+	generatesMoney: true,
 	usages: 1,
 	execute: async (client, message, args, user) => {
 		const reward = await daily(user.user_id);

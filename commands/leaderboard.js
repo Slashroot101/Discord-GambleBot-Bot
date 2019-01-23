@@ -5,6 +5,7 @@ module.exports = {
 	description: 'Leaderboard. Ex: `!lb`',
 	hasCooldown: true,
 	duration: 1,
+	generatesMoney: false,
 	requiresAdmin: false,
 	usages: 5,
 	execute: async (client, message, args, user) => {
