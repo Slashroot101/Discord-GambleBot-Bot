@@ -6,7 +6,7 @@ const currentChannelsInGame = new Set();
 
 module.exports = {
 	name: 'hangman',
-	description: 'Play hangman. Try `!hangman <bet>`. Win 3x your bet if no one guesses the word',
+	description: 'Play hangman. Try `!hangman`.',
 	requiresAdmin: false,
 	duration: 60,
 	hasCooldown: false,
@@ -16,18 +16,6 @@ module.exports = {
 
 		if(currentChannelsInGame.has(message.channel.id)) {
 			return message.reply('there is a game currently going on in this channel. Please choose another channel or wait until the game is done.');
-		}
-
-		if(bet < 0) {
-			return message.reply('your bet must be greater than or equal to 0.');
-		}
-
-		if(isNaN(bet)) {
-			return message.reply('your bet must be a number.');
-		}
-
-		if (user.current_balance < bet) {
-			return message.reply(`you do not have enough money! You currently have ${user.current_balance}, and would need to gain $${bet - user.current_balance} more to make that bet.`);
 		}
 
 		const privateMessage = await message.author.send('To start hangman I need a sentence/word from you, type `!sentence <word/sentence>` such as `!sentence wow this bot is awesome`. Please keep in mind that only letters are allowed in hangman. You have 30 seconds.');
@@ -48,7 +36,7 @@ module.exports = {
 		});
 
 		dmCollector.on('end', async () => {
-			const boardMessage = await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
+			let boardMessage = await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
 			const guessCollector = new Discord.MessageCollector(message.channel, (m) => m.author.id !== message.author.id, { time: 45000 });
 			const gameTimeout = setTimeout(async function() {
 				hangmanBoard.setGameOver();
@@ -56,12 +44,13 @@ module.exports = {
 				await message.channel.send({embed: hangmanBoard.getLeaderboard(message)});
 				await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
 			}, 60000);
+			let numGuesses = 0;
 			guessCollector.on('collect', async msg => {
 				const command = msg.content.slice(prefix.length).split(/ +/).shift().toLowerCase();
 
 				if(command === 'guess') {
 					const guess = msg.content.slice(prefix.length + command.length + 1).replace(/\s+/g, ' ');
-					if(!guess.match(/^[ A-Za-z]+$/)) { return message.reply('your guess must be a number');}
+					if(!guess.match(/^[ A-Za-z]+$/)) { return message.reply('your guess must be a letter');}
 					const isCorrectGuess = hangmanBoard.guess(guess, msg.author.id);
 					if(isCorrectGuess === hangmanBoard.INCORRECT_GUESS) {
 						await msg.reply(`'${guess}' is not a part of the sentence.`);
@@ -81,11 +70,16 @@ module.exports = {
 						currentChannelsInGame.delete(message.channel.id);
 						guessCollector.stop();
 						clearTimeout(gameTimeout);
+						numGuesses = 3;
 					}
-					await boardMessage.edit({ embed: hangmanBoard.toGameboardEmbed(message) });
+					if(numGuesses % 3 === 0){
+						boardMessage = await msg.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) })
+					} else {
+						await boardMessage.edit({ embed: hangmanBoard.toGameboardEmbed(message) });
+					}
+					numGuesses++;
 				}
 			});
 		});
-
 	},
 };

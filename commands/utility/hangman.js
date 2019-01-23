@@ -33,9 +33,9 @@ class Hangman {
 			return n[1].numAnswered;
 		});
 		let embedString = '';
-
+		const secretPhraseLength = this.secretPhrase.replace(/\s/g, '').length;
 		for(let i = 0; i < sortedLeaderboard.length; i++){
-			embedString += `${i + 1}. ${sortedLeaderboard[i][0]} : ${sortedLeaderboard[i][1].numAnswered}\n`;
+			embedString += `${i + 1}. <@${sortedLeaderboard[i][0]}> : ${sortedLeaderboard[i][1].numAnswered}/${secretPhraseLength} (${(sortedLeaderboard[i][1].numAnswered/secretPhraseLength).toFixed(2) * 100}%)\n`;
 		}
 
 		return {
@@ -144,6 +144,10 @@ class Hangman {
 		if(userGuess !== ''
 		 && (userGuess === this.secretPhrase
 		 || !this.encodedPhrase.includes('_'))) {
+			let player = this.playerPoints.get(discordID);
+			if(!player){
+				this.playerPoints.set(discordID, {numAnswered : this.secretPhrase.replace(/\s/g, '').length});
+			}
 			this.decodeWithGuess(userGuess);
 			this.gameState = this.WIN;
 			return this.WIN;
@@ -169,12 +173,14 @@ class Hangman {
 			this.decodeWithGuess(userGuess);
 			const encodedPhrase = this.getCurrentSentenceWithGuesses();
 			this.correctGuess.add(userGuess);
+			this.correctGuess.add(userGuess.toLowerCase());
 			let player = this.playerPoints.get(discordID);
 			if(!player){
-				this.playerPoints.set(discordID, {numAnswered : 1});
+				this.playerPoints.set(discordID, {numAnswered : this.secretPhrase.match(new RegExp(userGuess,"gi")).length});
 			}
 			else {
-				this.playerPoints.set(discordID, player.numAnswered + 1 );
+
+				this.playerPoints.set(discordID, { numAnswered: player.numAnswered + this.secretPhrase.match(new RegExp(userGuess,"gi")).length});
 			}
 			if(!encodedPhrase.includes('_')) {
 				this.gameState = this.WIN;
