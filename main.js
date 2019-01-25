@@ -51,8 +51,10 @@ client.on('message', async msg => {
 
 		}
 
-		commandToExec.execute(client, msg, args, user);
-		commandAPI.addToUserAudit(commandToExec.id, user.user_id);
+		let test = await commandToExec.execute(client, msg, args, user);
+		console.log(test)
+		const audit = await commandAPI.addToUserAudit(commandToExec.id, user.user_id);
+
 	}
 	catch (error) {
 		msg.reply('there was an error trying to execute that command!');

@@ -49,7 +49,6 @@ class BlackjackHand extends Hand {
 					}
 					return this.WIN;
 				}
-				return this.TIE;
 			}
 
 			if(opponentSum === 21) {
