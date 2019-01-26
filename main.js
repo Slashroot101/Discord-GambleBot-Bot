@@ -6,6 +6,7 @@ client.commands = new Discord.Collection();
 const { prefix, botToken } = require('./config');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commandAPI = require('./api/commands');
+const pointsAPI = require('./api/points');
 const moment = require('moment');
 
 client.on('ready', async () => {
@@ -48,13 +49,14 @@ client.on('message', async msg => {
 				const duration = moment.duration(availableTime.diff(moment()));
 				return msg.reply(` that command is currently on cooldown and will be available ${duration.humanize(true)}.`);
 			}
-
 		}
 
-		let test = await commandToExec.execute(client, msg, args, user);
-		console.log(test)
+		let reward = await commandToExec.execute(client, msg, args, user);
 		const audit = await commandAPI.addToUserAudit(commandToExec.id, user.user_id);
-
+		console.log(audit)
+		if(commandToExec.generatesMoney){
+			await pointsAPI.addPointsToUserAudit(audit.audit.id, reward);
+		}
 	}
 	catch (error) {
 		msg.reply('there was an error trying to execute that command!');

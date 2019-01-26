@@ -34,6 +34,20 @@ exports.addPointsByUserID = (userID, points) => {
 	});
 };
 
+exports.addPointsToUserAudit = (executionID, points) => {
+	return new Promise(async (resolve) => {
+		const options = {
+			method: 'POST',
+			uri: `${config.apiUrl}/points/command-history/${executionID}/point/${points}`,
+			body: {},
+			json: true,
+		};
+
+		const user = await request(options);
+		resolve(user.data[0]);
+	});
+};
+
 exports.daily = (userID) => {
 	return new Promise(async (resolve) => {
 		const options = {

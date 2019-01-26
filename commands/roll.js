@@ -60,7 +60,8 @@ module.exports = {
 				timestamp: new Date(),
 			};
 
-			return message.channel.send({ embed });
+			message.channel.send({ embed });
+			return bet * 3;
 		} else {
 			await Points.addPointsByUserID(user.user_id, bet * -1);
 			const embed = {
@@ -82,7 +83,8 @@ module.exports = {
 				timestamp: new Date(),
 			};
 
-			return message.channel.send({ embed });
+			message.channel.send({ embed });
+			return bet * -1;
 		}
 	},
 };

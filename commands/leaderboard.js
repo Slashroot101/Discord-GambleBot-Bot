@@ -16,7 +16,8 @@ module.exports = {
 			page = parseInt(args[0]);
 		}
 		if(isNaN(page)){
-			return message.reply(`You must provide the page as a number, such as 1`);
+			message.reply(`You must provide the page as a number, such as 1`);
+			return;
 		}
 		const lb = await getLeaderboard(page);
 		if(lb.leaderboard.length){
@@ -46,10 +47,11 @@ module.exports = {
 				timestamp: new Date()
 			};
 
-			message.channel.send({embed})
-
+			message.channel.send({embed});
+			return;
 		} else {
-			return message.reply('it looks like there is not any data to show right now.')
+			message.reply('it looks like there is not any data to show right now.')
+			return;
 		}
 	},
 };

@@ -50,6 +50,7 @@ module.exports = {
 			timestamp: new Date(),
 		};
 
-		return message.author.send({ embed });
+		message.author.send({ embed });
+		return;
 	},
 };

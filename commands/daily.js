@@ -11,5 +11,6 @@ module.exports = {
 	execute: async (client, message, args, user) => {
 		const reward = await daily(user.user_id);
 		message.reply(`you have been awarded $${reward} for the day!`);
+		return;
 	},
 };

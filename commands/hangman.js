@@ -16,7 +16,8 @@ module.exports = {
 		const bet = Number(parseInt(args[0]));
 
 		if(currentChannelsInGame.has(message.channel.id)) {
-			return message.reply('there is a game currently going on in this channel. Please choose another channel or wait until the game is done.');
+			message.reply('there is a game currently going on in this channel. Please choose another channel or wait until the game is done.');
+			return;
 		}
 
 		const privateMessage = await message.author.send('To start hangman I need a sentence/word from you, type `!sentence <word/sentence>` such as `!sentence wow this bot is awesome`. Please keep in mind that only letters are allowed in hangman. You have 30 seconds.');
@@ -28,7 +29,8 @@ module.exports = {
 			if(command === 'sentence') {
 				const sentence = msg.content.substr(prefix.length + 9, msg.content.length).replace(/\s+/g, ' ');
 				if(!sentence.match(/^[ A-Za-z]+$/)) {
-					return message.author.send('Your sentence may only contain letters.');
+					message.author.send('Your sentence may only contain letters.');
+					return;
 				}
 				currentChannelsInGame.add(message.channel.id);
 				hangmanBoard = new Hangman(sentence);

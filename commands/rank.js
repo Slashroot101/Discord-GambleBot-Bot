@@ -28,13 +28,12 @@ module.exports = {
             const discordID = args[1].replace(/[^0-9]/g, '');
             let user = await User.getUserByDiscordID(discordID);
             if(user.length === 0){
-                return message.reply(`that user has never executed a command!`);
+                message.reply(`that user has never executed a command!`);
             }
-            return message.reply(`${args[1]} has role: ${user.rolename}`);
+            message.reply(`${args[1]} has role: ${user.rolename}`);
+            return; 
         }
 
         message.reply('you must have provided an invalid verb. Please try the command again such as `!rank set @user <rank name>`')
-
-
 	},
 };

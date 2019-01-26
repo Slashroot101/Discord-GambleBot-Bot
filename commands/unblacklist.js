@@ -16,17 +16,20 @@ module.exports = {
 		const discordID = args[0].replace(/[^0-9]/g, '');
 
 		if(isNaN(discordID)) {
-			return message.reply('please enter a valid user. Such as `!unban @user`');
+			message.reply('please enter a valid user. Such as `!unban @user`');
+			return;
 		}
 
 		const personToUnban = await User.getUserByDiscordID(discordID);
 
 		if(personToUnban.length === 0) {
-			return message.reply('that person cannot be unbanned because they have never run a command!');
+			message.reply('that person cannot be unbanned because they have never run a command!');
+			return;
 		}
 
 		if(personToUnban.blacklist_date === null) {
-			return message.reply('that user is already unbanned.');
+			message.reply('that user is already unbanned.');
+			return;
 		}
 
 		await User.removeFromBlacklist(personToUnban.user_id);

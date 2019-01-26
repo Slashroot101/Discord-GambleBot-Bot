@@ -30,14 +30,26 @@ class BlackjackHand extends Hand {
 		return ret;
 	}
 
-	isWinner(opponent, isFirst) {
+	isWinner(opponent, isStand) {
 		const opponentSum = opponent.getSumOfCards();
 		const thisSum = super.getSumOfCards();
-		if(!isFirst){
-			if(thisSum > 21) {
-				return this.BUST;
-			}
-	
+		if(opponentSum > 21){
+			return this.WIN;
+		}
+
+		if(thisSum > 21) {
+			return this.BUST;
+		}
+
+		if(thisSum === 21) {
+			return this.BLACKJACK;
+		}
+
+		if(opponentSum === 21) {
+			return this.LOSE;
+		}
+
+		if(isStand){
 			if(opponentSum > thisSum && opponentSum < 21) {
 				return this.LOSE;
 			}
@@ -62,19 +74,12 @@ class BlackjackHand extends Hand {
 			return this.WIN;
 		}
 
-		if(thisSum === 21) {
-			return this.BLACKJACK;
-		}
-
-		if(opponentSum === 21) {
-			return this.LOSE;
-		}
 
 		return this.CONTINUEGAME;
 	}
 
-	static toGameboardEmbedObject(clientHand, dealerHand, message, isStand, isWinner) {
-		const isClientWinner = clientHand.isWinner(dealerHand, isWinner);
+	static toGameboardEmbedObject(clientHand, dealerHand, message, isStand) {
+		const isClientWinner = clientHand.isWinner(dealerHand, isStand);
 		let dealerSum;
 		let clientSum;
 		let result;

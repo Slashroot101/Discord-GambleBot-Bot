@@ -12,31 +12,37 @@ module.exports = {
 	async execute(client, message, args, user) {
 		const amount = args[1] === 'all' || args[1] === 'ALL' ? user.current_balance : Math.floor(Number(parseInt(args[1])));
 		if(isNaN(amount)) {
-			return message.reply(' the amount must be a number or ALL.');
+			message.reply(' the amount must be a number or ALL.');
+			return;
 		}
 
 		if(amount <= 0) {
-			return message.reply(' the amount bust be greater than 0.');
+			message.reply(' the amount bust be greater than 0.');
+			return;
 		}
 
 		if(amount > user.current_balance) {
-			return message.reply(` you cannot afford that. You currently only have $${user.current_balance}, and that would require $${amount - user.current_balance} more.`);
+			message.reply(` you cannot afford that. You currently only have $${user.current_balance}, and that would require $${amount - user.current_balance} more.`);
+			return;
 		}
 
 		const discordID = args[0].replace(/[^0-9]/g, '');
 
 		if(isNaN(discordID) || discordID === '') {
-			return message.reply('please enter a valid user. Such as `!ban @user <reason>`');
+			message.reply('please enter a valid user. Such as `!ban @user <reason>`');
+			return;
 		}
 
 		const personToPay = await User.getUserByDiscordID(discordID);
 
 		if(message.member.id === personToPay.discord_user_id){
-			return message.reply('you cannot pay yourself!');
+			message.reply('you cannot pay yourself!');
+			return;
 		}
 
 		if(personToPay.length === 0) {
-			return message.reply(' that user has never run a command.');
+			message.reply(' that user has never run a command.');
+			return;
 		}
 
 		await Points.addPointsByUserID(personToPay.user_id, amount);

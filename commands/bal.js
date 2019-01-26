@@ -32,6 +32,7 @@ module.exports = {
 			timestamp: new Date(),
 		};
 
-		return message.channel.send({ embed });
+		message.channel.send({ embed });
+		return;
 	},
 };

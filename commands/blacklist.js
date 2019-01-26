@@ -11,22 +11,26 @@ module.exports = {
 	execute: async (client, message, args, user) => {
 		if(args.length === 0) {
 			message.reply('please include a user to ban, such as `!ban @user <reason>`');
+			return;
 		}
 
 		const discordID = args[0].replace(/[^0-9]/g, '');
 
 		if(isNaN(discordID)) {
-			return message.reply('please enter a valid user. Such as `!ban @user <reason>`');
+			message.reply('please enter a valid user. Such as `!ban @user <reason>`');
+			return;
 		}
 
 		const personToBan = await User.getUserByDiscordID(discordID);
 
 		if(personToBan.length === 0) {
-			return message.reply('that person cannot be banned because they have never run a command!');
+			message.reply('that person cannot be banned because they have never run a command!');
+			return;
 		}
 
 		if(personToBan.blacklist_date !== null) {
-			return message.reply('that user is already banned.');
+			message.reply('that user is already banned.');
+			return;
 		}
 
 		let reason = '';
@@ -35,5 +39,6 @@ module.exports = {
 		}
 		await User.blacklist(personToBan.user_id, user.user_id, reason);
 		message.reply(`user ${personToBan.discord_user_id} was banned.`);
+		return;
 	},
 };

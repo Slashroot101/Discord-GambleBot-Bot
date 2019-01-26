@@ -55,11 +55,11 @@ module.exports = {
 				.addCard(gameDeck.drawRandomCard())
 				.addCard(gameDeck.drawRandomCard());
 	
-			const boardMsg = await message.channel.send({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false, false) });
+			const boardMsg = await message.channel.send({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
 	
 			if (clientHand.getSumOfCards() === 21) {
 				currentUsersInGame.delete(user.id);
-				return;
+				return resolve();
 			}
 	
 			const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000 });
@@ -77,6 +77,7 @@ module.exports = {
 			}, 60000);
 	
 			collector.on('collect', msg => {
+				let isClientWinner;
 				if (msg.content.toLowerCase() === `hit`) {
 					clientHand
 						.addCard(gameDeck.drawRandomCard());
@@ -85,7 +86,8 @@ module.exports = {
 						collector.stop();
 					}
 	
-					boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false, false) });
+					boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, false) });
+					isClientWinner = clientHand.isWinner(dealerHand, false);
 				}
 	
 				if (msg.content.toLowerCase() === `stand`) {
@@ -97,27 +99,24 @@ module.exports = {
 						dealerSum = dealerHand.getSumOfCards();
 					}
 					currentUsersInGame.delete(user.id);
-					boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true, false) });
-
-					
-					const isClientWinner = clientHand.isWinner(dealerHand);
-					if(isClientWinner === clientHand.BUST ||
-						isClientWinner === clientHand.TIE || 
-						isClientWinner === clientHand.BLACKJACK ||
-						isClientWinner === clientHand.WIN){
-						currentUsersInGame.delete(user.id);
-					}
-		
-					if (isClientWinner === clientHand.BLACKJACK || isClientWinner === clientHand.WIN) {
-						addPointsByUserID(user.user_id, bet * 1);
-						return resolve(bet * 1);
-					}
-					else if (isClientWinner === clientHand.LOSE || isClientWinner === clientHand.BUST) {
-						addPointsByUserID(user.user_id, bet * -1);
-						return resolve(bet * -1);
-					}
+					boardMsg.edit({ embed: BlackjackHand.toGameboardEmbedObject(clientHand, dealerHand, message, true) });
+					isClientWinner = clientHand.isWinner(dealerHand, true);
 				}
-
+				if(isClientWinner === clientHand.BUST ||
+					isClientWinner === clientHand.TIE || 
+					isClientWinner === clientHand.BLACKJACK ||
+					isClientWinner === clientHand.WIN){
+					currentUsersInGame.delete(user.id);
+				}
+	
+				if (isClientWinner === clientHand.BLACKJACK || isClientWinner === clientHand.WIN) {
+					addPointsByUserID(user.user_id, bet * 1);
+					resolve(bet * 1);
+				}
+				else if (isClientWinner === clientHand.LOSE || isClientWinner === clientHand.BUST) {
+					addPointsByUserID(user.user_id, bet * -1);
+					resolve(bet * -1);
+				}
 
 				clearTimeout(gameTimeout);
 			});
