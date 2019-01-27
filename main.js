@@ -58,6 +58,7 @@ client.on('message', async msg => {
 		}
 	}
 	catch (error) {
+		console.log(error)
 		msg.reply('there was an error trying to execute that command!');
 	}
 });
