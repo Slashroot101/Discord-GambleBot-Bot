@@ -51,9 +51,8 @@ client.on('message', async msg => {
 			}
 		}
 
-		let reward = await commandToExec.execute(client, msg, args, user);
+		const reward = await commandToExec.execute(client, msg, args, user);
 		const audit = await commandAPI.addToUserAudit(commandToExec.id, user.user_id);
-		console.log(audit)
 		if(commandToExec.generatesMoney){
 			await pointsAPI.addPointsToUserAudit(audit.audit.id, reward);
 		}

@@ -62,6 +62,19 @@ exports.daily = (userID) => {
 	});
 };
 
+exports.getNetCommandPoints = (commandID, userID) => {
+	return new Promise(async (resolve) => {
+		const options = {
+			method: 'GET',
+			uri: `${config.apiUrl}/points/user-id/${userID}/command-id/${commandID}/net`,
+			json: true,
+		};
+
+		const netPoints = await request(options);
+		resolve(netPoints.data);
+	});
+};
+
 exports.getLeaderboard = (pageNumber) => {
 	return new Promise(async (resolve) => {
 		const options = {
