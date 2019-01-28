@@ -25,8 +25,7 @@ module.exports = {
 		}
 		if(command.generatesMoney) {
 			const netPoints = await Points.getNetCommandPoints(command.id, user.user_id);
-			console.log(netPoints.length)
-			message.reply(`you have netted $${netPoints.length ? netPoints.netPoints.total_points_gained : 0} off of ${command.name}.`);
+			message.reply(`you have netted $${Object.entries(netPoints).length ? netPoints.netPoints.total_points_gained : 0} off of ${command.name}.`);
 		}
 		else if(!command.generatesMoney) {
 			message.reply(`you have netted $0 off of ${command.name}. This command does not generate money.`);
