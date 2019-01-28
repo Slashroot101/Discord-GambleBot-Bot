@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="578a2d05-2ff6-430f-a12f-8ce6c0774b2d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/commands/netPoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/netPoints.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,33 +12,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/commands/utility/hangman.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="713">
-              <caret line="31" column="68" selection-start-line="31" selection-start-column="68" selection-end-line="31" selection-end-column="68" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/commands/hangman.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-366">
-              <caret line="46" column="83" selection-start-line="46" selection-start-column="83" selection-end-line="46" selection-end-column="83" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="59" column="19" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/points.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -52,44 +24,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/commands/netPoints.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/commands/leaderboard.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="10" column="47" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/commands/ping.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" column="2" selection-end-line="11" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/commands/bj.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="48" selection-start-line="48" selection-end-line="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/commands/rank.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="8" column="26" lean-forward="true" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+            <state relative-caret-position="362">
+              <caret line="33" column="14" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -187,7 +123,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548556578749" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548633995345" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -224,12 +160,12 @@
       <workItem from="1544932398183" duration="238000" />
       <workItem from="1546624794446" duration="24551000" />
       <workItem from="1547734883717" duration="5639000" />
-      <workItem from="1548535303459" duration="2988000" />
+      <workItem from="1548535303459" duration="4427000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33986000" />
+    <option name="totallyTimeSpent" value="35425000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -441,13 +377,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/points.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="69" column="23" lean-forward="true" selection-start-line="69" selection-start-column="23" selection-end-line="69" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/commands/ping.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -483,10 +412,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/api/points.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="69" column="23" lean-forward="true" selection-start-line="69" selection-start-column="23" selection-end-line="69" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/commands/netPoints.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        <state relative-caret-position="362">
+          <caret line="33" column="14" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="14" />
         </state>
       </provider>
     </entry>
