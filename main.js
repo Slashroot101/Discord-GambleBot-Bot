@@ -44,9 +44,10 @@ client.on('message', async msg => {
 
 		if (commandToExec.hasCooldown && user.roleName !== 'admin') {
 			const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);
+			console.log(isOnCooldown)
 			if (isOnCooldown.onCooldown) {
 				const availableTime = moment(isOnCooldown.oldestAudit.execution_time).add(isOnCooldown.oldestAudit.duration, 'minutes');
-				const duration = moment.duration(availableTime.diff(moment()));
+				const duration = moment.duration(availableTime.diff(moment(isOnCooldown.oldestAudit.current_time)));
 				return msg.reply(` that command is currently on cooldown and will be available ${duration.humanize(true)}.`);
 			}
 		}

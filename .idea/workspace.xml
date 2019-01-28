@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="578a2d05-2ff6-430f-a12f-8ce6c0774b2d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/commands/netPoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/netPoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,11 +21,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/commands/netPoints.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="362">
-              <caret line="33" column="14" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="14" />
+              <caret line="33" column="14" lean-forward="true" selection-start-line="33" selection-end-line="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="214">
+              <caret line="45" column="102" selection-start-line="45" selection-start-column="101" selection-end-line="45" selection-end-column="102" />
             </state>
           </provider>
         </entry>
@@ -81,8 +90,8 @@
         <option value="$PROJECT_DIR$/commands/hangman.js" />
         <option value="$PROJECT_DIR$/api/points.js" />
         <option value="$PROJECT_DIR$/commands/rank.js" />
-        <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/commands/netPoints.js" />
+        <option value="$PROJECT_DIR$/main.js" />
       </list>
     </option>
   </component>
@@ -123,7 +132,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548633995345" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548645558344" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -160,12 +169,12 @@
       <workItem from="1544932398183" duration="238000" />
       <workItem from="1546624794446" duration="24551000" />
       <workItem from="1547734883717" duration="5639000" />
-      <workItem from="1548535303459" duration="4427000" />
+      <workItem from="1548535303459" duration="5524000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35425000" />
+    <option name="totallyTimeSpent" value="36522000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -405,13 +414,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="59" column="19" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/points.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
@@ -422,7 +424,14 @@
     <entry file="file://$PROJECT_DIR$/commands/netPoints.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="362">
-          <caret line="33" column="14" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="14" />
+          <caret line="33" column="14" lean-forward="true" selection-start-line="33" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="45" column="102" selection-start-line="45" selection-start-column="101" selection-end-line="45" selection-end-column="102" />
         </state>
       </provider>
     </entry>
