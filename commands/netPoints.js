@@ -23,15 +23,16 @@ module.exports = {
 				break;
 			}
 		}
+		if(!command){
+			message.reply('that command does not exist.');
+			return;
+		}
 		if(command.generatesMoney) {
 			const netPoints = await Points.getNetCommandPoints(command.id, user.user_id);
 			message.reply(`you have netted $${Object.entries(netPoints).length ? netPoints.netPoints.total_points_gained : 0} off of ${command.name}.`);
 		}
 		else if(!command.generatesMoney) {
 			message.reply(`you have netted $0 off of ${command.name}. This command does not generate money.`);
-		}
-		else {
-			message.reply('that command does not exist.');
 		}
 	},
 };
