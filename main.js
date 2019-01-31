@@ -62,4 +62,8 @@ client.on('message', async msg => {
 	}
 });
 
+client.on('guildCreate', async event => {
+
+});
+
 client.login(botToken);
