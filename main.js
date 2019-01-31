@@ -7,6 +7,7 @@ const { prefix, botToken } = require('./config');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commandAPI = require('./api/commands');
 const pointsAPI = require('./api/points');
+const guildAPI = require('./api/guild');
 const moment = require('moment');
 
 client.on('ready', async () => {
@@ -63,7 +64,7 @@ client.on('message', async msg => {
 });
 
 client.on('guildCreate', async event => {
-
+	console.log(event.id)
 });
 
 client.login(botToken);
