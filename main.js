@@ -39,8 +39,8 @@ client.on('message', async msg => {
 
 		const commandToExec = client.commands.get(command);
 
-		if(commandToExec.requiresAdmin && user.roleName !== 'admin'){
-			return msg.reply(`nice try :-). You must be an admin to run that command.`);
+		if(commandToExec.requiresAdmin && user.roleName !== 'admin') {
+			return msg.reply('nice try :-). You must be an admin to run that command.');
 		}
 
 		if (commandToExec.hasCooldown && user.roleName !== 'admin') {
@@ -54,7 +54,7 @@ client.on('message', async msg => {
 
 		const reward = await commandToExec.execute(client, msg, args, user);
 		const audit = await commandAPI.addToUserAudit(commandToExec.id, user.user_id);
-		if(commandToExec.generatesMoney){
+		if(commandToExec.generatesMoney) {
 			await pointsAPI.addPointsToUserAudit(audit.audit.id, reward);
 		}
 	}
