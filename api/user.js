@@ -47,7 +47,7 @@ exports.blacklist = (userID, userWhoBanned, reason) => {
 };
 
 exports.removeFromBlacklist = (userID) => {
-	return new Promise(async(resolve) => {
+	return new Promise(async (resolve) => {
 		const options = {
 			method: 'DELETE',
 			uri: `${config.apiUrl}/user/user-id/${userID}/blacklist`,
