@@ -52,12 +52,9 @@ client.on('message', async msg => {
 			}
 		}
 
-		const reward = await commandToExec.execute(client, msg, args, user);
-		const audit = await commandAPI.addToUserAudit(commandToExec.id, user.user_id);
-
+		const [reward, audit] = await Promise.all([commandToExec.execute(client, msg, args, user), commandAPI.addToUserAudit(commandToExec.id, user.user_id)])
 		if(commandToExec.generatesMoney) {
-			const guildPoints = await guildAPI.addPointsToGuildBank()
-			await pointsAPI.addPointsToUserAudit(audit.audit.id, reward);
+			await Promise.all([pointsAPI.addPointsByDiscordID(msg.author.id, reward), pointsAPI.addPointsToUserAudit(audit.audit.id, reward)]);
 		}
 	}
 	catch (error) {

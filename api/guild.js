@@ -19,7 +19,7 @@ exports.addPointsToGuildBank = (guildID) => {
 	return new Promise(async (resolve) => {
 		const options = {
 			method: 'GET',
-			uri: `${config.apiUrl}/guild/guild-id/${guildID}`,
+			uri: `${config.apiUrl}/guild/guild-id/${guildID}/points`,
 			json: true,
 		};
 
@@ -29,5 +29,15 @@ exports.addPointsToGuildBank = (guildID) => {
 };
 
 exports.getByGuildID = (guildID) => {
-	return new Promise(async )
+	return new Promise(async (resolve) => {
+		const options = {
+			method: 'GET',
+			uri: `${config.apiUrl}/guild/guild-id/${guildID}`,
+			json: true,
+		};
+
+		const guild = await request(options);
+		console.log(guild)
+		resolve(guild.data.guild);
+	});
 };
