@@ -13,8 +13,8 @@ module.exports = {
       return message.reply('give me a phrase to translate. Such as !speak blah blah blah');
     }
 
-    for (let i = 0; i < args.length; i++) {
-      for (let j = 0; j < args[i].length; j++) {
+    for (let i = 0; i < args.length; i += 1) {
+      for (let j = 0; j < args[i].length; j += 1) {
         const isCaps = Math.floor((Math.random() * 3) + 1);
         if (isCaps === 1) {
           ret += args[i].charAt(j).toUpperCase();
@@ -25,6 +25,6 @@ module.exports = {
       ret += ' ';
     }
 
-    message.reply(ret);
+    return message.reply(ret);
   },
 };

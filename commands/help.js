@@ -1,5 +1,10 @@
 const fs = require('fs');
 
+const commandFiles = fs
+  .readdirSync('./commands')
+  .filter(file => file.endsWith('.js'))
+  .map(x => require(`./${x}`));
+
 module.exports = {
   name: 'help',
   description: 'Lists all commands and some sample usages',
@@ -8,22 +13,20 @@ module.exports = {
   hasCooldown: false,
   generatesMoney: false,
   usages: 1,
-  execute(client, message, args, user) {
-    const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+  execute(client, message) {
     let adminCommands = '';
     let normieCommands = '';
     let adminCount = 1;
     let normieCount = 1;
-    for (let i = 0; i < commandFiles.length; i++) {
+    for (let i = 0; i < commandFiles.length; i += 1) {
       const commandFile = require(`./${commandFiles[i]}`);
       if (commandFile.requiresAdmin) {
         adminCommands += `${adminCount}. ${commandFile.name} : ${commandFile.description} \n`;
-        adminCount++;
-        continue;
+        adminCount += 1;
+      } else {
+        normieCommands += `${normieCount}. ${commandFile.name} : ${commandFile.description} \n`;
+        normieCount += 1;
       }
-
-      normieCommands += `${normieCount}. ${commandFile.name} : ${commandFile.description} \n`;
-      normieCount++;
     }
 
     const embed = {

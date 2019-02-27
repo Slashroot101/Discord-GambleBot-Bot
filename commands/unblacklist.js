@@ -8,14 +8,14 @@ module.exports = {
   generatesMoney: false,
   requiresAdmin: true,
   usages: 0,
-  execute: async (client, message, args, user) => {
+  execute: async (client, message, args) => {
     if (args.length === 0) {
       message.reply('please include a user to unban, such as `!unban @user`');
     }
 
     const discordID = args[0].replace(/[^0-9]/g, '');
 
-    if (isNaN(discordID)) {
+    if (Number.isNaN(discordID)) {
       message.reply('please enter a valid user. Such as `!unban @user`');
       return;
     }

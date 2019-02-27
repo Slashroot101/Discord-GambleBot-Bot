@@ -19,7 +19,7 @@ class BlackjackHand extends Hand {
     if (this.isDealer && isStanding) {
       this.cards.forEach((value, key) => {
         ret += `${count === 0 ? `${key[0].substr(0, key[0].indexOf('|'))} *` : ''}`;
-        count++;
+        count += 1;
       });
       return ret;
     }
@@ -95,7 +95,8 @@ class BlackjackHand extends Hand {
       clientHandString = clientHand.toString();
       result = 'Result: Blackjack';
       color = 0x00ff00;
-    } else if (isClientWinner === clientHand.BUST || (isClientWinner === clientHand.LOSE && isStand)) {
+    } else if (isClientWinner === clientHand.BUST
+      || (isClientWinner === clientHand.LOSE && isStand)) {
       dealerSum = dealerHand.getSumOfCards();
       clientSum = clientHand.getSumOfCards();
       dealerHandString = dealerHand.toString();

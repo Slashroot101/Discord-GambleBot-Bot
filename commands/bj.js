@@ -14,20 +14,20 @@ module.exports = {
   generatesMoney: true,
   usages: 2,
   execute(client, message, args, user) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       if (args.length === 0) {
         message.reply('please specify an amount to bet. Such as `!bj <amount>`');
         return resolve();
       }
 
-      const bet = Number(parseInt(args[0]));
+      const bet = Number(parseInt(args[0], 10));
 
       if (bet < 0) {
         message.reply('your bet must be greater than or equal to 0.');
         return resolve();
       }
 
-      if (isNaN(bet)) {
+      if (Number.isNaN(bet)) {
         message.reply('your bet must be a number.');
         return resolve();
       }

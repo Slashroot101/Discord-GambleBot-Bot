@@ -16,7 +16,7 @@ module.exports = {
 
     const discordID = args[0].replace(/[^0-9]/g, '');
 
-    if (isNaN(discordID)) {
+    if (Number.isNaN(discordID)) {
       message.reply('please enter a valid user. Such as `!ban @user <reason>`');
       return;
     }
@@ -34,7 +34,7 @@ module.exports = {
     }
 
     let reason = '';
-    for (let i = 1; i < args.length; i++) {
+    for (let i = 1; i < args.length; i += 1) {
       reason += ` ${args[i]}`;
     }
     await User.blacklist(personToBan.user_id, user.user_id, reason);

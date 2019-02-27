@@ -14,7 +14,7 @@ class Hand {
 
   toString() {
     let ret = '';
-    this.cards.forEach((key, value, map) => {
+    this.cards.forEach((key, value) => {
       ret += `${value[0].substr(0, value[0].indexOf('|'))} `;
     });
     return ret;
@@ -23,10 +23,10 @@ class Hand {
   getSumOfCards(isBlackjackDealer = false) {
     let sum = 0;
     let count = 0;
-    this.cards.forEach((value, key, map) => {
+    this.cards.forEach((value, key) => {
       if (isBlackjackDealer && count < 1) {
         sum = key[1].value;
-        count++;
+        count += 1;
       } else if (!isBlackjackDealer) {
         sum += key[1].value;
       }

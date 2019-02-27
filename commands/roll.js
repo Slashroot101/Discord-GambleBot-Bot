@@ -9,17 +9,17 @@ module.exports = {
   generatesMoney: true,
   usages: 1,
   async execute(client, message, args, user) {
-    const bet = Number(parseInt(args[0]));
-    const face1 = Number(parseInt(args[1]));
-    const face2 = Number(parseInt(args[2]));
-    const face3 = Number(parseInt(args[3]));
+    const bet = Number(parseInt(args[0], 10));
+    const face1 = Number(parseInt(args[1], 10));
+    const face2 = Number(parseInt(args[2], 10));
+    const face3 = Number(parseInt(args[3], 10));
 
-    if (isNaN(face1)
-			|| isNaN(face2)
-			|| isNaN(face3)
-			|| face1 === ''
-			|| face2 === ''
-			|| face3 === '') {
+    if (Number.isNaN(face1)
+      || Number.isNaN(face2)
+      || Number.isNaN(face3)
+      || face1 === ''
+      || face2 === ''
+      || face3 === '') {
       return message.reply(' all of the faces you entered must be numbers. Such as `!roll 200 3 3 3` where 3 are faces on the die.');
     }
 
@@ -27,7 +27,7 @@ module.exports = {
       return message.reply(' your bet must be more than 0.');
     }
 
-    if (isNaN(bet)) {
+    if (Number.isNaN(bet)) {
       return message.reply('your bet must be a number.');
     }
 

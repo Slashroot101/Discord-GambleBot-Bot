@@ -13,16 +13,17 @@ module.exports = {
   hasCooldown: false,
   generatesMoney: false,
   usages: 1,
-  async execute(client, message, args, user) {
-    const bet = Number(parseInt(args[0]));
-
+  async execute(client, message) {
     if (currentChannelsInGame.has(message.channel.id)) {
       message.reply('there is a game currently going on in this channel. Please choose another channel or wait until the game is done.');
       return;
     }
 
     const privateMessage = await message.author.send('To start hangman I need a sentence/word from you, type `!sentence <word/sentence>` such as `!sentence wow this bot is awesome`. Please keep in mind that only letters are allowed in hangman. You have 30 seconds.');
-    const dmCollector = new Discord.MessageCollector(privateMessage.channel, m => m.author.id === message.author.id, { time: 30000 });
+    const dmCollector = new Discord.MessageCollector(
+      privateMessage.channel,
+      m => m.author.id === message.author.id, { time: 30000 },
+    );
     let hangmanBoard;
     dmCollector.on('collect', (msg) => {
       const command = msg.content.slice(prefix.length).split(/ +/).shift().toLowerCase();
@@ -40,8 +41,15 @@ module.exports = {
     });
 
     dmCollector.on('end', async () => {
-      let boardMessage = await message.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
-      const guessCollector = new Discord.MessageCollector(message.channel, m => m.author.id !== message.author.id, { time: 120000 });
+      let boardMessage = await message.channel.send(
+        {
+          embed: hangmanBoard.toGameboardEmbed(message),
+        },
+      );
+      const guessCollector = new Discord.MessageCollector(
+        message.channel,
+        m => m.author.id !== message.author.id, { time: 120000 },
+      );
       const gameTimeout = setTimeout(async () => {
         hangmanBoard.setGameOver();
         await message.channel.send('The game has timed out.');
@@ -74,11 +82,13 @@ module.exports = {
             numGuesses = 3;
           }
           if (numGuesses % 3 === 0) {
-            boardMessage = await msg.channel.send({ embed: hangmanBoard.toGameboardEmbed(message) });
+            boardMessage = await msg.channel.send(
+              { embed: hangmanBoard.toGameboardEmbed(message) },
+            );
           } else {
             await boardMessage.edit({ embed: hangmanBoard.toGameboardEmbed(message) });
           }
-          numGuesses++;
+          numGuesses += 1;
         }
       });
     });

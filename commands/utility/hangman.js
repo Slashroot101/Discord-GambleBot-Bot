@@ -4,7 +4,7 @@ const hangmanImageMap = require('../../assets/hangman/fileMapToUrl');
 
 class Hangman {
   constructor(secretPhrase) {
-    if (!secretPhrase.match(/^[ A-Za-z]+$/)) { throw 'Parameter is not letters only.'; }
+    if (!secretPhrase.match(/^[ A-Za-z]+$/)) { throw new Error('Parameter is not letters only.'); }
     this.secretPhrase = secretPhrase;
     this.inCorrectGuess = new Set();
     this.correctGuess = new Set();
@@ -32,7 +32,7 @@ class Hangman {
     const sortedLeaderboard = _.sortBy(leaderboard, n => n[1].numAnswered);
     let embedString = '';
     const secretPhraseLength = this.secretPhrase.replace(/\s/g, '').length;
-    for (let i = 0; i < sortedLeaderboard.length; i++) {
+    for (let i = 0; i < sortedLeaderboard.length; i += 1) {
       embedString += `${i + 1}. <@${sortedLeaderboard[i][0]}> : ${sortedLeaderboard[i][1].numAnswered}/${secretPhraseLength} (${(sortedLeaderboard[i][1].numAnswered / secretPhraseLength).toFixed(2) * 100}%)\n`;
     }
 
@@ -62,7 +62,7 @@ class Hangman {
     if (this.gameState === this.WIN) {
       color = 0x00ff00;
     } else if (this.gameState === this.LOSE) {
-      color =	15158332;
+      color = 15158332;
     } else {
       color = 3447003;
     }
@@ -97,16 +97,16 @@ class Hangman {
   decodeWithGuess(guess) {
     if (guess === this.secretPhrase) {
       this.encodedPhrase = '';
-      for (let i = 0; i < this.secretPhrase.length; i++) {
+      for (let i = 0; i < this.secretPhrase.length; i += 1) {
         this.encodedPhrase += `${this.secretPhrase.substr(i, 1)}|`;
       }
-      return;
+      return undefined;
     }
     const locations = new Set();
-    for (let i = 0; i < this.secretPhrase.length - guess.length + 1; i++) {
+    for (let i = 0; i < this.secretPhrase.length - guess.length + 1; i += 1) {
       if (this.secretPhrase.substr(i, guess.length) === guess
-			|| this.secretPhrase.substr(i, guess.length) === guess.toLowerCase()
-			|| this.correctGuess.has(this.secretPhrase.substr(i, guess.length))) {
+          || this.secretPhrase.substr(i, guess.length) === guess.toLowerCase()
+          || this.correctGuess.has(this.secretPhrase.substr(i, guess.length))) {
         locations.add(i);
       }
     }
@@ -116,7 +116,7 @@ class Hangman {
     }
 
     this.encodedPhrase = '';
-    for (let i = 0; i < this.secretPhrase.length; i++) {
+    for (let i = 0; i < this.secretPhrase.length; i += 1) {
       if (locations.has(i)) {
         this.encodedPhrase += `${this.secretPhrase.substr(i, 1)}|`;
       } else if (this.secretPhrase.charAt(i) === ' ') {
@@ -135,8 +135,8 @@ class Hangman {
     }
 
     if (userGuess !== ''
-		 && (userGuess === this.secretPhrase
-		 || !this.encodedPhrase.includes('_'))) {
+      && (userGuess === this.secretPhrase
+        || !this.encodedPhrase.includes('_'))) {
       const player = this.playerPoints.get(discordID);
       if (!player) {
         this.playerPoints.set(discordID, { numAnswered: this.secretPhrase.replace(/\s/g, '').length });
@@ -147,8 +147,8 @@ class Hangman {
     }
 
     if (userGuess.length === 0
-		 || userGuess.length > 1
-		 || !this.secretPhrase.includes(userGuess)) {
+      || userGuess.length > 1
+      || !this.secretPhrase.includes(userGuess)) {
       this.inCorrectGuess.add(userGuess);
       if (this.inCorrectGuess.size === 6) {
         this.gameState = this.LOSE;
@@ -158,7 +158,7 @@ class Hangman {
     }
 
     if (this.inCorrectGuess.has(userGuess)
-		 || this.correctGuess.has(userGuess)) {
+      || this.correctGuess.has(userGuess)) {
       return this.LETTER_ALREADY_GUESSED;
     }
 

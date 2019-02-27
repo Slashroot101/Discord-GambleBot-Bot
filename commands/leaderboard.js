@@ -8,23 +8,22 @@ module.exports = {
   generatesMoney: false,
   requiresAdmin: false,
   usages: 5,
-  execute: async (client, message, args, user) => {
+  execute: async (client, message, args) => {
     let page;
     if (args.length === 0) {
       page = 0;
     } else {
-      page = parseInt(args[0]);
+      page = parseInt(args[0], 10);
     }
-    if (isNaN(page)) {
+    if (Number.isNaN(page)) {
       message.reply('You must provide the page as a number, such as 1');
       return;
     }
     const lb = await getLeaderboard(page);
     if (lb.leaderboard.length) {
       let embedString = '';
-      for (let i = 0; i < lb.leaderboard.length; i++) {
-        const lbUser = await client.fetchUser(lb.leaderboard[i].discord_user_id);
-        embedString += `${i + 1}. ${lbUser.username} : $${lb.leaderboard[i].current_balance}\n`;
+      for (let i = 0; i < lb.leaderboard.length; i += 1) {
+        embedString += `${i + 1}. ${client.users.find(user => user.id === lb.leaderboard[i].discord_user_id).username} : $${lb.leaderboard[i].current_balance}\n`;
       }
 
       const embed = {

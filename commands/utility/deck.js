@@ -15,7 +15,7 @@ class Deck {
   }
 
   shuffle() {
-    for (let i = this.deck.length - 1; i > 0; i--) {
+    for (let i = this.deck.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
       [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
     }
@@ -23,7 +23,7 @@ class Deck {
 
   static createHashMapFromArray(arr) {
     const hashMap = new Map();
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i += 1) {
       hashMap.set(arr[i][0], arr[i][1]);
     }
     return hashMap;

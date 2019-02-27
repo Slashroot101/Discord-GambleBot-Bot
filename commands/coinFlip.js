@@ -6,7 +6,7 @@ module.exports = {
   hasCooldown: false,
   generatesMoney: false,
   usages: 1,
-  async execute(client, message, args, user) {
+  async execute(client, message) {
     const flip = Math.floor(Math.random() * Math.floor(2));
     const side = flip === 1 ? 'heads' : 'tails';
     message.reply(` the coin landed on ${side}`);
