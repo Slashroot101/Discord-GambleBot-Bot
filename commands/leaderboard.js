@@ -22,8 +22,11 @@ module.exports = {
     const lb = await getLeaderboard(page);
     if (lb.leaderboard.length) {
       let embedString = '';
+      const neededUsers = lb.leaderboard.map(x => x.discord_user_id);
+      const userObjects = client.users.filter(x => neededUsers.includes(x.id));
+
       for (let i = 0; i < lb.leaderboard.length; i += 1) {
-        embedString += `${i + 1}. ${client.users.find(user => user.id === lb.leaderboard[i].discord_user_id).username} : $${lb.leaderboard[i].current_balance}\n`;
+        embedString += `${i + 1}. ${userObjects.find(user => user.id === lb.leaderboard[i].discord_user_id).username} : $${lb.leaderboard[i].current_balance}\n`;
       }
 
       const embed = {

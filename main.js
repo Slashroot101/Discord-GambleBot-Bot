@@ -1,10 +1,11 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+const moment = require('moment');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const { prefix, botToken } = require('./config');
-const moment = require('moment');
+
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commandAPI = require('./api/commands');

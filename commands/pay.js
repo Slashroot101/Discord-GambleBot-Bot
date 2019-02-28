@@ -10,8 +10,8 @@ module.exports = {
   generatesMoney: false,
   usages: 2,
   async execute(client, message, args, user) {
-    const amount = args[1] === 'all' || args[1] === 'ALL' ? user.current_balance : Math.floor(Number(parseInt(args[1])));
-    if (isNaN(amount)) {
+    const amount = args[1].toLowerCase() === 'all' ? user.current_balance : Math.floor(Number.parseInt(args[1], 10));
+    if (Number.isNaN(amount)) {
       message.reply(' the amount must be a number or ALL.');
       return;
     }
@@ -28,7 +28,7 @@ module.exports = {
 
     const discordID = args[0].replace(/[^0-9]/g, '');
 
-    if (isNaN(discordID) || discordID === '') {
+    if (Number.isNaN(discordID) || discordID === '') {
       message.reply('please enter a valid user. Such as `!ban @user <reason>`');
       return;
     }
@@ -45,8 +45,10 @@ module.exports = {
       return;
     }
 
-    await Points.addPointsByUserID(personToPay.user_id, amount);
-    await Points.addPointsByUserID(user.user_id, amount * -1);
+    await Promise.all([
+      Points.addPointsByUserID(personToPay.user_id, amount),
+      Points.addPointsByUserID(user.user_id, amount * -1),
+    ]);
 
     message.reply(`succesfully paid $${amount} to ${args[0]}. Your balance is now ${user.current_balance - amount}.`);
   },

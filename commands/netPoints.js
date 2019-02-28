@@ -17,10 +17,8 @@ module.exports = {
       return;
     }
 
-    const command = commandFiles.filter(file => {
-      return file.name === args[0];
-    });
-    console.log(command)
+    const command = commandFiles.filter(file => file.name === args[0]);
+    console.log(command);
 
     if (!command.length > 0) {
       message.reply('that command does not exist.');

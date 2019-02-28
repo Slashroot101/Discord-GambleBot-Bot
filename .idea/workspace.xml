@@ -2,30 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="578a2d05-2ff6-430f-a12f-8ce6c0774b2d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/commands.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/commands.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/guild.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/guild.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/points.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/points.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/hangman/fileMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/hangman/fileMap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/hangman/fileMapToUrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/hangman/fileMapToUrl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/bj.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/bj.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/blacklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/blacklist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/coinFlip.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/coinFlip.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/hangman.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/hangman.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/help.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/help.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/commands/leaderboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/leaderboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/commands/netPoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/netPoints.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/roll.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/roll.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/speak.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/speak.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/unblacklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/unblacklist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/utility/bj/blackjackHand.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/utility/bj/blackjackHand.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/utility/deck.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/utility/deck.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/utility/hand.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/utility/hand.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/utility/hangman.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/utility/hangman.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.example.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.example.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/pay.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/pay.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/rank.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/rank.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,26 +19,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="73" column="43" selection-start-line="73" selection-start-column="42" selection-end-line="73" selection-end-column="43" />
+            <state relative-caret-position="239">
+              <caret line="58" column="28" selection-start-line="58" selection-start-column="28" selection-end-line="61" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.js">
+        <entry file="file://$PROJECT_DIR$/commands/rank.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="161">
+              <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.example.js">
+        <entry file="file://$PROJECT_DIR$/commands/pay.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" selection-end-line="5" />
+            <state relative-caret-position="414">
+              <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -67,25 +47,25 @@
         <entry file="file://$PROJECT_DIR$/commands/help.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="92">
-              <caret line="4" column="39" lean-forward="true" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.eslintrc.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="2" column="14" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="14" />
+              <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.eslintrc.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret selection-end-line="6" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/commands/netPoints.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="414">
-              <caret line="24" column="30" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="30" />
+              <caret line="22" column="30" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -93,7 +73,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/commands/utility/bj/blackjackHand.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
+            <state relative-caret-position="3726">
               <caret line="162" column="10" selection-start-line="162" selection-start-column="9" selection-end-line="162" selection-end-column="10" />
             </state>
           </provider>
@@ -120,8 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/commands/leaderboard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="22" column="32" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="32" />
+            <state relative-caret-position="97">
+              <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -146,6 +126,7 @@
       <find>console</find>
       <find>isNan</find>
       <find>/&gt;</find>
+      <find>Promise.all</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -167,9 +148,7 @@
         <option value="$PROJECT_DIR$/assets/hangman/index.js" />
         <option value="$PROJECT_DIR$/assets/hangman/fileMapToUrl.js" />
         <option value="$PROJECT_DIR$/api/points.js" />
-        <option value="$PROJECT_DIR$/commands/rank.js" />
         <option value="$PROJECT_DIR$/api/guild.js" />
-        <option value="$PROJECT_DIR$/commands/pay.js" />
         <option value="$PROJECT_DIR$/commands/utility/hangman.js" />
         <option value="$PROJECT_DIR$/commands/utility/hand.js" />
         <option value="$PROJECT_DIR$/commands/bj.js" />
@@ -182,20 +161,22 @@
         <option value="$PROJECT_DIR$/commands/utility/bj/blackjackHand.js" />
         <option value="$PROJECT_DIR$/commands/unblacklist.js" />
         <option value="$PROJECT_DIR$/commands/roll.js" />
-        <option value="$PROJECT_DIR$/commands/leaderboard.js" />
-        <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/config.js" />
         <option value="$PROJECT_DIR$/config.example.js" />
-        <option value="$PROJECT_DIR$/.eslintrc.json" />
         <option value="$PROJECT_DIR$/commands/netPoints.js" />
+        <option value="$PROJECT_DIR$/commands/leaderboard.js" />
+        <option value="$PROJECT_DIR$/main.js" />
+        <option value="$PROJECT_DIR$/commands/rank.js" />
+        <option value="$PROJECT_DIR$/commands/pay.js" />
+        <option value="$PROJECT_DIR$/.eslintrc.json" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="2576" />
-    <option name="height" value="1456" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="2514" />
+    <option name="y" value="-910" />
+    <option name="width" value="5152" />
+    <option name="height" value="2912" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -278,17 +259,18 @@
       <workItem from="1550895669359" duration="3629000" />
       <workItem from="1551145254666" duration="1815000" />
       <workItem from="1551235064830" duration="7386000" />
+      <workItem from="1551312603964" duration="2812000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53283000" />
+    <option name="totallyTimeSpent" value="56095000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1456" extended-state="0" />
+    <frame x="2554" y="-904" width="2729" height="1501" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16852146" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15986522" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -306,7 +288,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32987553" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3993832" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3851301" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -404,13 +386,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/commands/rank.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="26" lean-forward="true" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/commands/ping.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -429,13 +404,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret line="25" column="41" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/commands/pay.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -502,9 +470,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.example.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/commands/help.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/commands/utility/bj/blackjackHand.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
+        <state relative-caret-position="3726">
           <caret line="162" column="10" selection-start-line="162" selection-start-column="9" selection-end-line="162" selection-end-column="10" />
         </state>
       </provider>
@@ -523,52 +512,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/commands/netPoints.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="22" column="30" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/commands/leaderboard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="32" />
+        <state relative-caret-position="97">
+          <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/commands/rank.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="73" column="43" selection-start-line="73" selection-start-column="42" selection-end-line="73" selection-end-column="43" />
+        <state relative-caret-position="239">
+          <caret line="58" column="28" selection-start-line="58" selection-start-column="28" selection-end-line="61" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.js">
+    <entry file="file://$PROJECT_DIR$/commands/pay.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.example.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/commands/help.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="39" lean-forward="true" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+        <state relative-caret-position="414">
+          <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.eslintrc.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="14" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/commands/netPoints.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="24" column="30" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="30" />
+        <state>
+          <caret selection-end-line="6" selection-end-column="1" />
         </state>
       </provider>
     </entry>

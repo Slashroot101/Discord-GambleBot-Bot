@@ -8,13 +8,13 @@ module.exports = {
   requiresAdmin: true,
   generatesMoney: false,
   usages: 0,
-  execute: async (client, message, args, user) => {
+  execute: async (client, message, args) => {
     if (args.length === 0) {
       message.reply('please include an action such as `!rank <set|get> @user <rank ID>`');
     }
 
     if (args[0] === 'set') {
-      const rankID = parseInt(args[2]);
+      const rankID = Number.parseInt(args[2], 10);
       if (rankID !== 1 && rankID !== 2) {
         return message.reply('please supply a valid rank. 1 = base user, 2 = admin');
       }
@@ -30,10 +30,9 @@ module.exports = {
       if (user.length === 0) {
         message.reply('that user has never executed a command!');
       }
-      message.reply(`${args[1]} has role: ${user.rolename}`);
-      return;
+      return message.reply(`${args[1]} has role: ${user.rolename}`);
     }
 
-    message.reply('you must have provided an invalid verb. Please try the command again such as `!rank set @user <rank name>`');
+    return message.reply('you must have provided an invalid verb. Please try the command again such as `!rank set @user <rank name>`');
   },
 };
