@@ -2,11 +2,12 @@ const request = require('request-promise');
 const config = require('../config');
 
 
-exports.addPointsByDiscordID = (discordID, points) => new Promise(async (resolve) => {
+exports.addPointsByDiscordID = (discordID, guildID, points) => new Promise(async (resolve) => {
   const options = {
     method: 'PUT',
     body: {
       points,
+      guildID,
     },
     uri: `${config.apiUrl}/points/discord-id/${discordID}`,
     json: true,

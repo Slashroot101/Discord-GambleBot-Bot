@@ -13,10 +13,13 @@ exports.create = guildID => new Promise(async (resolve) => {
   resolve(guild.data[0]);
 });
 
-exports.addPointsToGuildBank = guildID => new Promise(async (resolve) => {
+exports.addPointsToGuildBank = (guildID, points) => new Promise(async (resolve) => {
   const options = {
-    method: 'GET',
+    method: 'PUT',
     uri: `${config.apiUrl}/guild/guild-id/${guildID}/points`,
+    body: {
+      points
+    },
     json: true,
   };
 

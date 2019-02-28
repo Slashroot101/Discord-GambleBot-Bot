@@ -62,7 +62,7 @@ client.on('message', async (msg) => {
     ]);
     if (commandToExec.generatesMoney) {
       await Promise.all([
-        pointsAPI.addPointsByDiscordID(msg.author.id, reward),
+        pointsAPI.addPointsByDiscordID(msg.author.id, msg.guild.id, reward),
         pointsAPI.addPointsToUserAudit(audit.audit.id, reward),
       ]);
     }
