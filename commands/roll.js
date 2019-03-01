@@ -40,7 +40,7 @@ module.exports = {
     const diceRoll3 = Math.floor((Math.random() * 6) + 1);
 
     if (face1 === diceRoll1 && face2 === diceRoll2 && face3 === diceRoll3) {
-      await Points.addPointsByUserID(user.user_id, bet * 3);
+      await Points.addPointsByUserID(user.user_id, message.guild.id, bet * 3);
       const embed = {
         color: 0x00ff00,
         author: {
@@ -63,7 +63,7 @@ module.exports = {
       message.channel.send({ embed });
       return bet * 3;
     }
-    await Points.addPointsByUserID(user.user_id, bet * -1);
+    await Points.addPointsByUserID(user.user_id, message.guild.id, bet * -1);
     const embed = {
       color: 15158332,
       author: {

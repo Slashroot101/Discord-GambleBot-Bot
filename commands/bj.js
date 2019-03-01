@@ -88,7 +88,7 @@ module.exports = {
             ),
           },
         );
-        addPointsByUserID(user.user_id, bet * -1);
+        addPointsByUserID(user.user_id, message.guild.id, bet * -1);
       }, 60000);
 
       collector.on('collect', (msg) => {

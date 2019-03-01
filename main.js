@@ -60,9 +60,9 @@ client.on('message', async (msg) => {
       commandToExec.execute(client, msg, args, user),
       commandAPI.addToUserAudit(commandToExec.id, user.user_id),
     ]);
-    if (commandToExec.generatesMoney) {
+    if (commandToExec.generatesMoney && reward !== undefined && reward !== 0) {
       await Promise.all([
-        pointsAPI.addPointsByDiscordID(msg.author.id, msg.guild.id, reward),
+        pointsAPI.addPointsByUserID(user.user_id, msg.guild.id, reward),
         pointsAPI.addPointsToUserAudit(audit.audit.id, reward),
       ]);
     }

@@ -46,8 +46,8 @@ module.exports = {
     }
 
     await Promise.all([
-      Points.addPointsByUserID(personToPay.user_id, amount),
-      Points.addPointsByUserID(user.user_id, amount * -1),
+      Points.addPointsByUserID(personToPay.user_id, msg.guild.id, amount),
+      Points.addPointsByUserID(user.user_id, msg.guild.id, amount * -1),
     ]);
 
     message.reply(`succesfully paid $${amount} to ${args[0]}. Your balance is now ${user.current_balance - amount}.`);
