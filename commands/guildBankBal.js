@@ -1,13 +1,16 @@
+const { getGuildBankByGuildID } = require('../api/guild');
+
 module.exports = {
   name: 'gbalance',
   description: 'Shows the balance of the guild. `!gbalance`',
-  hasCooldown: true,
+  hasCooldown: false,
   duration: 1,
   requiresAdmin: false,
-  generatesMoney: true,
+  generatesMoney: false,
   usages: 1,
-  execute: async (client, message, args, user) => new Promise(async (resolve) => {
-
-
-  }),
+  execute: async (client, msg) => {
+    const guildBank = await getGuildBankByGuildID(msg.guild.id);
+    msg.channel.send(`${msg.guild.name} has \`$${guildBank.points}\` in its account.`);
+    return undefined;
+  },
 };

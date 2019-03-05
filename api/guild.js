@@ -1,16 +1,16 @@
 const request = require('request-promise');
 const config = require('../config');
 
-exports.create = guildID => new Promise(async (resolve) => {
+exports.create = guilds => new Promise(async (resolve) => {
   const options = {
     method: 'POST',
-    uri: `${config.apiUrl}/guild/id/${guildID}`,
-    body: {},
+    uri: `${config.apiUrl}/guild/`,
+    body: { guilds },
     json: true,
   };
 
   const guild = await request(options);
-  resolve(guild.data[0]);
+  resolve(guild);
 });
 
 exports.addPointsToGuildBank = (guildID, points) => new Promise(async (resolve) => {
@@ -18,7 +18,7 @@ exports.addPointsToGuildBank = (guildID, points) => new Promise(async (resolve) 
     method: 'PUT',
     uri: `${config.apiUrl}/guild/guild-id/${guildID}/points`,
     body: {
-      points
+      points,
     },
     json: true,
   };
@@ -27,17 +27,17 @@ exports.addPointsToGuildBank = (guildID, points) => new Promise(async (resolve) 
   resolve(guild.data[0]);
 });
 
-exports.getGuildBankByGuildID = async (guildID) => {
-  Promise(async(resolve) => {
-    const options = {
-      method: 'GET',
-      uri: `${config.apiUrl}/guild/discord-guild-id/${guildID}/bank`,
-    };
+exports.getGuildBankByGuildID = async guildID => new Promise(async (resolve) => {
+  const options = {
+    method: 'GET',
+    uri: `${config.apiUrl}/guild/discord-guild-id/${guildID}/bank`,
+    json: true,
+  };
 
-    const guildBank = await request(options);
-    resolve(guildBank.data[0]);
-  });
-};
+  const guildBank = await request(options);
+  resolve(guildBank.data.guildBank);
+});
+
 
 exports.getByGuildID = guildID => new Promise(async (resolve) => {
   const options = {
