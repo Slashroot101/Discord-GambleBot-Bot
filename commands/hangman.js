@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const { prefix } = require('../config');
 const Hangman = require('./utility/hangman');
+const { lettersOnly } = require('./utility/constants/regex');
 
 const currentChannelsInGame = new Set();
 
@@ -30,7 +31,7 @@ module.exports = {
 
       if (command === 'sentence') {
         const sentence = msg.content.substr(prefix.length + 9, msg.content.length).replace(/\s+/g, ' ');
-        if (!sentence.match(/^[ A-Za-z]+$/)) {
+        if (!sentence.match(lettersOnly)) {
           message.author.send('Your sentence may only contain letters.');
           return;
         }
@@ -63,7 +64,7 @@ module.exports = {
 
         if (command === 'guess') {
           const guess = msg.content.slice(prefix.length + command.length + 1).replace(/\s+/g, ' ');
-          if (!guess.match(/^[ A-Za-z]+$/)) { return message.reply('your guess must be a letter'); }
+          if (!guess.match(lettersOnly)) { return message.reply('your guess must be a letter'); }
           const isCorrectGuess = hangmanBoard.guess(guess, msg.author.id);
           if (isCorrectGuess === hangmanBoard.INCORRECT_GUESS) {
             await msg.reply(`'${guess}' is not a part of the sentence.`);
