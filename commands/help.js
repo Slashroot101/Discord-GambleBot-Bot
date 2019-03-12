@@ -1,9 +1,5 @@
 const fs = require('fs');
 
-const commandFiles = fs
-  .readdirSync('./commands')
-  .filter(file => file.endsWith('.js'))
-  .map(x => require(`./${x}`));
 module.exports = {
   name: 'help',
   description: 'Lists all commands and some sample usages',
@@ -13,6 +9,10 @@ module.exports = {
   generatesMoney: false,
   usages: 1,
   execute(client, message, args) {
+    const commandFiles = fs
+      .readdirSync('./commands')
+      .filter(file => file.endsWith('.js'))
+      .map(x => require(`./${x}`));
     let adminCommands = '';
     let normieCommands = '';
     let adminCount = 1;
@@ -30,7 +30,7 @@ module.exports = {
           name: message.member.user.tag,
           icon_url: message.member.user.avatarURL,
         },
-        title: 'For help with a specific command, type `!help <command name>`',
+        title: 'To see all commands, type `!help`',
         url: '',
         description: '',
         fields: [
