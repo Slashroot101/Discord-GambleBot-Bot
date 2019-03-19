@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const moment = require('moment');
+const ROLES = require('./commands/utility/constants/roles');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -44,11 +45,11 @@ client.on('message', async (msg) => {
 
     const commandToExec = client.commands.get(command);
 
-    if (commandToExec.requiresAdmin && user.roleName !== 'admin') {
+    if (commandToExec.requiresAdmin && user.rolename !== ROLES.ADMIN.name) {
       return msg.reply('nice try :-). You must be an admin to run that command.');
     }
 
-    if (commandToExec.hasCooldown && user.roleName !== 'admin') {
+    if (commandToExec.hasCooldown && user.roleName !== ROLES.ADMIN.name) {
       const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);
       if (isOnCooldown.onCooldown) {
         const availableTime = moment(isOnCooldown.oldestAudit.execution_time).add(isOnCooldown.oldestAudit.duration, 'minutes');
