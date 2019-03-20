@@ -9,11 +9,15 @@ module.exports = {
   hasCooldown: false,
   usages: 1,
   generatesMoney: false,
-  execute(client, message, args, user) {
-	  const code = args.join(' ');
-	  let evaled = eval(code);
+  async execute(client, message, args) {
+  	try {
+		  const code = args.join(' ');
+		  let evaled = eval(code);
 
-	  if (typeof evaled !== 'string') evaled = util.inspect(evaled);
-	  message.channel.send(cleanForEval(evaled), { code: 'xl' });
+		  if (typeof evaled !== 'string') evaled = util.inspect(evaled);
+		  message.channel.send(cleanForEval(evaled), { code: 'xl' });
+	  } catch (err) {
+		  message.channel.send(cleanForEval(err), { code: 'xl' });
+	  }
   },
 };
