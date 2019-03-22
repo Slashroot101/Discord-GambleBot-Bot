@@ -17,7 +17,7 @@ module.exports = {
 		  if (typeof evaled !== 'string') evaled = util.inspect(evaled);
 		  message.channel.send(cleanForEval(evaled), { code: 'xl' });
 	  } catch (err) {
-		  message.channel.send(cleanForEval(err), { code: 'xl' });
+		  message.channel.send(`\`ERROR\` \`\`\`xl\n${cleanForEval(err)}\n\`\`\``);
 	  }
   },
 };
