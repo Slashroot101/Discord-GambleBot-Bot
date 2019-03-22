@@ -1,10 +1,10 @@
 const _ = require('lodash');
 const hangmanImageMap = require('../../assets/hangman/fileMapToUrl');
-const {lettersOnly} = require('./constants/regex');
+const {lettersOnlyRegex} = require('./constants/regex');
 
 class Hangman {
   constructor(secretPhrase) {
-    if (!secretPhrase.match(lettersOnly)) { throw new Error('Parameter is not letters only.'); }
+    if (!secretPhrase.match(lettersOnlyRegex)) { throw new Error('Parameter is not letters only.'); }
     this.secretPhrase = secretPhrase;
     this.inCorrectGuess = new Set();
     this.correctGuess = new Set();
