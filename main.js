@@ -70,14 +70,14 @@ client.on('message', async (msg) => {
       ]);
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     msg.reply('there was an error trying to execute that command!');
   }
   return undefined;
 });
 
 client.on('guildCreate', async (event) => {
-  await guildAPI.create([ event.id ]);
+  await guildAPI.create([event.id]);
 });
 
 client.login(botToken);
