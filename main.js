@@ -21,7 +21,7 @@ client.on('ready', async () => {
     const command = require(`./commands/${file}`);
     const newCommand = await commandAPI.create(command);
     command.id = newCommand.commands.id;
-    client.commands.set(command.name, command);;
+    client.commands.set(command.name, command);
   }
 
   await guildAPI.create(client.guilds.map(x => x.id));
@@ -31,7 +31,18 @@ client.on('ready', async () => {
   nats.subscribe('lottery', async (msg) => {
     const parsedMessage = JSON.parse(msg);
     const winner = await lotteryAPI.completeLottery(parsedMessage.id);
-    console.log(client.guilds.find(guild => guild.id === winner.guild.id));
+    const guild = client.guilds.get(String(winner.guild[`guild_id`]));
+    let channelID;
+	  const { channels } = guild;
+		  for (let c of channels) {
+			  const channelType = c[1].type;
+			  if (channelType === 'text') {
+				  channelID = c[0];
+				  break;
+			  }
+		  }
+	  const channel = client.channels.get(guild.systemChannelID || channelID);
+	  channel.send(`We have a lottery winner!`);
   });
 });
 
