@@ -1,17 +1,18 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const moment = require('moment');
+const NATS = require('nats');
 const ROLES = require('./commands/utility/constants/roles');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-const { prefix, botToken } = require('./config');
-
+const { prefix, botToken, natsUrl } = require('./config');
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commandAPI = require('./api/commands');
 const pointsAPI = require('./api/points');
 const guildAPI = require('./api/guild');
+const lotteryAPI = require('./api/lottery');
 const { getUserByDiscordID, create } = require('./api/user');
 
 client.on('ready', async () => {
@@ -20,10 +21,18 @@ client.on('ready', async () => {
     const command = require(`./commands/${file}`);
     const newCommand = await commandAPI.create(command);
     command.id = newCommand.commands.id;
-    client.commands.set(command.name, command);
+    client.commands.set(command.name, command);;
   }
 
   await guildAPI.create(client.guilds.map(x => x.id));
+
+  const nats = await NATS.connect({ url: natsUrl });
+
+  nats.subscribe('lottery', async (msg) => {
+    const parsedMessage = JSON.parse(msg);
+    const winner = await lotteryAPI.completeLottery(parsedMessage.id);
+    console.log(client.guilds.find(guild => guild.id === winner.guild.id));
+  });
 });
 
 client.on('message', async (msg) => {

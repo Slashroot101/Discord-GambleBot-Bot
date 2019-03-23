@@ -5,6 +5,7 @@
         "global-require": "warn",
         "no-mixed-spaces-and-tabs": "off",
         "no-tabs": "off",
-        "no-eval": "warn"
+        "no-eval": "warn",
+        "dot-notation": "off"
     }
 }
