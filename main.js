@@ -5,7 +5,7 @@ const NATS = require('nats');
 const ROLES = require('./commands/utility/constants/roles');
 const localityTypes = require('./commands/utility/constants/localityTypes');
 const { lotteryWinnerEmbed } = require('./commands/utility/lottery/lotteryWinnerEmbed');
-
+const { pickFirstChannelInGuild } = require ('./commands/utility/pickFirstChannelInGuild');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const { prefix, botToken, natsUrl } = require('./config');
@@ -32,9 +32,13 @@ client.on('ready', async () => {
   nats.subscribe('lottery', async (msg) => {
     const parsedMessage = JSON.parse(msg);
     const winner = await lotteryAPI.completeLottery(parsedMessage.id);
-    console.log(parsedMessage['locality_type'] );
     if (parsedMessage['locality_type'] === localityTypes.guild){
-      const channel = client.channels.get(winner.channel['discord_channel_id']);
+      let channel;
+      if (winner.channel === undefined){
+        channel = pickFirstChannelInGuild(client.channels);
+      } else {
+	      channel = client.channels.get(winner.channel['discord_channel_id']);
+      }
       channel.send({  embed: lotteryWinnerEmbed(winner.user['discord_user_id'], winner.jackpotTotal.jackpot)});
     } else {
 

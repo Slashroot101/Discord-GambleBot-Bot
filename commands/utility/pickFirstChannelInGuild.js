@@ -1,12 +1,12 @@
 exports.pickFirstChannelInGuild = (channels) => {
-  let channelID;
+  let channel;
   for (const c of channels) {
     const channelType = c[1].type;
     if (channelType === 'text') {
-      channelID = c[0];
+      channel = c[1];
       break;
     }
   }
 
-  return channelID;
+  return channel;
 };
