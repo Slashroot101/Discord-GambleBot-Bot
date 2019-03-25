@@ -47,6 +47,5 @@ exports.getByGuildID = guildID => new Promise(async (resolve) => {
   };
 
   const guild = await request(options);
-  console.log(guild);
   resolve(guild.data.guild);
 });

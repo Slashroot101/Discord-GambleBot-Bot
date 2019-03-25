@@ -48,7 +48,6 @@ client.on('ready', async () => {
 
 client.on('message', async (msg) => {
   if (!msg.content.startsWith(prefix) || msg.author.bot || msg.guild === null) return undefined;
-
   const args = msg.content.slice(prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
   try {
@@ -83,6 +82,7 @@ client.on('message', async (msg) => {
       commandToExec.execute(client, msg, args, user),
       commandAPI.addToUserAudit(commandToExec.id, user.user_id),
     ]);
+
     if (commandToExec.generatesMoney && reward !== undefined && reward !== 0) {
       await Promise.all([
         pointsAPI.addPointsByUserID(user.user_id, msg.guild.id, reward),
