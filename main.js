@@ -3,6 +3,8 @@ const Discord = require('discord.js');
 const moment = require('moment');
 const NATS = require('nats');
 const ROLES = require('./commands/utility/constants/roles');
+const localityTypes = require('./commands/utility/constants/localityTypes');
+const { lotteryWinnerEmbed } = require('./commands/utility/lottery/lotteryWinnerEmbed');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -25,24 +27,18 @@ client.on('ready', async () => {
   }
 
   await guildAPI.create(client.guilds.map(x => x.id));
-
   const nats = await NATS.connect({ url: natsUrl });
 
   nats.subscribe('lottery', async (msg) => {
     const parsedMessage = JSON.parse(msg);
     const winner = await lotteryAPI.completeLottery(parsedMessage.id);
-    const guild = client.guilds.get(String(winner.guild[`guild_id`]));
-    let channelID;
-	  const { channels } = guild;
-		  for (let c of channels) {
-			  const channelType = c[1].type;
-			  if (channelType === 'text') {
-				  channelID = c[0];
-				  break;
-			  }
-		  }
-	  const channel = client.channels.get(guild.systemChannelID || channelID);
-	  channel.send(`We have a lottery winner!`);
+    console.log(parsedMessage['locality_type'] );
+    if (parsedMessage['locality_type'] === localityTypes.guild){
+      const channel = client.channels.get(winner.channel['discord_channel_id']);
+      channel.send({  embed: lotteryWinnerEmbed(winner.user['discord_user_id'], winner.jackpotTotal.jackpot)});
+    } else {
+
+    }
   });
 });
 
