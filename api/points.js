@@ -2,7 +2,6 @@ const request = require('request-promise');
 const config = require('../config');
 
 exports.addPointsByUserID = (userID, guildID, points) => new Promise(async (resolve) => {
-  console.log(guildID)
   const options = {
     method: 'PUT',
     body: {
