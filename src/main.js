@@ -17,6 +17,7 @@ const pointsAPI = require('./api/points');
 const guildAPI = require('./api/guild');
 const lotteryAPI = require('./api/lottery');
 const { getUserByDiscordID, create } = require('./api/user');
+const getHumanizedDuration = require('./utility/getHumanizedDuration');
 
 client.on('ready', async () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -36,13 +37,8 @@ client.on('ready', async () => {
   nats.subscribe('lottery', async (msg) => {
     const parsedMessage = JSON.parse(msg);
     const winner = await lotteryAPI.completeLottery(parsedMessage.id);
-    if (parsedMessage['locality_type'] === localityTypes.guild) {
-      let channel;
-      if (winner.channel === undefined) {
-        channel = pickFirstChannelInGuild(client.channels);
-      } else {
-	      channel = client.channels.get(winner.channel['discord_channel_id']);
-      }
+    if (parsedMessage.locality_type === localityTypes.guild) {
+      const channel = client.channels.get(winner.channel['discord_channel_id']) || pickFirstChannelInGuild(client.channels);
       channel.send({ embed: lotteryWinnerEmbed(winner.user['discord_user_id'], winner.jackpotTotal.jackpot) });
     } else {
 
@@ -53,11 +49,11 @@ client.on('ready', async () => {
 client.on('message', async (msg) => {
   if (!msg.content.startsWith(prefix) || msg.author.bot || msg.guild === null) return undefined;
   const args = msg.content.slice(prefix.length).split(/ +/);
-  const command = args.shift().toLowerCase();
+  const command = args.shift();
   try {
-    if (!client.commands.has(command)) return undefined;
+	  const commandToExec = client.commands.get(command);
+    if (!commandToExec) return undefined;
     let user = await getUserByDiscordID(msg.author.id);
-
     if (user.length === 0) {
       user = await create(msg.author.id);
     }
@@ -65,8 +61,6 @@ client.on('message', async (msg) => {
     if (user.blacklist_date !== null && user.length !== 0) {
       return msg.reply(`you were blacklisted on ${moment(user.blacklist_date)}. Please contact an administrator if you think this is incorrect.`);
     }
-
-    const commandToExec = client.commands.get(command);
 
     if (commandToExec.requiresAdmin && user.rolename !== ROLES.ADMIN.name) {
       return msg.reply('nice try :-). You must be an admin to run that command.');
@@ -76,9 +70,7 @@ client.on('message', async (msg) => {
       const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);
       if (isOnCooldown.onCooldown) {
         const availableTime = moment(isOnCooldown.oldestAudit.execution_time).add(isOnCooldown.oldestAudit.duration, 'minutes');
-        const timeDifference = availableTime.diff(moment(isOnCooldown.oldestAudit.current_time));
-        const duration = moment.duration(timeDifference);
-        return msg.reply(` that command is currently on cooldown and will be available ${duration.humanize(true)}.`);
+        return msg.reply(` that command is currently on cooldown and will be available ${getHumanizedDuration(isOnCooldown.oldestAudit.current_time, availableTime, true )}.`);
       }
     }
 

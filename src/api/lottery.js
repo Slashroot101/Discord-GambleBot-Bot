@@ -36,3 +36,14 @@ exports.getActiveForDiscordGuildID = guildID => new Promise(async (resolve) => {
   const lottery = await request(options);
   resolve(lottery.data);
 });
+
+exports.getCurrentGlobalLottery = () => new Promise(async (resolve) => {
+  const options = {
+    method: 'GET',
+    uri: `${config.apiUrl}/lottery/global`,
+    json: true,
+  };
+
+  const globalLottery = await request(options);
+  resolve(globalLottery.data);
+});

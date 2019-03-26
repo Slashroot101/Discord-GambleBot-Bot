@@ -42,6 +42,7 @@ module.exports = {
       duration,
       ticketCost,
       maxTickets: MAX_TICKETS,
+      createdBy: user.user_id,
       isDone: false,
     };
 
