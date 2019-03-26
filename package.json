@@ -2,7 +2,7 @@
   "name": "discord-gamble-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "src/main.js",
   "dependencies": {
     "discord.js": "^11.4.2",
     "lodash": "^4.17.11",

@@ -1,5 +1,5 @@
 const request = require('request-promise');
-const config = require('../config');
+const config = require('../../config');
 
 exports.create = commands => new Promise(async (resolve) => {
   const options = {

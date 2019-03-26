@@ -1,5 +1,5 @@
 const request = require('request-promise');
-const config = require('../config');
+const config = require('../../config');
 
 exports.completeLottery = async lotteryID => new Promise(async (resolve) => {
   const options = {

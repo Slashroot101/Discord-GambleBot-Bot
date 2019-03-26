@@ -59,8 +59,18 @@ module.exports = {
         fields.push({
           name: `**${property}**`,
           value: groupedCommands[property].map(x => x.command.name).join('\n'),
-          inline: false,
+          inline: true,
         });
+      }
+      const numColumnsRemainingFromRow = fields.length % 3;
+      if (numColumnsRemainingFromRow !== 0) {
+        for (let i = 0; i < numColumnsRemainingFromRow; i += 1) {
+          fields.push({
+            name: '\u200b',
+            value: '\u200b',
+            inline: true,
+          });
+        }
       }
       const embed = {
         color: 0x00ff00,

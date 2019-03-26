@@ -9,7 +9,7 @@ const { pickFirstChannelInGuild } = require('./utility/pickFirstChannelInGuild')
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-const { prefix, botToken, natsUrl } = require('./config');
+const { prefix, botToken, natsUrl } = require('../config');
 
 const commandDirectories = fs.readdirSync('./commands');
 const commandAPI = require('./api/commands');
@@ -22,8 +22,8 @@ client.on('ready', async () => {
   console.log(`Logged in as ${client.user.tag}!`);
   for (const directory of commandDirectories) {
     const files = fs.readdirSync(`./commands/${directory}`);
-    files.forEach(async (element) => {
-      const command = require(`./commands/${directory}/${element}`);
+    files.forEach(async (file) => {
+      const command = require(`./commands/${directory}/${file}`);
       const newCommand = await commandAPI.create(command);
       command.id = newCommand.commands.id;
       client.commands.set(command.name, command);
