@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const Deck = require('./utility/deck');
-const BlackjackHand = require('./utility/bj/blackjackHand');
-const { addPointsByUserID } = require('../api/points');
+const Deck = require('../../utility/deck');
+const BlackjackHand = require('../../utility/bj/blackjackHand');
+const { addPointsByUserID } = require('../../api/points');
 
 const currentUsersInGame = new Set();
 

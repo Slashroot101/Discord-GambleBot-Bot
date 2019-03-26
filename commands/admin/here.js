@@ -1,4 +1,4 @@
-const { create } = require('../api/channels');
+const { create } = require('../../api/channels');
 
 module.exports = {
   name: 'here',

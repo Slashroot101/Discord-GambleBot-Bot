@@ -1,5 +1,5 @@
-const User = require('../api/user');
-const Points = require('../api/points');
+const User = require('../../api/user');
+const Points = require('../../api/points');
 
 module.exports = {
   name: 'pay',

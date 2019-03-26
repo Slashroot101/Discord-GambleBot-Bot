@@ -1,4 +1,4 @@
-const { getLeaderboard } = require('../api/points');
+const { getLeaderboard } = require('../../api/points');
 
 module.exports = {
   name: 'lb',

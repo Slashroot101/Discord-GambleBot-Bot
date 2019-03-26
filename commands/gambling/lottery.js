@@ -1,9 +1,9 @@
-const { create: createLottery } = require('../api/lottery');
-const { INITIAL_NEEDED_TICKETS, MAX_DURATION_HOURS, MAX_TICKETS } = require('./utility/constants/lottery');
-const { create: createLotteryTickets } = require('../api/lotteryTickets');
-const localityTypes = require('./utility/constants/localityTypes');
-const { getByGuildID: getGuildByGuildID } = require('../api/guild');
-const { addPointsByUserID } = require('../api/points');
+const { create: createLottery } = require('../../api/lottery');
+const { INITIAL_NEEDED_TICKETS, MAX_DURATION_HOURS, MAX_TICKETS } = require('../../utility/constants/lottery');
+const { create: createLotteryTickets } = require('../../api/lotteryTickets');
+const localityTypes = require('../../utility/constants/localityTypes');
+const { getByGuildID: getGuildByGuildID } = require('../../api/guild');
+const { addPointsByUserID } = require('../../api/points');
 
 module.exports = {
   name: 'lottery',

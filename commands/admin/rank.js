@@ -1,4 +1,4 @@
-const User = require('../api/user');
+const User = require('../../api/user');
 
 module.exports = {
   name: 'rank',

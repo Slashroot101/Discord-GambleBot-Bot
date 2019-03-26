@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')).map(x => require(`./${x}`));
-const Points = require('../api/points');
+const Points = require('../../api/points');
 
 module.exports = {
   name: 'net',

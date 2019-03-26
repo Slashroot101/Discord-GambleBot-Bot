@@ -1,4 +1,4 @@
-const { daily } = require('../api/points');
+const { daily } = require('../../api/points');
 
 module.exports = {
   name: 'daily',

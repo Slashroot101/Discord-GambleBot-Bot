@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const hangmanImageMap = require('../../assets/hangman/fileMapToUrl');
+const hangmanImageMap = require('../assets/hangman/fileMapToUrl');
 const {lettersOnlyRegex} = require('./constants/regex');
 
 class Hangman {

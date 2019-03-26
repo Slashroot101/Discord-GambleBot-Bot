@@ -1,4 +1,4 @@
-const { getGuildBankByGuildID } = require('../api/guild');
+const { getGuildBankByGuildID } = require('../../api/guild');
 
 module.exports = {
   name: 'gbalance',

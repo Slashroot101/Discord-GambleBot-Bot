@@ -2,15 +2,16 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const moment = require('moment');
 const NATS = require('nats');
-const ROLES = require('./commands/utility/constants/roles');
-const localityTypes = require('./commands/utility/constants/localityTypes');
-const { lotteryWinnerEmbed } = require('./commands/utility/lottery/lotteryWinnerEmbed');
-const { pickFirstChannelInGuild } = require ('./commands/utility/pickFirstChannelInGuild');
+const ROLES = require('./utility/constants/roles');
+const localityTypes = require('./utility/constants/localityTypes');
+const { lotteryWinnerEmbed } = require('./utility/lottery/lotteryWinnerEmbed');
+const { pickFirstChannelInGuild } = require('./utility/pickFirstChannelInGuild');
+
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const { prefix, botToken, natsUrl } = require('./config');
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandDirectories = fs.readdirSync('./commands');
 const commandAPI = require('./api/commands');
 const pointsAPI = require('./api/points');
 const guildAPI = require('./api/guild');
@@ -19,11 +20,14 @@ const { getUserByDiscordID, create } = require('./api/user');
 
 client.on('ready', async () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    const newCommand = await commandAPI.create(command);
-    command.id = newCommand.commands.id;
-    client.commands.set(command.name, command);
+  for (const directory of commandDirectories) {
+    const files = fs.readdirSync(`./commands/${directory}`);
+    files.forEach(async (element) => {
+      const command = require(`./commands/${directory}/${element}`);
+      const newCommand = await commandAPI.create(command);
+      command.id = newCommand.commands.id;
+      client.commands.set(command.name, command);
+    });
   }
 
   await guildAPI.create(client.guilds.map(x => x.id));
@@ -32,14 +36,14 @@ client.on('ready', async () => {
   nats.subscribe('lottery', async (msg) => {
     const parsedMessage = JSON.parse(msg);
     const winner = await lotteryAPI.completeLottery(parsedMessage.id);
-    if (parsedMessage['locality_type'] === localityTypes.guild){
+    if (parsedMessage['locality_type'] === localityTypes.guild) {
       let channel;
-      if (winner.channel === undefined){
+      if (winner.channel === undefined) {
         channel = pickFirstChannelInGuild(client.channels);
       } else {
 	      channel = client.channels.get(winner.channel['discord_channel_id']);
       }
-      channel.send({  embed: lotteryWinnerEmbed(winner.user['discord_user_id'], winner.jackpotTotal.jackpot)});
+      channel.send({ embed: lotteryWinnerEmbed(winner.user['discord_user_id'], winner.jackpotTotal.jackpot) });
     } else {
 
     }

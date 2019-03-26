@@ -1,4 +1,4 @@
-const { cleanForEval } = require('../commands/utility/cleanForEval');
+const { cleanForEval } = require('../../utility/cleanForEval');
 const util = require('util');
 
 module.exports = {

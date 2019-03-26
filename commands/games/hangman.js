@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const { prefix } = require('../config');
-const Hangman = require('./utility/hangman');
-const { lettersOnlyRegex } = require('./utility/constants/regex');
+const { prefix } = require('../../config');
+const Hangman = require('../../utility/hangman');
+const { lettersOnlyRegex } = require('../../utility/constants/regex');
 
 const currentChannelsInGame = new Set();
 

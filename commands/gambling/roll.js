@@ -1,4 +1,4 @@
-const Points = require('../api/points');
+const Points = require('../../api/points');
 
 module.exports = {
   name: 'roll',
