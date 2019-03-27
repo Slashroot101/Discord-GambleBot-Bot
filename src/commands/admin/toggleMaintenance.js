@@ -2,7 +2,7 @@ const { toggleMaintenanceMode } = require('../../api/commands');
 const REGEX_CONST = require('../../utility/constants/regex');
 
 module.exports = {
-  name: 'commandToggle',
+  name: 'toggleMaintenance',
   description: 'Toggles commands on/off maintenance',
   requiresAdmin: true,
   duration: 60,
@@ -34,7 +34,7 @@ module.exports = {
       commandObject.maintenanceMode = isInMaintenance;
       client.commands.set(commandObject.name, commandObject);
       await toggleMaintenanceMode(commandObject.id, isInMaintenance);
-      await message.reply(` successfully toggled maintenance mode for ${args[0]} to ${isInMaintenance}`);
+      await message.reply(` successfully toggled maintenance mode for ${args[0]} to ${args[1]}`);
       await client.shard.broadcastEval(`client.commands.set(${commandObject.name}, ${commandObject})`);
     } else {
       message.reply(' you must supply your command as the command name or the command ID.');
