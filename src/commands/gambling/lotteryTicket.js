@@ -23,7 +23,6 @@ module.exports = {
     }
 
 	    const lottery = args[1] === 'guild' ? await getActiveForDiscordGuildID(message.guild.id) : await getCurrentGlobalLottery();
-      console.log(lottery);
 	    if (Object.entries(lottery).length === 0 && lottery.constructor === Object) {
 	    	message.reply(' there is no active lottery to buy tickets for.');
 	    	return;

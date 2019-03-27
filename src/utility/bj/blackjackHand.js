@@ -15,11 +15,11 @@ class BlackjackHand extends Hand {
 
   toString(isStanding) {
     let ret = '';
-    let count = 0;
+    let isFirstIteration = false;
     if (this.isDealer && isStanding) {
       this.cards.forEach((value, key) => {
-        ret += `${count === 0 ? `${key[0].substr(0, key[0].indexOf('|'))} *` : ''}`;
-        count += 1;
+        ret += `${!isFirstIteration ? `${key[0].substr(0, key[0].indexOf('|'))} *` : ''}`;
+        isFirstIteration = true;
       });
       return ret;
     }

@@ -48,7 +48,7 @@ If the bot is responding, everything is working.
 
 ## Authors
 
-* **Samuel Curry** - *Creator and maintainer* - [PurpleBooth](https://github.com/slashroot101)
+* **Samuel Curry** - *Creator and maintainer* - [Github](https://github.com/slashroot101)
 
 
 ## License

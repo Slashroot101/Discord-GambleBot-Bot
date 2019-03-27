@@ -13,7 +13,7 @@ module.exports = {
     const [globalLottery, localLottery] = await Promise.all([
       getCurrentGlobalLottery(), getActiveForDiscordGuildID(message.guild.id),
     ]);
-		console.log(globalLottery)
+
     const fields = [];
     if (localLottery) {
     	fields.push({
@@ -24,7 +24,7 @@ module.exports = {
     } else {
 	    fields.push({
 		    name: '**Local**',
-		    value: 'None are currently active.`',
+		    value: 'None are currently active.',
 		    inline: true,
 	    });
     }
@@ -32,13 +32,13 @@ module.exports = {
     if (Object.entries(globalLottery).length !== 0 && globalLottery.constructor === Object) {
 	    fields.push({
 		    name: '**Local**',
-		    value: `This lottery will end ${getHumanizedDuration(globalLottery.lottery.current_time, globalLottery.lottery.end_date, true)} \nCurrent Jackpot: $${globalLottery.lottery.jackpot > 0 ? globalLottery.lottery.jackpot : 0 }`,
+		    value: `This lottery will end ${getHumanizedDuration(globalLottery.lottery.current_time, globalLottery.lottery.end_date, true)} \nCurrent Jackpot: $${globalLottery.lottery.jackpot > 0 ? globalLottery.lottery.jackpot : 0}`,
 		    inline: true,
 	    });
     } else {
 	    fields.push({
 		    name: '**Global**',
-		    value: 'None are currently active.`',
+		    value: 'None are currently active.',
 		    inline: true,
 	    });
     }

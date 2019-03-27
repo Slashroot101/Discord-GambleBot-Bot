@@ -22,15 +22,14 @@ class Hand {
 
   getSumOfCards(isBlackjackDealer = false) {
     let sum = 0;
-    let count = 0;
-    this.cards.forEach((value, key) => {
-      if (isBlackjackDealer && count < 1) {
-        sum = key[1].value;
-        count += 1;
-      } else if (!isBlackjackDealer) {
+    if (isBlackjackDealer){
+      sum = this.cards.entries().next().value[0][1].value;
+    } else {
+      this.cards.forEach((value, key) => {
         sum += key[1].value;
-      }
-    });
+      });
+    }
+
     return sum;
   }
 }

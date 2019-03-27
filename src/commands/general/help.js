@@ -22,6 +22,7 @@ module.exports = {
   generatesMoney: false,
   usages: 1,
   execute(client, message, args) {
+    message.react('👌');
     if (args.length === 1) {
       let neededCommand;
       for (const property in groupedCommands) {

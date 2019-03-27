@@ -3,7 +3,6 @@ const Discord = require('discord.js');
 const moment = require('moment');
 const NATS = require('nats');
 const ROLES = require('./utility/constants/roles');
-const localityTypes = require('./utility/constants/localityTypes');
 const { lotteryWinnerEmbed } = require('./utility/lottery/lotteryWinnerEmbed');
 const { pickFirstChannelInGuild } = require('./utility/pickFirstChannelInGuild');
 
@@ -27,6 +26,7 @@ client.on('ready', async () => {
       const command = require(`./commands/${directory}/${file}`);
       const newCommand = await commandAPI.create(command);
       command.id = newCommand.commands.id;
+      command.maintenanceMode = newCommand.commands.maintenance;
       client.commands.set(command.name, command);
     });
   }
@@ -36,12 +36,8 @@ client.on('ready', async () => {
   nats.subscribe('lottery', async (msg) => {
     const parsedMessage = JSON.parse(msg);
     const winner = await lotteryAPI.completeLottery(parsedMessage.id);
-    if (parsedMessage.locality_type === localityTypes.guild) {
-      const channel = client.channels.get(winner.channel['discord_channel_id']) || pickFirstChannelInGuild(client.channels);
-      channel.send({ embed: lotteryWinnerEmbed(winner.user['discord_user_id'], winner.jackpotTotal.jackpot) });
-    } else {
-
-    }
+    const channel = winner.channel ? client.channels.get(winner.channel['discord_channel_id']) : pickFirstChannelInGuild(client.channels);
+    channel.send({ embed: lotteryWinnerEmbed(winner.user['discord_user_id'], winner.jackpotTotal.jackpot) });
   });
 });
 
@@ -52,7 +48,13 @@ client.on('message', async (msg) => {
   try {
 	  const commandToExec = client.commands.get(command);
     if (!commandToExec) return undefined;
+
     let user = await getUserByDiscordID(msg.author.id);
+
+    if (commandToExec.maintenanceMode === true && user.rolename !== ROLES.ADMIN.name) {
+      return msg.reply(' this command is currently in maintenance mode. Please try again later.');
+    }
+
     if (user.length === 0) {
       user = await create(msg.author.id);
     }
@@ -69,7 +71,7 @@ client.on('message', async (msg) => {
       const isOnCooldown = await commandAPI.isCommandOnCooldown(commandToExec.id, user.user_id);
       if (isOnCooldown.onCooldown) {
         const availableTime = moment(isOnCooldown.oldestAudit.execution_time).add(isOnCooldown.oldestAudit.duration, 'minutes');
-        return msg.reply(` that command is currently on cooldown and will be available ${getHumanizedDuration(isOnCooldown.oldestAudit.current_time, availableTime, true )}.`);
+        return msg.reply(` that command is currently on cooldown and will be available ${getHumanizedDuration(isOnCooldown.oldestAudit.current_time, availableTime, true)}.`);
       }
     }
 
@@ -86,7 +88,7 @@ client.on('message', async (msg) => {
       ]);
     }
   } catch (error) {
-    console.log(error);
+    console.log(error)
     msg.reply('there was an error trying to execute that command!');
   }
   return undefined;

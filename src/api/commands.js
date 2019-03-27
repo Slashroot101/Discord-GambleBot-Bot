@@ -35,3 +35,17 @@ exports.isCommandOnCooldown = (commandID, userID) => new Promise(async (resolve)
   const isOnCooldown = await request(options);
   resolve(isOnCooldown.data);
 });
+
+exports.toggleMaintenanceMode = (commandID, maintenanceMode) => new Promise(async (resolve) => {
+  const options = {
+    method: 'PUT',
+    uri: `${config.apiUrl}/commands/command/${commandID}/maintenance`,
+    body: {
+      maintenanceMode,
+    },
+    json: true,
+  };
+
+  const command = await request(options);
+  resolve(command.data);
+});
