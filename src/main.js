@@ -50,10 +50,12 @@ client.on('message', async (msg) => {
 	  const commandToExec = client.commands.get(command);
     if (!commandToExec) return undefined;
 
+    let user = await getUserByDiscordID(msg.author.id);
+
     if (commandToExec.maintenanceMode === true && user.rolename !== ROLES.ADMIN.name) {
       return msg.reply(' this command is currently in maintenance mode. Please try again later.');
     }
-    let user = await getUserByDiscordID(msg.author.id);
+
     if (user.length === 0) {
       user = await create(msg.author.id);
     }
