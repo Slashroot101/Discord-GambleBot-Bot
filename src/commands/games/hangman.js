@@ -42,6 +42,9 @@ module.exports = {
     });
 
     dmCollector.on('end', async () => {
+      if (!hangmanBoard){
+        return;
+      }
       let boardMessage = await message.channel.send(
         {
           embed: hangmanBoard.toGameboardEmbed(message),
