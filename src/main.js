@@ -31,7 +31,6 @@ client.on('ready', async () => {
     });
   }
 
-  await guildAPI.create(client.guilds.map(x => x.id));
   const nats = await NATS.connect({ url: natsUrl });
 
   nats.subscribe('lottery', async (msg) => {
@@ -77,6 +76,7 @@ client.on('message', async (msg) => {
     const [reward, audit] = await Promise.all([
       commandToExec.execute(client, msg, args, user),
       commandAPI.addToUserAudit(commandToExec.id, user.user_id),
+	    guildAPI.create([msg.guild.id]),
     ]);
 
     if (commandToExec.generatesMoney && reward !== undefined && reward !== 0) {
