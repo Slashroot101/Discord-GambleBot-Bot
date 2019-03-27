@@ -38,11 +38,21 @@ exports.getGuildBankByGuildID = async guildID => new Promise(async (resolve) => 
   resolve(guildBank.data.guildBank);
 });
 
-
 exports.getByGuildID = guildID => new Promise(async (resolve) => {
   const options = {
     method: 'GET',
     uri: `${config.apiUrl}/guild/guild-id/${guildID}`,
+    json: true,
+  };
+
+  const guild = await request(options);
+  resolve(guild.data.guild);
+});
+
+exports.getGlobalGuild = () => new Promise(async (resolve) => {
+  const options = {
+    method: 'GET',
+    uri: `${config.apiUrl}/guild/global`,
     json: true,
   };
 
