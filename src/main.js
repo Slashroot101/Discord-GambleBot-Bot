@@ -48,7 +48,7 @@ client.on('message', async (msg) => {
   try {
 	  const commandToExec = client.commands.get(command);
     if (!commandToExec) return undefined;
-
+	  await guildAPI.create([msg.guild.id]);
     let user = await getUserByDiscordID(msg.author.id);
 
     if (commandToExec.maintenanceMode === true && user.rolename !== ROLES.ADMIN.name) {
@@ -78,7 +78,6 @@ client.on('message', async (msg) => {
     const [reward, audit] = await Promise.all([
       commandToExec.execute(client, msg, args, user),
       commandAPI.addToUserAudit(commandToExec.id, user.user_id),
-	    guildAPI.create([msg.guild.id]),
     ]);
 
     if (commandToExec.generatesMoney && reward !== undefined && reward !== 0) {
