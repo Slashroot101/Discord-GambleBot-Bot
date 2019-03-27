@@ -19,7 +19,7 @@ module.exports = {
       message.reply('there is a game currently going on in this channel. Please choose another channel or wait until the game is done.');
       return;
     }
-
+    message.react('👌');
     const privateMessage = await message.author.send('To start hangman I need a sentence/word from you, type `!sentence <word/sentence>` such as `!sentence wow this bot is awesome`. Please keep in mind that only letters are allowed in hangman. You have 30 seconds.');
     const dmCollector = new Discord.MessageCollector(
       privateMessage.channel,
