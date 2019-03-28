@@ -12,7 +12,6 @@ module.exports = {
     const guildBank = await getGuildBankByGuildID(msg.guild.id);
     const globalGuild = await getGlobalGuild();
     const globalBank = await getGuildBankByGuildID(globalGuild.guild_id);
-    console.log(globalBank);
 	  const embed = {
 		  color: 0x00ff00,
 		  author: {

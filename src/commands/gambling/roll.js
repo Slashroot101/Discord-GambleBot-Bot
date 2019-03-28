@@ -13,7 +13,6 @@ module.exports = {
     const face1 = Number(parseInt(args[1], 10));
     const face2 = Number(parseInt(args[2], 10));
     const face3 = Number(parseInt(args[3], 10));
-
     if (Number.isNaN(face1)
       || Number.isNaN(face2)
       || Number.isNaN(face3)
@@ -27,8 +26,8 @@ module.exports = {
       return message.reply(' your bet must be more than 0.');
     }
 
-    if (Number.isNaN(bet)) {
-      return message.reply('your bet must be a number.');
+    if (Number.isNaN(bet || bet > Number.MAX_SAFE_INTEGER)) {
+      return message.reply(`your bet must be a number and be less than ${Number.MAX_SAFE_INTEGER}.`);
     }
 
     if (user.current_balance < bet) {

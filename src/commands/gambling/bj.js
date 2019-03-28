@@ -27,8 +27,8 @@ module.exports = {
         return resolve();
       }
 
-      if (Number.isNaN(bet)) {
-        message.reply('your bet must be a number.');
+      if (Number.isNaN(bet) || bet > Number.MAX_SAFE_INTEGER) {
+        message.reply(`your bet must be a number and less than ${Number.MAX_SAFE_INTEGER}.`);
         return resolve();
       }
 

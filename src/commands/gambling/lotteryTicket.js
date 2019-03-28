@@ -23,7 +23,7 @@ module.exports = {
     }
 
 	    const lottery = args[1] === 'guild' ? await getActiveForDiscordGuildID(message.guild.id) : await getCurrentGlobalLottery();
-	    if (Object.entries(lottery).length === 0 && lottery.constructor === Object) {
+	    if (lottery === undefined || (Object.entries(lottery).length === 0 && lottery.constructor === Object)) {
 	    	message.reply(' there is no active lottery to buy tickets for.');
 	    	return;
 	    }
@@ -34,6 +34,5 @@ module.exports = {
 		    numTickets * lottery.lottery.ticket_cost,
 	    );
 	    message.reply(` you have succesfully purchased ${numTickets} tickets. Good luck!`);
-
   },
 };

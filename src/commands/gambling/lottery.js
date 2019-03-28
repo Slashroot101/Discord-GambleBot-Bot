@@ -20,8 +20,8 @@ module.exports = {
     }
 
     const ticketCost = Number.parseInt(args[0], 10);
-    if (ticketCost < 1 || Number.isNaN(ticketCost)) {
-      message.reply(' the ticket cost cannot be 0 or negative. It must be an integer.');
+    if (ticketCost < 1 || Number.isNaN(ticketCost) || ticketCost > Number.MAX_SAFE_INTEGER) {
+      message.reply(` the ticket cost cannot be 0 or negative. It must be an integer that is less than ${Number.MAX_SAFE_INTEGER}.`);
     }
 
     const duration = Math.ceil(Number.parseInt(args[1], 10));
