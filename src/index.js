@@ -13,6 +13,7 @@ client.registry
   .registerDefaultTypes()
   .registerGroups([
     ['gambling', 'Gamble your points away!'],
+    ['points', 'Gain points to use in gambling.'],
   ])
   .registerDefaultGroups()
   .registerDefaultCommands()

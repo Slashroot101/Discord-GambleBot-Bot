@@ -6,8 +6,8 @@ module.exports = class BalanceCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'balance',
-      aliases: ['bank', 'points'],
-      group: 'gambling',
+      aliases: ['bank', 'points', 'bal'],
+      group: 'points',
       memberName: 'balance',
       description: 'Retrieves your user balance.',
       details: oneLine`
@@ -19,6 +19,9 @@ module.exports = class BalanceCommand extends Command {
 
   async run(msg, args) {
     const user = await getUser({ discordUserID: msg.author.id });
+    if (!user[0]){
+      return msg.say('Beep boop. You do not exist in my brain now. Please try to execute a command again to get added.');
+    }
     const embed = {
       color: 0x00ff00,
       author: {
