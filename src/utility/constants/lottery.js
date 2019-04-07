@@ -1,5 +1,0 @@
-module.exports = {
-  INITIAL_NEEDED_TICKETS: 5,
-	MAX_DURATION_HOURS: 24,
-	MAX_TICKETS: 100,
-};
