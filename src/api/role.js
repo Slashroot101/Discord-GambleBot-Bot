@@ -4,7 +4,7 @@ const BASE_URL = 'api/roles/';
 
 exports.createRole = async (name, isSuperUser, hasAdmin) => {
 	const options = {
-		uri: `${config.apiUrl}/${BASE_URL}/`,
+		uri: `${config.apiUrl}/${BASE_URL}`,
 		method: 'POST',
 		body: {
 			name,
@@ -15,16 +15,16 @@ exports.createRole = async (name, isSuperUser, hasAdmin) => {
 	};
 
 	const role = await request(options);
-	return {role};
+	return role.role;
 };
 
 exports.getWithFilter = async (query) => {
 	const options = {
-		uri:`${config.apiUrl}/${BASE_URL}/`,
-		qa: query,
+		uri:`${config.apiUrl}/${BASE_URL}`,
+		qs: query,
 		json: true,
 	};
 
 	const roles = await request(options);
-	return {roles};
+	return roles.roles;
 };

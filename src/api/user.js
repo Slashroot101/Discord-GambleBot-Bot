@@ -3,7 +3,7 @@ const config = require('../../config');
 
 const BASE_URL = 'api/users/';
 
-exports.getUser = async (query) => {
+exports.getWithFilter = async (query) => {
   const options = {
     method: 'GET',
     uri: `${config.apiUrl}/${BASE_URL}`,
@@ -12,7 +12,7 @@ exports.getUser = async (query) => {
   };
 
   const users = await request(options);
-  return {users};
+  return users.users;
 };
 
 exports.createUser = async (discordUserID, role) => {
