@@ -11,6 +11,21 @@ exports.getUser = async (query) => {
     json: true,
   };
 
+  const users = await request(options);
+  return {users};
+};
+
+exports.createUser = async (discordUserID, role) => {
+  const options ={
+    method: 'POST',
+    uri: `${config.apiUrl}/${BASE_URL}`,
+    body: {
+      discordUserID,
+      role,
+    },
+    json: true
+  };
+
   const user = await request(options);
-  return user.users;
+  return user.user;
 };

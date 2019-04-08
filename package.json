@@ -4,9 +4,7 @@
   "description": "",
   "main": "src/main.js",
   "dependencies": {
-    "common-tags": "^1.8.0",
     "discord.js": "^11.4.2",
-    "discord.js-commando": "^0.10.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "nats": "^1.2.2",
