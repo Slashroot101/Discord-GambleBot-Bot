@@ -1,26 +1,29 @@
-const constants = require('../../constants');
+const { Command } = require('discord.js-commando');
+const { oneLine } = require('common-tags');
+const { getWithFilter } = require('../../api/user');
 
-module.exports = {
-  name: 'bal',
-  description: 'Retrieves your balance. Ex: `!bal`',
-  costData: {
-    cost: 1,
-    hasCost: true,
-  },
-  cooldown: {
-    hasCooldown: true,
-    executions: 1,
-    cooldownInMinutes: 2
-  },
-  allowedRoles: [
-   constants.roles.baseUser, constants.roles.admin,
-  ],
-  async execute(client, message, args, user) {
+module.exports = class BalanceCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'balance',
+      aliases: ['bank', 'points', 'bal'],
+      group: 'points',
+      memberName: 'balance',
+      description: 'Retrieves your user balance.',
+      details: oneLine`
+        This command returns your current user balance and the total points you have gotten.
+			`,
+      examples: ['balance'],
+    });
+  }
+
+  async run(msg, args) {
+    const user = await getWithFilter({ discordUserID: msg.author.id });
     const embed = {
       color: 0x00ff00,
       author: {
-        name: message.member.user.tag,
-        icon_url: message.member.user.avatarURL,
+        name: msg.member.user.tag,
+        icon_url: msg.member.user.avatarURL,
       },
       title: '',
       url: '',
@@ -28,18 +31,17 @@ module.exports = {
       fields: [
         {
           name: '**Current Balance**',
-          value: `${user.current_balance}`,
+          value: `${user[0].points.currentPoints}`,
           inline: true,
         },
         {
           name: '**Total Money Gained**',
-          value: `${user.total_points_gained}`,
+          value: `${user[0].points.totalAccruedPoints}`,
           inline: true,
         },
       ],
       timestamp: new Date(),
     };
-
-    message.channel.send({ embed });
-  },
+    return msg.embed(embed)
+  }
 };

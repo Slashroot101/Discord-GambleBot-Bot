@@ -1,46 +1,45 @@
-const Discord = require('discord.js');
+const { CommandoClient } = require('discord.js-commando');
+const path = require('path');
+const config = require('../config');
+const User = require('./api/user');
+const MongoClient = require('mongodb').MongoClient;
+const MongoDBProvider = require('commando-provider-mongo');
 
-const client = new Discord.Client();
-const {prefix, botToken} = require('../config');
-const fs = require('fs');
-const User = require('../src/api/user');
-const Role = require('../src/api/role');
-const Command = require('../src/api/command');
-client.commands = new Discord.Collection();
-
-client.on('ready', async () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-	const commandDirectories = fs.readdirSync('./commands');
-	const allCommands = await Command.getWithFilter();
-	for (const directory of commandDirectories) {
-		const files = fs.readdirSync(`./commands/${directory}`);
-		files.forEach(async (file) => {
-			const command = require(`./commands/${directory}/${file}`);
-			let foundCommand = allCommands.filter(x => x.name === command.name);
-			if(!foundCommand.length){
-				foundCommand = await Command.createCommand(command);
-			}
-			command.id = foundCommand._id;
-			client.commands.set(command.name, foundCommand);
-		});
-	}
+const client = new CommandoClient({
+	commandPrefix: config.prefix,
+	unknownCommandResponse: false,
+	owner: config.owner,
+	disableEveryone: true
 });
 
-client.on('message', async (msg) => {
-	if (!msg.content.startsWith(prefix) || msg.author.bot || msg.guild === null) return undefined;
-	const args = msg.content.slice(prefix.length).split(/ +/);
-	const command = args.shift();
-	const commandToExec = client.commands.get(command);
-	if (!commandToExec) return;
-	let user = await User.getWithFilter({discordUserID: msg.author.id});
-	if(!user.length){
-		const role = await Role.getWithFilter({name: 'baseUser'});
-		user = await User.createUser(msg.author.id, role[0]._id);
-	}
+client.setProvider(
+	MongoClient.connect(config.db.host, {
+		auth: {
+			user: config.db.username,
+			password: config.db.password,
+			authdb: config.db.authdb,
+		},
+		autoReconnect: true,
+		reconnectTries: 1000000,
+		reconnectInterval: 3000}).then(client => new MongoDBProvider(client, 'GambleBot'))
+).catch(console.error);
 
-	if(user.blacklist.isBlacklisted){
-		return msg.reply(`You are currently blacklisted. You were blacklisted on ${user.blacklist.blacklistDate}. Please contact an admin if you think this is wrong.`);
-	}
+client.registry
+	.registerDefaultTypes()
+	.registerGroups([
+		['points', 'Points']
+	])
+	.registerDefaultGroups()
+	.registerDefaultCommands()
+	.registerCommandsIn(path.join(__dirname, 'commands'));
+
+client.dispatcher.addInhibitor(async msg => {
+	
 });
 
-client.login(botToken);
+client.on('ready', () => {
+	console.log('Logged in!');
+	client.user.setActivity('Pigchomp Boys');
+});
+
+client.login(config.botToken);

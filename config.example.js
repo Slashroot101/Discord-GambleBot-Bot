@@ -1,5 +1,15 @@
 module.exports = {
-  botToken: '', // discord bot token
-  prefix: '', // discord command prefix
-  apiUrl: '', // api url for bot
+  module.exports = {
+    botToken: '',
+    prefix: '!',
+    apiUrl: '',
+    natsUrl: '',
+    owner: '',
+    db: {
+      host: '',
+      username: '',
+      authdb: '',
+      password: '',
+    },
+  }
 };
