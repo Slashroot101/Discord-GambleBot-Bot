@@ -1,11 +1,20 @@
+const constants = require('../../constants');
+
 module.exports = {
   name: 'bal',
   description: 'Retrieves your balance. Ex: `!bal`',
-  hasCooldown: false,
-  duration: 0,
-  usages: 0,
-  requiresAdmin: false,
-  generatesMoney: false,
+  costData: {
+    cost: 1,
+    hasCost: true,
+  },
+  cooldown: {
+    hasCooldown: true,
+    executions: 1,
+    cooldownInMinutes: 2
+  },
+  allowedRoles: [
+   constants.roles.baseUser, constants.roles.admin,
+  ],
   async execute(client, message, args, user) {
     const embed = {
       color: 0x00ff00,
