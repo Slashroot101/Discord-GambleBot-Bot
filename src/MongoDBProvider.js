@@ -1,5 +1,5 @@
 const SettingProvider = require('discord.js-commando').SettingProvider;
-
+const Guild = require('./api/guild');
 /**
  * Uses an MongoDB collection to store settings with guilds
  * @extends {SettingProvider}
@@ -45,12 +45,11 @@ class MongoDBProvider extends SettingProvider {
   async init(client) {
     this.client = client;
 
-    // Load or create the settings collection
-    const collection = await this.db.collection('settings');
+    const guilds = await Guild.getGuildWithFilter();
 
     // Load all settings
-    collection.find().forEach(doc => {
-      const guild = doc.guild !== '0' ? doc.guild : 'global';
+    guilds.forEach(doc => {
+      const guild = doc.discordGuildID !== '0' ? doc.discordGuildID : 'global';
       this.settings.set(guild, doc.settings);
 
       // Guild is not global, and doesn't exist currently so lets skip it.
@@ -109,7 +108,6 @@ class MongoDBProvider extends SettingProvider {
     settings[key] = val;
 
     await this.updateGuild(guild, settings);
-
     if(guild === 'global') this.updateOtherShards(key, val);
     return val;
   }
@@ -128,11 +126,21 @@ class MongoDBProvider extends SettingProvider {
     return val;
   }
 
-  async updateGuild(guild, settings) {
-    guild = guild !== 'global' ? guild : 0;
+  async clear(guild) {
+    guild = this.constructor.getGuildID(guild);
+    if(!this.settings.has(guild)) return;
+    this.settings.delete(guild);
 
-    const collection = await this.db.collection('settings');
-    return collection.updateOne({ guild }, { $set: { guild, settings } }, { upsert: true });
+    return Guild.updateGuild(guild, {settings: []});
+  }
+
+  async updateGuild(guild, settings) {
+    console.log(settings)
+    guild = guild !== 'global' ? guild : 0;
+    if(guild === 0){
+      guild = await Guild.getGuildWithFilter({isGlobal: true, discordGuildID: '0'});
+    }
+    return Guild.updateGuild(guild[0]._id, {settings});
   }
 
   /**
