@@ -1,93 +1,72 @@
-const { CommandoClient } = require('discord.js-commando');
-const path = require('path');
-const config = require('../config');
-const User = require('./api/user');
-const Role = require('./api/role');
-const Guild = require('./api/guild');
-const RoleConstants = require('./constants');
-const MongoClient = require('mongodb').MongoClient;
-const MongoDBProvider = require('./MongoDBProvider');
 
-const client = new CommandoClient({
-	commandPrefix: config.prefix,
-	unknownCommandResponse: false,
-	owner: config.owner,
-	disableEveryone: true
-});
-
-client.setProvider(
-	MongoClient.connect(config.db.host, {
-		auth: {
-			user: config.db.username,
-			password: config.db.password,
-			authdb: config.db.authdb,
-		},
-		autoReconnect: true,
-		reconnectTries: 1000000,
-		reconnectInterval: 3000}).then(client => new MongoDBProvider(client, 'GambleBot'))
-).catch(console.error);
-
-client.registry
-	.registerDefaultTypes()
-	.registerGroups([
-		['points', 'Points']
-	])
-	.registerDefaultGroups()
-	.registerDefaultCommands()
-	.registerCommandsIn(path.join(__dirname, 'commands'));
-
-// client.dispatcher.addInhibitor(async msg => {
-// 	const isDM = msg.guild === null;
-// 	let user = await User.getWithFilter({discordUserID: msg.author.id});
-// 	if(!user.length){
-// 		const baseUser = await Role.getWithFilter({name: RoleConstants.roles.baseUser});
-// 		user = await User.createUser({discordUserID: msg.author.id, role: baseUser._id});
-// 	}
-// 	if(!isDM){
-// 		let guild = await Guild.getGuildWithFilter({discordGuildID: msg.guild.id});
-// 		if(!guild.length && !isDM){
-// 			guild = await Guild.create({
-// 				discordGuildID: msg.guild.id,
-// 				bank: {
-// 					currentBalance: 0,
-// 					totalPointsGained: 0,
-// 				},
-// 				isGlobalCommandoRow: false,
-// 				isGlobal: false,
-// 				createdOn: new Date(),
-// 				communicationChannel: {
-// 					onlyAllowCommunicationsHere: false,
-// 					discordChannelID: msg.channel.id,
-// 				},
-// 				disabledCommands: [],
-// 			});
-// 		}
-// 	}
-//
-// 	return false;
-// });
+const Discord = require('discord.js');
+const moment = require('moment');
+const client = new Discord.Client();
+const {prefix, botToken} = require('../config');
+const fs = require('fs');
+const User = require('../src/api/user');
+const Role = require('../src/api/role');
+const Command = require('../src/api/command');
+const {getCommandHistoryWithFilter, createCommandHistory} = require('../src/api/commandHistory');
+const getHumanizedDuration = require('../src/utility/getHumanizedDuration');
+client.commands = new Discord.Collection();
 
 client.on('ready', async () => {
-	console.log('Logged in!');
-	const globalGuild = await Guild.getGuildWithFilter({discordGuildID: '0', isGlobal: true});
-	if(!globalGuild){
-		const guild = await Guild.create({
-			discordGuildID: '0',
-			bank: {
-				currentBalance: 0,
-				totalPointsGained: 0
-			},
-			isGlobal: true,
-			createdOn: new Date(),
-			settings: [],
-			communicationChannel: {
-				onlyAllowCommunicationsHere: false,
-				discordChannelID: '0',
-			},
-			disabledCommands: [],
+	console.log(`Logged in as ${client.user.tag}!`);
+	const commandDirectories = fs.readdirSync('./commands');
+	const allCommands = await Command.getWithFilter();
+	for (const directory of commandDirectories) {
+		const files = fs.readdirSync(`./commands/${directory}`);
+		files.forEach(async (file) => {
+			const command = require(`./commands/${directory}/${file}`);
+			let foundCommand = allCommands.filter(x => x.name === command.name);
+			if(!foundCommand.length){
+				foundCommand = await Command.createCommand(command);
+			}
+			command.id = foundCommand._id;
+			client.commands.set(command.name, foundCommand[0]);
 		});
 	}
-	client.user.setActivity('Pigchomp Boys');
 });
 
-client.login(config.botToken);
+client.on('message', async (msg) => {
+	if (!msg.content.startsWith(prefix) || msg.author.bot || msg.guild === null) return undefined;
+	const args = msg.content.slice(prefix.length).split(/ +/);
+	const command = args.shift();
+	const commandToExec = client.commands.get(command);
+	if (!commandToExec) return;
+	let user = await User.getWithFilter({discordUserID: msg.author.id});
+	if(!user.length){
+		const role = await Role.getWithFilter({name: 'baseUser'});
+		user = await User.createUser(msg.author.id, role[0]._id);
+	} else {
+		user = user[0];
+	}
+
+	if(!commandToExec.allowedRoles.includes(user.role)){
+		return msg.reply('You need a different role to execute that command.');
+	}
+
+	if(user.blacklist.isBlacklisted){
+		return msg.reply(`You are currently blacklisted. You were blacklisted on ${user.blacklist.blacklistDate}. Please contact an admin if you think this is wrong.`);
+	}
+
+	if(commandToExec.cooldown.hasCooldown){
+		const commandAudit = await getCommandHistoryWithFilter({userID: user._id, startTime: moment().subtract(commandToExec.cooldown.cooldownInMinutes, 'minutes').toDate(), endTime: moment().toDate(), sort: -1});
+		console.log(commandAudit)
+		if(commandAudit.length > commandToExec.cooldown.executions){
+			const availableTime = moment(commandAudit[0].executionTime).add(commandToExec.cooldown.cooldownInMinutes, 'minutes');
+			console.log(commandAudit)
+			return msg.reply(`This command is on cooldown and will currently be available ${getHumanizedDuration(commandAudit[0].executionTime, availableTime, true)}`)
+		}
+	}
+
+	 await createCommandHistory({
+		commandID: commandToExec._id,
+		executionTime: moment(),
+		userID: user._id,
+		points: 0,
+	});
+});
+
+client.login(botToken);

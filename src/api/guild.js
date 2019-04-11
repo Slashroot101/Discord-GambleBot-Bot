@@ -3,13 +3,14 @@ const config = require('../../config');
 const BASE_URL = 'api/guilds';
 
 exports.updateGuild = async (id, guildObject) => {
+  console.log(typeof guildObject)
   const options = {
     uri: `${config.apiUrl}/${BASE_URL}/${id}`,
     method: 'PUT',
     body: guildObject,
     json: true,
   };
-  console.log(options)
+
   const guild = await request(options);
   return guild.guild;
 };

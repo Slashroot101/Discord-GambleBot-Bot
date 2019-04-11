@@ -4,11 +4,9 @@
   "description": "",
   "main": "src/main.js",
   "dependencies": {
-    "commando-provider-mongo": "^1.1.1",
     "discord.js": "^11.4.2",
-    "discord.js-commando": "^0.10.0",
     "lodash": "^4.17.11",
-    "moment": "^2.23.0",
+    "moment": "^2.24.0",
     "mongodb": "^3.2.3",
     "nats": "^1.2.2",
     "request": "^2.88.0",
