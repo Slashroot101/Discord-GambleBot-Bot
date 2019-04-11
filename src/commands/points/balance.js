@@ -12,6 +12,7 @@ module.exports = {
     executions: 1,
     cooldownInMinutes: 2
   },
+  group: 'Points',
   allowedRoles: [
     constants.roles.baseUser, constants.roles.admin,
   ],
