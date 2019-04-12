@@ -60,8 +60,9 @@ client.on('ready', async () => {
 
 client.on('message', async (msg) => {
 	try {
+		if(msg.author.bot || msg.guild === null) return;
 		const prefix = client.prefix.get(msg.guild.id);
-		if (!msg.content.startsWith(prefix) || msg.author.bot || msg.guild === null) return undefined;
+		if (!msg.content.startsWith(prefix)) return;
 		const args = msg.content.slice(prefix.length).split(/ +/);
 		const command = args.shift();
 		const commandToExec = client.commands.get(command);
@@ -74,7 +75,7 @@ client.on('message', async (msg) => {
 			user = user[0];
 		}
 
-		if(!commandToExec.allowedRoles.includes(user.role)){
+		if(commandToExec.allowedRoles.length !== 0 && !commandToExec.allowedRoles.includes(user.role)){
 			return msg.reply('You need a different role to execute that command.');
 		}
 
