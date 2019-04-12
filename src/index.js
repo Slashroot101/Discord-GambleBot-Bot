@@ -62,6 +62,9 @@ client.on('ready', async () => {
 client.on('message', async (msg) => {
 	try {
 		if(msg.author.bot || msg.guild === null) return;
+		if(msg.content.startsWith(`<@!${client.user.id}>`)){
+		  return msg.reply(`prefix for this guild: ${client.prefix.get(msg.guild.id)}`);
+    }
 		const prefix = client.prefix.get(msg.guild.id);
 		if (!msg.content.startsWith(prefix)) return;
 		const args = msg.content.slice(prefix.length).split(/ +/);
