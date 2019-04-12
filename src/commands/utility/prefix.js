@@ -15,12 +15,11 @@ module.exports = {
   },
   group: 'Utility',
   allowedRoles: [
-    constants.roles.baseUser, constants.roles.admin,
   ],
   async execute(client, message, args, user) {
     const isAdmin = message.channel.permissionsFor(message.member).has("ADMINISTRATOR", false);
     if(!isAdmin){
-      return message.reply(' you do not have proper permission to execute this command.');
+      return message.reply(' you do not have proper permission to execute this command. You need server level admin permission.');
     }
 
     if(!args.length) {
@@ -30,6 +29,7 @@ module.exports = {
     const guild = await Guild.getGuildWithFilter({discordGuildID: [message.guild.id]});
     await Guild.updateGuild(guild[0]._id, {prefix: args.join(' ')});
     client.prefix.set(message.guild.id, args.join(' '));
+    console.log(client.prefix.get(message.guild.id))
     return message.reply(` your guild prefix has been changed to ${args.join(' ')}`);
   },
 };

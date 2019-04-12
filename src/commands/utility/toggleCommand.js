@@ -19,7 +19,7 @@ module.exports = {
 	async execute(client, message, args, user) {
 		const isAdmin = message.channel.permissionsFor(message.member).has("ADMINISTRATOR", false);
 		if(!isAdmin){
-			return message.reply(' you do not have proper permission to execute this command.');
+			return message.reply(' you do not have proper permission to execute this command. You need server level admin permission.');
 		}
 
 		if(!args.length) {
