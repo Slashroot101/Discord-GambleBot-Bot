@@ -29,12 +29,12 @@ module.exports = {
       fields: [
         {
           name: '**Current Balance**',
-          value: `${user.current_balance}`,
+          value: `${user.points.currentPoints}`,
           inline: true,
         },
         {
           name: '**Total Money Gained**',
-          value: `${user.total_points_gained}`,
+          value: `${user.points.totalAccruedPoints}`,
           inline: true,
         },
       ],
