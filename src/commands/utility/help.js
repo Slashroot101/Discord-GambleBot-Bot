@@ -56,7 +56,7 @@ module.exports = {
 					},
 					title: `For help with a specific command, type \`${guildPrefix}help <command name>\``,
 					url: '',
-					description: 'Emojis show if you have permission to run the command',
+					description: 'Emojis show if you have permission to run the command. It does NOT show discord level permissions at the moment.',
 					fields,
 					timestamp: new Date(),
 				}})
@@ -74,7 +74,7 @@ module.exports = {
 				},
 				title: `To see all commands, type \`${guildPrefix}help\``,
 				url: '',
-				description: 'Emojis show if you have permission to run the command',
+				description: 'Emojis show if you have permission to run the command. It does NOT show discord level permissions at the moment.',
 				fields: [{
 					name: `${command.allowedRoles.includes(user.role) || command.allowedRoles.length === 0 ? ':white_check_mark:' : ':x:'} ${command.name}`,
 					value: `${command.description}`,

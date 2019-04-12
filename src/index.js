@@ -1,4 +1,3 @@
-
 const Discord = require('discord.js');
 const moment = require('moment');
 const client = new Discord.Client();
@@ -23,9 +22,11 @@ client.on('ready', async () => {
 			const command = require(`./commands/${directory}/${file}`);
 			let foundCommand = allCommands.filter(x => x.name === command.name);
 			if(!foundCommand.length){
+				command.isInMaintenanceMode = false;
 				foundCommand = await Command.createCommand(command);
 			}
 			command._id = foundCommand[0]._id;
+			command.isInMaintenanceMode = foundCommand[0].isInMaintenanceMode;
 			client.commands.set(command.name, command);
 		});
 	}
@@ -74,10 +75,9 @@ client.on('message', async (msg) => {
 		} else {
 			user = user[0];
 		}
-		let guild = await Guild.getGuildWithFilter({discordGuildID: [msg.guild.id]});
-		console.log(guild)
-		if(guild[0].disabledCommands.includes(commandToExec._id)){
-			return msg.reply(' this command is currently disabled in this guild. Check with your guild admin if you think that this is wrong.');
+
+		if(commandToExec.isInMaintenanceMode){
+			return msg.reply(' this command is currently in maintenance mode. Please try again later.');
 		}
 
 		if(commandToExec.allowedRoles.length !== 0 && !commandToExec.allowedRoles.includes(user.role)){
@@ -94,6 +94,11 @@ client.on('message', async (msg) => {
 				const availableTime = moment(commandAudit[0].executionTime).add(commandToExec.cooldown.cooldownInMinutes, 'minutes');
 				return msg.reply(`This command is on cooldown and will currently be available ${getHumanizedDuration(moment(), availableTime, true)}`)
 			}
+		}
+
+		let guild = await Guild.getGuildWithFilter({discordGuildID: [msg.guild.id]});
+		if(guild[0].disabledCommands.includes(commandToExec._id)){
+			return msg.reply(' this command is currently disabled in this guild. Check with your guild admin if you think that this is wrong.');
 		}
 
 		const commandValue = await commandToExec.execute(client, msg, args, user);
