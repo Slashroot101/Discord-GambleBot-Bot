@@ -16,6 +16,7 @@ exports.getCommandHistoryWithFilter = async (query) => {
 };
 
 exports.createCommandHistory = async (commandHistoryObject) => {
+  console.log(commandHistoryObject)
   const options = {
     method: 'POST',
     uri: `${config.apiUrl}/${BASE_URL}`,

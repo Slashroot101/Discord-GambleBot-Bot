@@ -28,8 +28,8 @@ module.exports = {
     }
 
     const guild = await Guild.getGuildWithFilter({discordGuildID: [message.guild.id]});
-    await Guild.updateGuild(guild[0]._id, {prefix: args[0]});
-    client.prefix.set(message.guild.id, args[0]);
-    return message.reply(` your guild prefix has been changed to ${args[0]}`);
+    await Guild.updateGuild(guild[0]._id, {prefix: args.join(' ')});
+    client.prefix.set(message.guild.id, args.join(' '));
+    return message.reply(` your guild prefix has been changed to ${args.join(' ')}`);
   },
 };

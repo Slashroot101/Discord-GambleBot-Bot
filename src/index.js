@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const moment = require('moment');
 const client = new Discord.Client();
-const {prefix, botToken} = require('../config');
+const {botToken} = require('../config');
 const fs = require('fs');
 const config = require('../config');
 const User = require('../src/api/user');
@@ -25,7 +25,7 @@ client.on('ready', async () => {
 			if(!foundCommand.length){
 				foundCommand = await Command.createCommand(command);
 			}
-			command.id = foundCommand._id;
+			command._id = foundCommand[0]._id;
 			client.commands.set(command.name, command);
 		});
 	}
@@ -83,10 +83,9 @@ client.on('message', async (msg) => {
 		}
 
 		if(commandToExec.cooldown.hasCooldown){
-			const commandAudit = await getCommandHistoryWithFilter({userID: user._id, startTime: moment().subtract(commandToExec.cooldown.cooldownInMinutes, 'minutes').toDate(), endTime: moment().toDate(), sort: -1});
+			const commandAudit = await getCommandHistoryWithFilter({userID: user._id, startTime: moment().subtract(commandToExec.cooldown.cooldownInMinutes, 'minutes').toDate(), endTime: moment().toDate(), sort: -1, commandID: commandToExec._id });
 			if(commandAudit.length >= commandToExec.cooldown.executions){
 				const availableTime = moment(commandAudit[0].executionTime).add(commandToExec.cooldown.cooldownInMinutes, 'minutes');
-				console.log(availableTime)
 				return msg.reply(`This command is on cooldown and will currently be available ${getHumanizedDuration(moment(), availableTime, true)}`)
 			}
 		}
@@ -104,6 +103,27 @@ client.on('message', async (msg) => {
 		msg.reply(' there was an error executing that command.');
 	}
 
+
+});
+
+client.on('guildCreate', async (event) => {
+	const guild = await Guild.getGuildWithFilter({discordGuildID: [event.id]});
+	if(!guild.length){
+		await Guild.create({
+			discordGuildID: event.id,
+			bank: {
+				currentBalance: 0,
+				totalPointsGained: 0
+			},
+			prefix: config.prefix,
+			isGlobal: false,
+			createdOn: new Date(),
+			communicationChannel: {
+				onlyAllowCommunicationsHere: false,
+				discordChannelID: ''
+			}
+		});
+	}
 
 });
 
