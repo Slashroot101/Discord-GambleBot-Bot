@@ -74,13 +74,18 @@ client.on('message', async (msg) => {
 		} else {
 			user = user[0];
 		}
+		let guild = await Guild.getGuildWithFilter({discordGuildID: [msg.guild.id]});
+		console.log(guild)
+		if(guild[0].disabledCommands.includes(commandToExec._id)){
+			return msg.reply(' this command is currently disabled in this guild. Check with your guild admin if you think that this is wrong.');
+		}
 
 		if(commandToExec.allowedRoles.length !== 0 && !commandToExec.allowedRoles.includes(user.role)){
-			return msg.reply('You need a different role to execute that command.');
+			return msg.reply(' you need a different role to execute that command.');
 		}
 
 		if(user.blacklist.isBlacklisted){
-			return msg.reply(`You are currently blacklisted. You were blacklisted on ${user.blacklist.blacklistDate}. Please contact an admin if you think this is wrong.`);
+			return msg.reply(` you are currently blacklisted. You were blacklisted on ${user.blacklist.blacklistDate}. Please contact an admin if you think this is wrong.`);
 		}
 
 		if(commandToExec.cooldown.hasCooldown){
