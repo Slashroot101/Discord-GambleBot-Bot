@@ -20,6 +20,10 @@ module.exports = {
 			return message.reply('You need to provide a command to toggle maintenance on for and whether it\'\ on/off')
 		}
 
+		if(args[1] === 'maintenanceMode'){
+			return message.reply(' hey, cut it out.');
+		}
+
 		const command = client.commands.get(args[1]);
 		if(!command){
 			return message.reply(' this command does not exist. Please provide a valid command to continue');
