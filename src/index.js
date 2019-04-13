@@ -2,11 +2,12 @@ const Discord = require('discord.js');
 const moment = require('moment');
 const client = new Discord.Client();
 const {botToken} = require('../config');
-const fs = require('fs');
+
 const config = require('../config');
 const User = require('../src/api/user');
 const Role = require('../src/api/role');
-const Command = require('../src/api/command');
+const createCommands = require('./utility/createCommands');
+const createGuildsAndGetPrefix = require('./utility/createGuildsAndGetPrefix');
 const Guild = require('../src/api/guild');
 const {getCommandHistoryWithFilter, createCommandHistory} = require('../src/api/commandHistory');
 const getHumanizedDuration = require('../src/utility/getHumanizedDuration');
@@ -14,49 +15,9 @@ client.commands = new Discord.Collection();
 
 client.on('ready', async () => {
 	console.log(`Logged in as ${client.user.tag}!`);
-	const commandDirectories = fs.readdirSync('./commands');
-	const allCommands = await Command.getWithFilter();
-	for (const directory of commandDirectories) {
-		const files = fs.readdirSync(`./commands/${directory}`);
-		files.forEach(async (file) => {
-			const command = require(`./commands/${directory}/${file}`);
-			let foundCommand = allCommands.filter(x => x.name === command.name);
-			if(!foundCommand.length){
-				command.isInMaintenanceMode = false;
-				foundCommand = await Command.createCommand(command);
-			}
-			command._id = foundCommand[0]._id;
-			command.isInMaintenanceMode = foundCommand[0].isInMaintenanceMode;
-			client.commands.set(command.name, command);
-		});
-	}
-	const guildsIds = [ ...client.guilds.keys() ];
-	const guilds = await Guild.getGuildWithFilter({discordGuildID: guildsIds});
-	const savedGuildIDs = guilds.map(x => x.discordGuildID);
-	const notSavedGuilds = guildsIds.filter(x => x.includes(savedGuildIDs));
-	const guildPromises = [];
-	for(let i = 0; i < notSavedGuilds.length; i++){
-		guildPromises.push(Guild.create({
-			discordGuildID: notSavedGuilds[i],
-			bank: {
-				currentBalance: 0,
-				totalPointsGained: 0
-			},
-			prefix: config.prefix,
-			isGlobal: false,
-			createdOn: new Date(),
-			communicationChannel: {
-				onlyAllowCommunicationsHere: false,
-				discordChannelID: ''
-			}
-		}));
-	}
-	const resolvedGuilds = await Promise.all(guildPromises);
-	const allGuilds = guilds.concat(resolvedGuilds);
-	client.prefix = new Map();
-	allGuilds.forEach(element => {
-		client.prefix.set(element.discordGuildID, element.prefix);
-	});
+	client.user.setActivity(`Type @${client.user.username} to get prefix.`);
+	client.commands = await createCommands();
+  client.prefix = await createGuildsAndGetPrefix([ ...client.guilds.keys()]);
 });
 
 client.on('message', async (msg) => {
