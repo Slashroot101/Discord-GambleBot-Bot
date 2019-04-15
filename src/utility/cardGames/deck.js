@@ -1,9 +1,13 @@
 class Deck {
-  constructor(cards, shouldSuffle) {
-    this.cards = card;
-    if(shouldSuffle){
+  constructor(cards, shouldShuffle) {
+    this.cards = cards;
+    if(shouldShuffle){
       this.shuffle();
     }
+  }
+
+  getSumOfCards(){
+    return this.cards.reduce((sum, card) => { return sum + card.value });
   }
 
   drawRandomCard(){
@@ -21,3 +25,5 @@ class Deck {
     }
   }
 }
+
+module.exports = Deck;
