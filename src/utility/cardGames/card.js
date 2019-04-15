@@ -1,7 +1,7 @@
 const suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
 
 class Card {
-  constructor(suit, value) {
+  constructor(suit, value, name) {
     if(suits.includes(suit)){
       throw new Error('Suit is not of hearts, spades, clubs, or diamonds');
     }
@@ -11,6 +11,7 @@ class Card {
     }
     this.suit = suit;
     this.value = value;
+    this.name = name;
   }
 
   getValue(){
@@ -18,6 +19,6 @@ class Card {
   }
 
   getName(){
-    return `${this.value} of ${this.suit}`;
+    return `${this.name}`;
   }
 }

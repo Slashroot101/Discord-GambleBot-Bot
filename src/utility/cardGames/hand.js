@@ -10,6 +10,10 @@ class Hand {
     this.cards.push(card);
   }
 
+  toString(){
+    return this.cards.map(card => card.name).join(' ');
+  }
+
   removeCard(card){
     if(!(card instanceof Card)){
       throw new Error('Card must be an instance of the card class.');
