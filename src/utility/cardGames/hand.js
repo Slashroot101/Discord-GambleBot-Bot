@@ -22,6 +22,10 @@ class Hand {
     return this.cards.splice(indexOfCard, 1);
   }
 
+  getCards(){
+    return this.cards;
+  }
+
   getSumOfCards(){
     return this.cards.reduce((sum, card) => { return sum + card.value });
   }
