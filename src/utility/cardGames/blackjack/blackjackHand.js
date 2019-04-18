@@ -1,8 +1,10 @@
 const messageConstants = require('./messageConstants');
+const Hand = require('../hand');
 
 class BlackjackHand extends Hand {
 	constructor(cards, isDealer){
 		super(cards);
+		console.log(this.cards)
 		this.WIN = 0;
 		this.LOSE = 1;
 		this.TIE = 2;
@@ -12,13 +14,13 @@ class BlackjackHand extends Hand {
 		this.isDealer = isDealer;
 	}
 
-	toString(onlyShowFirst){
-		return onlyShowFirst && this.isDealer ? this.cards[0] : this.cards.map(card => card.name).join(' ');
+	getSumOfCards(isFirst) {
+		return isFirst ? this.cards[0].value : super.getSumOfCards();
 	}
 
 	isWinner(opponent, isStand){
 			const opponentSum = opponent.getSumOfCards();
-			const thisHandSum = super.getSumOfCards();
+			const thisHandSum = this.getSumOfCards();
 			if(thisHandSum > 21){
 				return this.BUST;
 			}
@@ -50,15 +52,21 @@ class BlackjackHand extends Hand {
 			return this.CONTINUEGAME;
 	}
 
+	toString(onlyShowFirst){
+		return onlyShowFirst && this.isDealer ? this.cards[0].getName() : this.cards.map(card => card.name).join(' ');
+	}
+
 	toGameboardEmbed(discordUser, opponentHand, isStand, isFirst){
 		const isUserWinner = this.isWinner(opponentHand, isStand);
-		let dealerSum = opponentHand.getSumOfCards();
-		let clientSum = this.getSumOfCards();
+		let dealerSum = opponentHand.getSumOfCards(isFirst);
+		let clientSum = this.getSumOfCards(false);
 		let resultText = messageConstants[isUserWinner].text;
-		let clientHandString = this.toString();
+		let clientHandString = this.toString(false);
 		let dealerHandString = opponentHand.toString(isFirst);
 		let color = messageConstants[isUserWinner].color;
 
+
+		console.log(clientHandString, dealerHandString)
 		return {
 			color,
 			author: {
@@ -104,3 +112,5 @@ class BlackjackHand extends Hand {
 		};
   }
 }
+
+module.exports = BlackjackHand;

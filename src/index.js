@@ -77,8 +77,6 @@ client.on('message', async (msg) => {
 		console.log(err)
 		msg.reply(' there was an error executing that command.');
 	}
-
-
 });
 
 client.on('guildCreate', async (event) => {

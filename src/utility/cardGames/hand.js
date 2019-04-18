@@ -8,6 +8,7 @@ class Hand {
       throw new Error('Card must be an instance of the card class.');
     }
     this.cards.push(card);
+    return this;
   }
 
   toString(){
@@ -19,7 +20,8 @@ class Hand {
       throw new Error('Card must be an instance of the card class.');
     }
     const indexOfCard = this.cards.map(cardElement => `${cardElement.suit}|${cardElement.value}`).indexOf(`${card.suit}|${card.value}`);
-    return this.cards.splice(indexOfCard, 1);
+    this.cards.splice(indexOfCard, 1);
+    return this;
   }
 
   getCards(){
@@ -27,6 +29,8 @@ class Hand {
   }
 
   getSumOfCards(){
-    return this.cards.reduce((sum, card) => { return sum + card.value });
+    return this.cards.reduce((sum, card) => { return sum + card.value }, 0);
   }
 }
+
+module.exports = Hand;

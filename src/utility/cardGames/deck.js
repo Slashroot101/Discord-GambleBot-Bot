@@ -11,11 +11,11 @@ class Deck {
   }
 
   drawRandomCard(){
-    return this.cards.splice(Math.floor(Math.random() * this.cards.length), 1);
+    return this.cards.splice(Math.floor(Math.random() * this.cards.length) - 1, 1);
   }
 
   drawCardOffTop(){
-    return this.cards.splice(this.cards.length, 1);
+    return this.cards.splice(0, 1)[0];
   }
 
   shuffle(){
