@@ -4,6 +4,7 @@ const Deck = require('../../utility/cardGames/deck');
 const BlackjackHand = require('../../utility/cardGames/blackjack/blackjackHand');
 const Cards = require('../../utility/cardGames/cards');
 const BlackjackCards = [...Cards, ...Cards, ...Cards];
+const GAME_TIME = 60000;
 
 module.exports = {
   name: 'bj',
@@ -26,7 +27,7 @@ module.exports = {
     }
 
     const bet = Number(parseInt(args[0], 10));
-
+    console.log(bet)
     if (bet < 0) {
       return msg.reply('your bet must be greater than or equal to 0.');
     }
@@ -36,7 +37,7 @@ module.exports = {
     }
 
     if (user.points.currentPoints < bet) {
-      return msg.reply(`you do not have enough money! You currently have ${user.current_balance}, and would need to gain $${bet - user.current_balance} more to make that bet.`);
+      return msg.reply(`you do not have enough money! You currently have ${user.currentPoints}, and would need to gain $${bet - user.currentPoints} more to make that bet.`);
     }
 
     if (currentUsersInGame.has(user.id)) {
@@ -48,17 +49,77 @@ module.exports = {
     const gameDeck = new Deck(BlackjackCards, true);
     const dealerHand = new BlackjackHand([gameDeck.drawCardOffTop(), gameDeck.drawCardOffTop()], true);
     const clientHand = new BlackjackHand([gameDeck.drawCardOffTop(), gameDeck.drawCardOffTop()], false);
-    const boardMsg = await msg.channel.send({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, false, true)});
 
     if (clientHand.getSumOfCards() === 21) {
-      currentUsersInGame.delete(user._id);
-      return bet;
-    }
+		  currentUsersInGame.delete(user._id);
+		  return bet;
+	  }
+
+    const boardMsg = await msg.channel.send({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, clientHand.getSumOfCards() === 21, true)});
+    let gameTimeout = setTimeout(async () => {
+	    currentUsersInGame.delete(user._id);
+	    clientHand
+            .addCard(gameDeck.drawCardOffTop())
+            .addCard(gameDeck.drawCardOffTop())
+            .addCard(gameDeck.drawCardOffTop())
+            .addCard(gameDeck.drawCardOffTop())
+            .addCard(gameDeck.drawCardOffTop())
+            .addCard(gameDeck.drawCardOffTop());
+	    await boardMsg.edit({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, false, false)});
+	    betCollector.stop();
+    }, GAME_TIME);
 
     const betCollector = new Discord.MessageCollector(
       msg.channel,
-      m => m.author.id === msg.author.lastMessageID,
-      {time: 60000},
+      m => m.author.id === msg.author.id,
+      {time: GAME_TIME},
     );
+
+    betCollector.on('collect', async msg => {
+      let isStand = false;
+      if(msg.content.toLowerCase() === 'hit'){
+        clientHand.addCard(gameDeck.drawCardOffTop());
+        await boardMsg.edit({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, false, true)});
+      }
+
+      if(msg.content.toLowerCase() === 'stand'){
+        isStand = true;
+        let dealerSum = dealerHand.getSumOfCards();
+        while(dealerSum < 17){
+          dealerHand.addCard(gameDeck.drawCardOffTop());
+          dealerSum = dealerHand.getSumOfCards();
+        }
+        await boardMsg.edit({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, true, false)});
+      }
+
+      const isWinner = clientHand.isWinner(dealerHand, isStand);
+
+      if(isWinner === clientHand.BUST
+	      || isWinner === clientHand.TIE
+	      || isWinner === clientHand.BLACKJACK
+	      || isWinner === clientHand.WIN
+        || isWinner === clientHand.LOSE){
+          betCollector.stop();
+	        await boardMsg.edit({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, true, isWinner === clientHand.CONTINUEGAME)});
+	        currentUsersInGame.delete(user._id);
+	        clearTimeout(gameTimeout);
+
+	        if(isWinner === clientHand.TIE){
+            return 0;
+          }
+
+          if(isWinner === clientHand.WIN
+          || isWinner === clientHand.BLACKJACK){
+            return bet;
+          }
+
+          if(isWinner === clientHand.BUST
+          || isWinner === clientHand.LOSE){
+            return bet * -1;
+          }
+      }
+
+	    await boardMsg.edit({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, false, isWinner === clientHand.CONTINUEGAME)});
+    });
   },
 };

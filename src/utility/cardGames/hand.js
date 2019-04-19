@@ -4,9 +4,6 @@ class Hand {
   }
 
   addCard(card){
-    if(!(card instanceof Card)){
-      throw new Error('Card must be an instance of the card class.');
-    }
     this.cards.push(card);
     return this;
   }
