@@ -66,7 +66,6 @@ class BlackjackHand extends Hand {
 
 	toGameboardEmbed(discordUser, opponentHand, isStand, hideFirstDealerCard){
 		const isUserWinner = this.isWinner(opponentHand, isStand);
-		console.log('IsWinner', isUserWinner)
 		let dealerSum = opponentHand.getSumOfCards(hideFirstDealerCard);
 		let clientSum = this.getSumOfCards(false);
 		let resultText = messageConstants[isUserWinner].text;

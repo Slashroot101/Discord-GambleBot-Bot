@@ -26,8 +26,8 @@ module.exports = {
       return msg.reply('please specify an amount to bet. Such as `!bj <amount>`');
     }
 
-    const bet = Number(parseInt(args[0], 10));
-    console.log(bet)
+    let bet = Number(parseInt(args[0], 10));
+
     if (bet < 0) {
       return msg.reply('your bet must be greater than or equal to 0.');
     }
@@ -82,7 +82,11 @@ module.exports = {
         await boardMsg.edit({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, false, true)});
       }
 
-      if(msg.content.toLowerCase() === 'stand'){
+      if(msg.content.toLowerCase() === 'stand' || msg.content.toLowerCase() === 'double'){
+        if(msg.content.toLowerCase() === 'double'){
+          bet *= 2;
+	        clientHand.addCard(gameDeck.drawCardOffTop());
+        }
         isStand = true;
         let dealerSum = dealerHand.getSumOfCards();
         while(dealerSum < 17){
@@ -100,7 +104,9 @@ module.exports = {
 	      || isWinner === clientHand.WIN
         || isWinner === clientHand.LOSE){
           betCollector.stop();
-	        await boardMsg.edit({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, true, isWinner === clientHand.CONTINUEGAME)});
+          let embed = clientHand.toGameboardEmbed(msg.member.user, dealerHand, true, isWinner === clientHand.CONTINUEGAME);
+          embed.description = embed.description.replace('${0}', bet);
+	        await boardMsg.edit({embed});
 	        currentUsersInGame.delete(user._id);
 	        clearTimeout(gameTimeout);
 
