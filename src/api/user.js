@@ -29,3 +29,17 @@ exports.createUser = async (discordUserID, role) => {
   const user = await request(options);
   return user.user;
 };
+
+exports.addPointsToUser = async(userID, commandID, points) => {
+  const options ={
+    method: 'PUT',
+    uri: `${config.apiUrl}/${BASE_URL}${userID}/command/${commandID}/points`,
+    body: {
+      points,
+    },
+    json: true
+  };
+
+  const user = await request(options);
+  return user.user;
+};

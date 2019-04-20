@@ -67,6 +67,11 @@ client.on('message', async (msg) => {
 
 		const commandValue = await commandToExec.execute(client, msg, args, user);
 
+		if(commandToExec.costData.hasCost){
+			console.log(commandValue)
+			await User.addPointsToUser(user._id, commandToExec._id, commandValue);
+		}
+
 		await createCommandHistory({
 			commandID: commandToExec._id,
 			executionTime: moment(),
