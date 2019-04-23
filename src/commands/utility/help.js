@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const constants = require('../../constants');
+const Guild = require('../../api/guild');
 
 module.exports = {
 	name: 'help',
@@ -17,6 +18,8 @@ module.exports = {
 	allowedRoles: [
 	],
 	async execute(client, message, args, user) {
+		const guild = await Guild.getGuildWithFilter({discordGuildID: [message.guild.id]});
+		console.log(guild)
 		const guildPrefix = client.prefix.get(message.guild.id);
 		if(!args[0]){
 			const fields = [];
@@ -28,7 +31,10 @@ module.exports = {
 				let embedString = '';
 
 				for(let i = 0; i < command.length; i++){
-					embedString += `${command[i].allowedRoles.includes(user.role) || command[i].allowedRoles.length === 0 ? ':white_check_mark:' : ':x:'} ${command[i].name}\n`
+					embedString += `${command[i].allowedRoles.includes(user.role)
+					|| (command[i].allowedRoles.length === 0
+					&& !command[i].isInMaintenanceMode
+					&& !guild[0].disabledCommands.includes(command[i]._id)) ? ':white_check_mark:' : ':x:'} ${command[i].name}\n`
 				}
 				fields.push({
 					name: `**${key}**`,
