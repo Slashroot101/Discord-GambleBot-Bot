@@ -11,5 +11,9 @@ module.exports = {
     authdb: '',
     password: '',
   },
+  points: {
+    min: -20,
+    max: 20
+  }
 };
 

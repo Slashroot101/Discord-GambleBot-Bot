@@ -5,10 +5,10 @@ module.exports = {
   description: 'Retrieves your balance. Ex: `!bal`',
   costData: {
     cost: 1,
-    hasCost: true,
+    hasCost: false,
   },
   cooldown: {
-    hasCooldown: true,
+    hasCooldown: false,
     executions: 1,
     cooldownInMinutes: 2
   },

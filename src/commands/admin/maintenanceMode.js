@@ -32,7 +32,7 @@ module.exports = {
 		if(args[0] !== 'off' && args[0] !== 'on'){
 			return message.reply('you must supplement how to toggle the command (on/off)')
 		}
-		command.isInMaintenanceMode = args[0] ===  'off' ? false : true;
+		command.isInMaintenanceMode = args[0] !== 'off';
 		client.commands.set(args[1], command);
 		await Command.updateCommand(command._id, {isInMaintenanceMode: command.isInMaintenanceMode});
 		return message.reply(` maintenance mode for ${command.name} was successfully toggled ${args[0]}`);
