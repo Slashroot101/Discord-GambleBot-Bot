@@ -37,8 +37,8 @@ module.exports = {
         return msg.reply(`your bet must be a number that does not go over ${Number.MAX_SAFE_INTEGER} and does not go below ${Number.MIN_SAFE_INTEGER}.`);
       }
 
-      if (user.points.currentPoints < bet) {
-        return msg.reply(`you do not have enough money! You currently have ${user.currentPoints}, and would need to gain $${bet - user.currentPoints} more to make that bet.`);
+      if (user.points.currentPoints < bet && bet !== 0) {
+        return msg.reply(`you do not have enough money! You currently have ${user.points.currentPoints}, and would need to gain $${bet - user.points.currentPoints} more to make that bet.`);
       }
 
       if (currentUsersInGame.has(user.id)) {
@@ -84,7 +84,7 @@ module.exports = {
         }
 
         if(msg.content.toLowerCase() === 'stand' || msg.content.toLowerCase() === 'double'){
-          if(msg.content.toLowerCase() === 'double'){
+          if(msg.content.toLowerCase() === 'double' && dealerHand.cards.length === 2){
             bet *= 2;
             clientHand.addCard(gameDeck.drawCardOffTop());
           }
