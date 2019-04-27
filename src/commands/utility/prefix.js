@@ -3,7 +3,7 @@ const Guild = require('../../api/guild');
 
 module.exports = {
   name: 'prefix',
-  description: 'Changes the prefix for your guild. You must have administrator powers in the guild.',
+  description: 'Changes the prefix for your guild. You must have administrator powers in the guild. Ex: `{0}prefix !`',
   costData: {
     cost: 0,
     hasCost: false,

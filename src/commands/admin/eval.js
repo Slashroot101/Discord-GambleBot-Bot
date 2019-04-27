@@ -7,7 +7,7 @@ const discord = require('discord.js');
 
 module.exports = {
   name: 'eval',
-  description: 'Evaluate a javascript string',
+  description: 'Evaluate a javascript string, only for the coolest of users. Ex: `{0}eval process.exit(0)`',
   costData: {
     cost: 1,
     hasCost: false,

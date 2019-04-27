@@ -4,7 +4,7 @@ const User = require('../../api/user');
 
 module.exports = {
   name: 'daily',
-  description: 'Gives you your daily money `!daily`',
+  description: 'Gives you your daily money `{0}daily`',
   costData: {
     cost: 1,
     hasCost: true,

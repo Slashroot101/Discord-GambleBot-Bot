@@ -19,7 +19,6 @@ module.exports = {
 	],
 	async execute(client, message, args, user) {
 		const guild = await Guild.getGuildWithFilter({discordGuildID: [message.guild.id]});
-		console.log(guild)
 		const guildPrefix = client.prefix.get(message.guild.id);
 		if(!args[0]){
 			const fields = [];
@@ -83,7 +82,7 @@ module.exports = {
 				description: 'Emojis show if you have permission to run the command. It does NOT show discord level permissions at the moment.',
 				fields: [{
 					name: `${command.allowedRoles.includes(user.role) || command.allowedRoles.length === 0 ? ':white_check_mark:' : ':x:'} ${command.name}`,
-					value: `${command.description}`,
+					value: `${command.description.replace('{0}', prefix)}`,
 					inline: false,
 				}],
 				timestamp: new Date(),

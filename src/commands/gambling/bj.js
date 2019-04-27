@@ -8,7 +8,7 @@ const GAME_TIME = 60000;
 
 module.exports = {
   name: 'bj',
-  description: 'Starts a game of blackjack. Try `!bj 0` to give it a try',
+  description: 'Starts a game of blackjack. Try `{0}bj 0` to give it a try',
   costData: {
     cost: 1,
     hasCost: true,

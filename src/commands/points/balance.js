@@ -2,7 +2,7 @@ const constants = require('../../constants');
 
 module.exports = {
   name: 'bal',
-  description: 'Retrieves your balance. Ex: `!bal`',
+  description: 'Retrieves your balance. Ex: `{0}bal`',
   costData: {
     cost: 1,
     hasCost: false,

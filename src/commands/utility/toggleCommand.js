@@ -3,7 +3,7 @@ const Guild = require('../../api/guild');
 
 module.exports = {
 	name: 'toggleCommand',
-	description: 'Toggles a command off for your guild.',
+	description: 'Toggles a command off for your guild. Ex: `{0}toggleCommand off bj`',
 	costData: {
 		cost: 0,
 		hasCost: false,

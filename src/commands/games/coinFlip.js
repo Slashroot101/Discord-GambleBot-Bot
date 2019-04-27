@@ -1,6 +1,6 @@
 module.exports = {
   name: 'coinflip',
-  description: 'Flips a coin',
+  description: 'Flips a coin Ex: `{0}coinflip`',
   costData: {
     cost: 1,
     hasCost: false,

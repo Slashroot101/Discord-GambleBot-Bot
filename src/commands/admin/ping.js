@@ -3,7 +3,7 @@ const { oneLine } = require('common-tags');
 
 module.exports = {
   name: 'ping',
-  description: 'Returns bot ping',
+  description: 'Returns bot ping `{0}ping`',
   costData: {
     cost: 1,
     hasCost: false,

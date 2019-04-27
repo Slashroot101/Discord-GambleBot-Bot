@@ -2,7 +2,7 @@ const Command = require('../../api/command');
 
 module.exports = {
 	name: 'maintenanceMode',
-	description: 'Puts a command in  maintenance mode.',
+	description: 'Puts a command in  maintenance mode. Ex: `{0}maintenanceMode off ping`',
 	costData: {
 		cost: 0,
 		hasCost: false,
