@@ -65,7 +65,7 @@ client.on('message', async (msg) => {
 			return msg.reply(' this command is currently disabled in this guild. Check with your guild admin if you think that this is wrong.');
 		}
 
-		const commandValue = await commandToExec.execute(client, msg, args, user);
+		const commandValue = await commandToExec.execute(client, msg, args, user, guild[0]);
 
 		if(commandToExec.costData.hasCost){
 			await User.addPointsToUser(user._id, commandToExec._id, commandValue);

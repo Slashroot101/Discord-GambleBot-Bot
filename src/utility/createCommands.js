@@ -12,7 +12,7 @@ module.exports = async (client) => {
       let foundCommand = allCommands.filter(x => x.name === command.name);
       if(!foundCommand.length){
         command.isInMaintenanceMode = false;
-        foundCommand = await Command.createCommand(command);
+        foundCommand = [await Command.createCommand(command)];
       }
       command._id = foundCommand[0]._id;
       command.isInMaintenanceMode = foundCommand[0].isInMaintenanceMode;
