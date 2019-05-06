@@ -72,6 +72,7 @@ module.exports = {
       isDone: false,
       userID: user._id,
       guildID: guild._id,
+      createdInChannel: message.channel.id,
       ticketCost,
       minTickets: 0,
       maxTickets: lottery.MAX_TICKETS,
