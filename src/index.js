@@ -71,12 +71,14 @@ client.on('message', async (msg) => {
 			await User.addPointsToUser(user._id, commandToExec._id, commandValue);
 		}
 
-		await createCommandHistory({
-			commandID: commandToExec._id,
-			executionTime: moment(),
-			userID: user._id,
-			points: typeof commandValue === 'number' && commandValue !== 0 ? commandValue : 0 ,
-		});
+		if(typeof commandValue === 'number' && commandValue !== 0){
+			await createCommandHistory({
+				commandID: commandToExec._id,
+				executionTime: moment(),
+				userID: user._id,
+				points: commandValue,
+			});
+		}
 	} catch (err) {
 		console.log(err)
 		msg.reply(' there was an error executing that command.');

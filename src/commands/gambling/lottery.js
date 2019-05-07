@@ -49,7 +49,8 @@ module.exports = {
 
     const lotteries = await getLotteryWithFilter({
       guildID: guild._id,
-      isDone: false
+      isDone: false,
+      isQueued: false
     });
 
     if (lotteries.length > 0) {

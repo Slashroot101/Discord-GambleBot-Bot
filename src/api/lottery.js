@@ -25,3 +25,15 @@ exports.getLotteryWithFilter = async(query) => {
   const lotteries = await request(options);
   return lotteries.lotteries;
 };
+
+exports.addTickets = async(lotteryID, tickets) => {
+  const options = {
+    uri: `${config.apiUrl}/${BASE_URL}/${lotteryID}/ticket`,
+    method: 'PUT',
+    body: tickets,
+    json: true,
+  };
+
+  const lottery = await request(options);
+  return lottery.lottery;
+};
