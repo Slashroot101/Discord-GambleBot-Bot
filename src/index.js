@@ -2,12 +2,13 @@ const Discord = require('discord.js');
 const moment = require('moment');
 const client = new Discord.Client();
 const {botToken} = require('../config');
-
+const NATS = require('nats');
 const config = require('../config');
 const User = require('../src/api/user');
 const Role = require('../src/api/role');
 const createCommands = require('./utility/createCommands');
 const createGuildsAndGetPrefix = require('./utility/createGuildsAndGetPrefix');
+const handleExpiredLotteries = require('./utility/handleLotteryExpiration');
 const Guild = require('../src/api/guild');
 const {getCommandHistoryWithFilter, createCommandHistory} = require('../src/api/commandHistory');
 const getHumanizedDuration = require('../src/utility/getHumanizedDuration');
@@ -20,6 +21,10 @@ client.on('ready', async () => {
 		createCommands(),
 		createGuildsAndGetPrefix([ ...client.guilds.keys()]),
 	]);
+
+	const nats = await NATS.connect({ url: config.natsUrl });
+
+	nats.subscribe('lottery', handleExpiredLotteries.bind({client}));
 });
 
 client.on('message', async (msg) => {

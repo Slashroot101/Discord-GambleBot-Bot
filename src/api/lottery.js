@@ -37,3 +37,13 @@ exports.addTickets = async(lotteryID, tickets) => {
   const lottery = await request(options);
   return lottery.lottery;
 };
+
+exports.pickAndSetWinner = async(lotteryID) => {
+	const options = {
+		uri: `${config.apiUrl}/${BASE_URL}/${lotteryID}/winner`,
+		method: 'PUT',
+		json: true,
+	};
+	const lottery = await request(options);
+	return lottery.lottery
+};

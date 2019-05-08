@@ -9,7 +9,7 @@
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "mongodb": "^3.2.3",
-    "nats": "^1.2.2",
+    "nats": "^1.2.10",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
   },
