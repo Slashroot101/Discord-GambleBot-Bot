@@ -15,9 +15,11 @@ client.commands = new Discord.Collection();
 
 client.on('ready', async () => {
 	console.log(`Logged in as ${client.user.tag}!`);
-	client.user.setActivity(`Type @${client.user.username} to get prefix.`);
-	client.commands = await createCommands();
-  client.prefix = await createGuildsAndGetPrefix([ ...client.guilds.keys()]);
+	await client.user.setActivity(`Type @${client.user.username} to get prefix.`);
+	[client.commands, client.prefix] = await Promise.all([
+		createCommands(),
+		createGuildsAndGetPrefix([ ...client.guilds.keys()]),
+	]);
 });
 
 client.on('message', async (msg) => {
