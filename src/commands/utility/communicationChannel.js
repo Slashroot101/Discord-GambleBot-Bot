@@ -21,6 +21,8 @@ module.exports = {
 			return message.reply(' you must provide whether communication filtering is toggled on or off.');
 		}
 
+		client.channels.set(guild.discordGuildID, message.channel.id);
+
 		await Guild.updateGuild(guild._id, {
 			discordChannelID: toggleValue === 'on' ? message.channel.id : undefined,
 		});
