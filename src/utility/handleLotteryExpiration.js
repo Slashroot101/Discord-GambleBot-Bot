@@ -14,9 +14,10 @@ module.exports = async (queuedMessage, client) => {
 				'ids[]': winner.winner
 			}),
 		]);
-		console.log(guild)
+
 		const channel = client.channels.get(guild[0].communicationChannel.discordChannelID) || client.channels.get(winner.createdInChannel);
 		await channel.send({ embed: lotteryWinnerEmbed(user[0].discordUserID, winner.currentJackpot)});
+		await User.addPointsToUser(winner.winner, client.commands.get('lottery'), winner.currentJackpot);
 		await Lottery.update(winner._id, {isDone: true});
 	} else {
 
