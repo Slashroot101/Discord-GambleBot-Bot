@@ -9,13 +9,15 @@ module.exports = async (queuedMessage, client) => {
 	const winner = await Lottery.pickAndSetWinner(parsedLottery._id);
 	if(winner.localityType === constants.lottery.localityType.guild){
 		const [guild, user] = await Promise.all([
-			Guild.getGuildWithFilter({'discordGuildID[0]': winner.discordGuildID}),
+			Guild.getGuildWithFilter({id: winner.guildID}),
 			User.getWithFilter({
 				'ids[]': winner.winner
 			}),
 		]);
-		const channel = client.channels.get(guild.communicationChannel.discordChannelID) || client.channels.get(winner.createdInChannel);
-		await channel.send({ embed: lotteryWinnerEmbed(user.discordUserID, winner.currentJackpot)});
+		console.log(guild)
+		const channel = client.channels.get(guild[0].communicationChannel.discordChannelID) || client.channels.get(winner.createdInChannel);
+		await channel.send({ embed: lotteryWinnerEmbed(user[0].discordUserID, winner.currentJackpot)});
+		await Lottery.update(winner._id, {isDone: true});
 	} else {
 
 	}

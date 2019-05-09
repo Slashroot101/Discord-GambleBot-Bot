@@ -22,7 +22,7 @@ module.exports = {
 		}
 
 		await Guild.updateGuild(guild._id, {
-			defaultCommunicationChannel: toggleValue === 'on', communicationChannel: toggleValue === 'on' ? message.channel.id : undefined,
+			discordChannelID: toggleValue === 'on' ? message.channel.id : undefined,
 		});
 
 		return message.reply(' communication channel successfully toggled!');

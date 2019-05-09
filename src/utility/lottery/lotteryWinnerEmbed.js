@@ -1,4 +1,4 @@
-exports.lotteryWinnerEmbed = (winnerID, jackpotTotal) => {
+module.exports = (winnerID, jackpotTotal) => {
 	const embed = {
 		color: 0x00ff00,
 		title: 'Lottery Results',

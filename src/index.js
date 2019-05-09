@@ -24,7 +24,9 @@ client.on('ready', async () => {
 
 	const nats = await NATS.connect({ url: config.natsUrl });
 
-	nats.subscribe('lottery', handleExpiredLotteries.bind({client}));
+	nats.subscribe('lottery', (message) => {
+		handleExpiredLotteries(message, client);
+	});
 });
 
 client.on('message', async (msg) => {

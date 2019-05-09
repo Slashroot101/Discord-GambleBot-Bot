@@ -47,3 +47,15 @@ exports.pickAndSetWinner = async(lotteryID) => {
 	const lottery = await request(options);
 	return lottery.lottery
 };
+
+exports.update = async(lotteryID, body) => {
+  const options = {
+    uri: `${config.apiUrl}/${BASE_URL}/${lotteryID}`,
+    method: 'PUT',
+    body: body,
+    json: true,
+  };
+
+  const lottery = await request(options);
+  return lottery.lottery;
+};
