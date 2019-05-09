@@ -83,7 +83,7 @@ module.exports = {
       tickets,
     });
 
-    message.reply(` your lottery has successfully been created. You have purchased ${numStartingTickets} as the number of initial tickets.`);
+    message.reply(` your lottery has successfully been created. You have purchased ${numStartingTickets} as the number of initial tickets. It will end in ${duration} hours.`);
     return numStartingTickets * ticketCost * -1;
   },
 };
