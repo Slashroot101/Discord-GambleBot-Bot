@@ -10,7 +10,7 @@ exports.getWithFilter = async (query) => {
     qs: query,
     json: true,
   };
-
+  console.log(options)
   const users = await request(options);
   return users.users;
 };

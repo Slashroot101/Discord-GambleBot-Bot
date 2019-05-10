@@ -15,7 +15,6 @@ module.exports = async (queuedMessage, client) => {
 				'ids[]': winner.winner
 			}),
 		]);
-		console.log(client.channels)
 		let channel = client.channels.get(guild[0].communicationChannel.discordChannelID) || client.channels.get(winner.createdInChannel) || pickFirstChannelInGuild(client.guilds.filter(x => x.id === guild.discordGuildID).channels);
 		await User.addPointsToUser(winner.winner, client.commands.get('lottery')._id, winner.currentJackpot);
 		await Lottery.update(winner._id, {isDone: true});

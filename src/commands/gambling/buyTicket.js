@@ -71,6 +71,6 @@ module.exports = {
     await addTickets(currentLottery._id, {tickets});
 
     message.reply(` you successfully purchased ${numTickets} tickets!`);
-    return currentLottery.ticketCost * numTickets;
+    return currentLottery.ticketCost * numTickets * -1;
   },
 };
