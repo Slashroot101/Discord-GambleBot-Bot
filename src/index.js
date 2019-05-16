@@ -80,11 +80,12 @@ client.on('message', async (msg) => {
 			let totalPointsForUser = commandValue;
 			if(commandValue > 0){
 				const globalGuild = await Guild.getGuildWithFilter({isGlobal: true});
-				const globalTaxAmount = commandValue * config.tax.global
 				const guildTaxAmount = (commandValue - globalTaxAmount) * config.tax.guild;
-				totalPointsForUser = totalPointsForUser - guildTaxAmount - guildTaxAmount;
+				totalPointsForUser -= guildTaxAmount;
 				await Guild.updateGuild(guild[0]._id, {points: commandValue});
 				if(globalGuild.length > 0){
+					totalPointsForUser -= globalTaxAmount;
+					const globalTaxAmount = commandValue * config.tax.global
 					await Guild.updateGuild(globalGuild[0]._id, )
 				}
 			}
