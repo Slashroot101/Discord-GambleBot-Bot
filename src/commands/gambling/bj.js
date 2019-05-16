@@ -67,7 +67,8 @@ module.exports = {
           .addCard(gameDeck.drawCardOffTop())
           .addCard(gameDeck.drawCardOffTop());
         await boardMsg.edit({embed: clientHand.toGameboardEmbed(msg.member.user, dealerHand, false, false)});
-        betCollector.stop();
+		betCollector.stop();
+		resolve(bet * -1);
       }, GAME_TIME);
 
       const betCollector = new Discord.MessageCollector(
