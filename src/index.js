@@ -79,15 +79,16 @@ client.on('message', async (msg) => {
 		if(commandToExec.costData.hasCost && typeof commandValue === 'number'){
 			let totalPointsForUser = commandValue;
 			if(commandValue > 0){
+				let globalTaxAmount = 0;
 				const globalGuild = await Guild.getGuildWithFilter({isGlobal: true});
+				if(globalGuild.length > 0){
+					totalPointsForUser -= globalTaxAmount;
+					globalTaxAmount = commandValue * config.tax.global
+					await Guild.updateGuild(globalGuild[0]._id, )
+				}
 				const guildTaxAmount = (commandValue - globalTaxAmount) * config.tax.guild;
 				totalPointsForUser -= guildTaxAmount;
 				await Guild.updateGuild(guild[0]._id, {points: commandValue});
-				if(globalGuild.length > 0){
-					totalPointsForUser -= globalTaxAmount;
-					const globalTaxAmount = commandValue * config.tax.global
-					await Guild.updateGuild(globalGuild[0]._id, )
-				}
 			}
 			await User.addPointsToUser(user._id, commandToExec._id, totalPointsForUser);
 		}
