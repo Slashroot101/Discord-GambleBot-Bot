@@ -62,7 +62,10 @@ client.on('message', async (msg) => {
 		}
 
 		if(commandToExec.cooldown.hasCooldown){
-			const commandAudit = await getCommandHistoryWithFilter({userID: user._id, startTime: moment().subtract(commandToExec.cooldown.cooldownInMinutes, 'minutes').toDate(), endTime: moment().toDate(), sort: -1, commandID: commandToExec._id });
+			const commandAudit = await getCommandHistoryWithFilter({
+				userID: user._id, startTime: moment().subtract(commandToExec.cooldown.cooldownInMinutes, 'minutes').toDate(),
+				endTime: moment().toDate(), sort: -1, commandID: commandToExec._id
+			});
 			if(commandAudit.length >= commandToExec.cooldown.executions){
 				const availableTime = moment(commandAudit[0].executionTime).add(commandToExec.cooldown.cooldownInMinutes, 'minutes');
 				return msg.reply(`This command is on cooldown and will currently be available ${getHumanizedDuration(moment(), availableTime, true)}`)
@@ -84,11 +87,11 @@ client.on('message', async (msg) => {
 				if(globalGuild.length > 0){
 					totalPointsForUser -= globalTaxAmount;
 					globalTaxAmount = commandValue * config.tax.global
-					await Guild.updateGuild(globalGuild[0]._id, )
+					await Guild.updateGuild(globalGuild[0]._id, globalTaxAmount);
 				}
 				const guildTaxAmount = (commandValue - globalTaxAmount) * config.tax.guild;
 				totalPointsForUser -= guildTaxAmount;
-				await Guild.updateGuild(guild[0]._id, {points: commandValue});
+				await Guild.updateGuild(guild[0]._id, {points: guildTaxAmount});
 			}
 			await User.addPointsToUser(user._id, commandToExec._id, totalPointsForUser);
 		}
