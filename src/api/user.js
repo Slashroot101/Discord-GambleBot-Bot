@@ -10,7 +10,6 @@ exports.getWithFilter = async (query) => {
     qs: query,
     json: true,
   };
-  console.log(options)
   const users = await request(options);
   return users.users;
 };
@@ -28,6 +27,18 @@ exports.createUser = async (discordUserID, role) => {
 
   const user = await request(options);
   return user.user;
+};
+
+exports.updateUser = async(userID, body) => {
+	const options ={
+		method: 'PUT',
+		uri: `${config.apiUrl}/${BASE_URL}${userID}`,
+		body,
+		json: true
+	  };
+	
+	  const user = await request(options);
+	  return user.user;
 };
 
 exports.addPointsToUser = async(userID, commandID, points) => {
