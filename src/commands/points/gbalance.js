@@ -20,8 +20,8 @@ module.exports = {
     const embed = {
       color: 0x00ff00,
       author: {
-        name: message.member.user.tag,
-        icon_url: message.member.user.avatarURL,
+        name: message.guild.name,
+        icon_url: message.guild.iconURL,
       },
       title: '',
       url: '',
