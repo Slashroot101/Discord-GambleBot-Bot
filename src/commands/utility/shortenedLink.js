@@ -26,7 +26,7 @@ module.exports = {
       return message.reply('That is not a valid URL. Please provide a valid URL that begins with http:// or https://');
     }
 
-    const shortLink = await ShortenedLink.getWithFilter({originalUrl: url});
+    let shortLink = await ShortenedLink.getWithFilter({originalUrl: url});
 
     if(shortLink.shortenedLinks.length > 0){
 
@@ -35,9 +35,10 @@ module.exports = {
       }
 
       return message.reply(`${shortLink.hostname}/${shortLink.shortenedLinks[0].shortCode}`);
-    }
+    } 
 
+    shortLink = await ShortenedLink.create({originalUrl: url, createdBy: [user._id]});
     
-		
+		message.reply(`${shortLink.shortenedLink.hostname}/${shortLink.shortenedLink.shortCode}`)
 	},
 };
