@@ -12,4 +12,7 @@ module.exports = {
     MAX_DURATION_HOURS: 48,
     MAX_TICKETS: 500,
   },
+  regex: {
+    WELL_FORMED_URL: /^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/g,
+  }
 };
