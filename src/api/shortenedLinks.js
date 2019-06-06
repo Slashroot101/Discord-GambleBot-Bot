@@ -1,7 +1,8 @@
 const BASE_URL = 'api/short-link/';
+const config = require('../../config');
+const request = require('request-promise');
 
-
-exports.update = (id, body) => {
+exports.update = async (id, body) => {
 	const options ={
 			method: 'PUT',
 			uri: `${config.apiUrl}/${BASE_URL}${id}`,
@@ -10,10 +11,10 @@ exports.update = (id, body) => {
 	  };
 	
 	  const shortLink = await request(options);
-	  return shortLink.shortLink;
+	  return shortLink;
 };
 
-exports.getWithFilter = (query) =>  {
+exports.getWithFilter = async (query) =>  {
 	const options = {
 		method: 'GET',
 		uri: `${config.apiUrl}/${BASE_URL}`,
@@ -22,13 +23,14 @@ exports.getWithFilter = (query) =>  {
 	};
 
 	const shortenedLinks = await request(options);
-	return shortenedLinks.shortenedLinks;
+	return shortenedLinks;
 };
 
-exports.create = (body) => {
+exports.create = async (body) => {
 	const options = {
 		method: 'POST',
 		uri: `${config.apiUrl}/${BASE_URL}`,
+		body,
 		json: true,
 	};
 
@@ -38,5 +40,5 @@ exports.create = (body) => {
 		return new Error('the provided website is not live. Please provide a live website');
 	}
 
-	return shortenedLink.shortenedLink;
+	return shortenedLink;
 };

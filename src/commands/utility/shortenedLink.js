@@ -2,7 +2,7 @@ const WELL_FORMED_URL  = require('../../constants').regex.WELL_FORMED_URL;
 const ShortenedLink = require('../../api/shortenedLinks');
 
 module.exports = {
-	name: 'shorten',
+	name: 'short',
 	description: 'Shortens a link: `Ex: {0}shorten https://google.com`',
 	costData: {
 		cost: 0,
@@ -22,12 +22,11 @@ module.exports = {
     }
 
     const url = args[0];
-    if(!url.match(WELL_FORMED_URL)){
+    if(!new RegExp(WELL_FORMED_URL).test(url)){
       return message.reply('That is not a valid URL. Please provide a valid URL that begins with http:// or https://');
     }
 
     let shortLink = await ShortenedLink.getWithFilter({originalUrl: url});
-
     if(shortLink.shortenedLinks.length > 0){
 
       if(!shortLink.shortenedLinks[0].createdBy.includes(user._id)){
@@ -38,7 +37,7 @@ module.exports = {
     } 
 
     shortLink = await ShortenedLink.create({originalUrl: url, createdBy: [user._id]});
-    
-		message.reply(`${shortLink.shortenedLink.hostname}/${shortLink.shortenedLink.shortCode}`)
+    console.log(shortLink)
+		message.reply(`Shortened! http://${shortLink.shortenedLink.hostname}/${shortLink.shortenedLink.shortCode}`)
 	},
 };

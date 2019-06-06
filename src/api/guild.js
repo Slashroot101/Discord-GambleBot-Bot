@@ -1,6 +1,6 @@
 const request = require('request-promise');
 const config = require('../../config');
-const BASE_URL = 'api/guilds';
+const BASE_URL = 'api/guild';
 
 exports.updateGuild = async (id, guildObject) => {
   const options = {

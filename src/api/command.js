@@ -1,7 +1,7 @@
 const request = require('request-promise');
 const config = require('../../config');
 
-const BASE_URL = 'api/commands/';
+const BASE_URL = 'api/command/';
 
 exports.getWithFilter = async (query) => {
   const options = {
