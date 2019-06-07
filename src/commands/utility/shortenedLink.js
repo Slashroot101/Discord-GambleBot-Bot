@@ -33,11 +33,14 @@ module.exports = {
         await ShortenedLink.update(shortLink.shortenedLinks[0]._id, {createdBy: user._id});
       }
 
-      return message.reply(`${shortLink.hostname}/${shortLink.shortenedLinks[0].shortCode}`);
+      return message.reply(`http://${shortLink.hostname}/${shortLink.shortenedLinks[0].shortCode}`);
     } 
 
-    shortLink = await ShortenedLink.create({originalUrl: url, createdBy: [user._id]});
-    console.log(shortLink)
-		message.reply(`Shortened! http://${shortLink.shortenedLink.hostname}/${shortLink.shortenedLink.shortCode}`)
+		try {
+			shortLink = await ShortenedLink.create({originalUrl: url, createdBy: [user._id]});
+			message.reply(`Shortened! http://${shortLink.shortenedLink.hostname}/${shortLink.shortenedLink.shortCode}`)
+		} catch (err){
+			message.reply('the provided url is not live. Please provide a live website');
+		}
 	},
 };
