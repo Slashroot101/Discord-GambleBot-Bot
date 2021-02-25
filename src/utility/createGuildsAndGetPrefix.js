@@ -1,4 +1,5 @@
 const Guild = require('../api/guild');
+const config = require('../../config');
 
 module.exports = async (guildsIds) => {
   const guilds = await Guild.getGuildWithFilter({discordGuildID: guildsIds});
