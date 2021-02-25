@@ -10,9 +10,9 @@ module.exports = {
     hasCost: true,
   },
   cooldown: {
-    hasCooldown: false,
-    executions: 1,
-    cooldownInMinutes: 2
+    hasCooldown: true,
+    executions: 2,
+    cooldownInMinutes: 1440
   },
   group: 'Points',
   allowedRoles: [
