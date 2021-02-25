@@ -1,6 +1,6 @@
 const request = require('request-promise');
 const config = require('../../config');
-const BASE_URL = 'api/role/';
+const BASE_URL = 'api/role';
 
 exports.createRole = async (name, isSuperUser, hasAdmin) => {
 	const options = {
