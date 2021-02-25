@@ -1,7 +1,7 @@
 module.exports = {
   roles: {
-    baseUser: '6037334712b87a4fb0cdffd6',
-    admin: '603733bd12b87a4fb0cdffd8',
+    baseUser: '6037dbce0db395664004b658',
+    admin: '6037dbee0db395664004b659',
   },
   lottery: {
     localityType: {
